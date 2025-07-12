@@ -1350,6 +1350,135 @@ article.post .entry-footer {
 /* End of 404 Page Styling */
 
 /* ==========================================================================
+   Blog / Index Page
+   ========================================================================== */
+
+.blog .page-header,
+.home .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+.blog .page-header .page-title,
+.home .page-header .page-title {
+    margin-bottom: 0; /* Remove margin as flex handles spacing */
+    border-bottom: none; /* Remove border from default page-header style */
+    padding-bottom: 0;
+}
+.blog .page-header .page-title::after,
+.home .page-header .page-title::after {
+    display: none; /* Hide the underline from default style */
+}
+
+.blog-search {
+    flex-grow: 1;
+    max-width: 350px; /* Limit the width of the search bar */
+}
+
+.blog-search .search-form {
+    width: 100%;
+}
+
+.blog-posts-container {
+    /* Optional: if you want a grid layout */
+    /* display: grid; */
+    /* grid-template-columns: 1fr; */
+    /* gap: 32px; */
+}
+
+/* Styling for individual posts on the blog index */
+.blog-post-summary {
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid #eee;
+}
+.blog-post-summary:last-of-type {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.blog-post-summary .post-thumbnail {
+    margin-bottom: 24px;
+    text-align: left;
+}
+.blog-post-summary .post-thumbnail a {
+    display: block;
+}
+.blog-post-summary .post-thumbnail img {
+    border-radius: 5px;
+}
+
+.blog-post-summary .entry-header {
+    margin-bottom: 16px;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.blog-post-summary .entry-title {
+    font-size: 2em;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+.blog-post-summary .entry-title a {
+    text-decoration: none;
+}
+.blog-post-summary .entry-title a:hover {
+    text-decoration: underline;
+}
+
+.blog-post-summary .entry-meta {
+    margin-bottom: 16px;
+}
+
+.blog-post-summary .entry-summary p:last-child {
+    margin-bottom: 0;
+}
+
+.blog-post-summary .entry-footer {
+    margin-top: 24px;
+    padding-top: 24px;
+}
+
+/* Pagination styling */
+.pagination {
+    margin-top: 48px;
+    border-top: 1px solid #eee;
+    padding-top: 32px;
+}
+.nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.nav-links .page-numbers {
+    padding: 8px 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--bbt-primary-color);
+    transition: all 0.2s ease-in-out;
+}
+.nav-links .page-numbers:hover {
+    background-color: var(--bbt-primary-color);
+    color: #fff;
+    border-color: var(--bbt-primary-color);
+}
+.nav-links .page-numbers.current {
+    background-color: var(--bbt-primary-color);
+    color: #fff;
+    border-color: var(--bbt-primary-color);
+    font-weight: bold;
+}
+.nav-links .dots {
+    padding: 8px;
+}
+
+/* ==========================================================================
    Header & Navigation
    ========================================================================== */
 

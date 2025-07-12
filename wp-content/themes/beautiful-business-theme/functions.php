@@ -123,13 +123,13 @@ add_action( 'after_setup_theme', 'beautiful_business_content_width', 0 );
 /**
  * Enqueue Google Fonts for the theme.
  */
-function beautiful_business_enqueue_google_fonts() {
-    $fonts_url = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap';
-    wp_enqueue_style( 'beautiful-business-google-fonts', $fonts_url, array(), null );
-}
-add_action( 'wp_enqueue_scripts', 'beautiful_business_enqueue_google_fonts' );
+// This is now handled dynamically in inc/dynamic-css.php
+// function beautiful_business_enqueue_google_fonts() { ... }
+// add_action( 'wp_enqueue_scripts', 'beautiful_business_enqueue_google_fonts' );
 
 function beautiful_business_scripts() {
+    // The 'beautiful-business-google-fonts' handle is now enqueued from dynamic-css.php,
+    // but we still list it as a dependency for the main stylesheet to ensure load order.
     wp_enqueue_style( 'beautiful-business-style', get_stylesheet_uri(), array('beautiful-business-google-fonts'), BEAUTIFUL_BUSINESS_VERSION );
     // wp_style_add_data( 'beautiful-business-style', 'rtl', 'replace' ); // If supporting RTL
 
@@ -170,6 +170,11 @@ require get_template_directory() . '/inc/template-tags.php';
  * Custom Post Types.
  */
 require get_template_directory() . '/inc/custom-post-types.php';
+
+/**
+ * Dynamic CSS.
+ */
+require get_template_directory() . '/inc/dynamic-css.php';
 
 /**
  * Load Jetpack compatibility file.

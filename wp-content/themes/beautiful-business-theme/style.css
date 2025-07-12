@@ -21,10 +21,10 @@ Use it to make something cool, have fun, and share what you've learned with othe
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: var(--bbt-font-body, 'Open Sans', sans-serif);
     line-height: 1.6;
-    color: #333; /* Default text color */
-    background-color: #fff; /* Default background */
+    color: var(--bbt-body-text-color, #333);
+    background-color: var(--bbt-background-color, #fff);
     -webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -40,8 +40,9 @@ body {
 h1, h2, h3, h4, h5, h6 {
     margin-top: 1.5em;
     margin-bottom: 0.5em;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--bbt-font-heading, 'Montserrat', sans-serif);
     font-weight: 700; /* Use bold weight */
+    color: var(--bbt-heading-color, #111);
 }
 
 p {
@@ -49,15 +50,15 @@ p {
 }
 
 a {
-    /* color: #007bff; */ /* A common blue for links */
-    color: var(--bbt-primary-color);
+    color: var(--bbt-primary-color, #007bff);
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 a:hover,
 a:focus {
+    color: var(--bbt-link-hover-color, #0056b3);
     text-decoration: underline;
-    opacity: 0.8; /* Slight feedback on hover */
 }
 
 .site-description {
@@ -1350,7 +1351,6 @@ article.post .entry-footer { /* For single.php (if we create it) */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* Allow wrapping on very small screens */
 }
 .post-navigation .nav-previous,
 .post-navigation .nav-next {
@@ -1642,3 +1642,5 @@ article.post .entry-footer { /* For single.php (if we create it) */
         display: block;
     }
 }
+
+[end of wp-content/themes/beautiful-business-theme/style.css]

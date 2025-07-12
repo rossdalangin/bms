@@ -15,6 +15,21 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
 function beautiful_business_customize_register( $wp_customize ) {
+
+    // --- Helper function for font choices ---
+    function beautiful_business_get_font_choices() {
+        return array(
+            'Montserrat'        => 'Montserrat',
+            'Open Sans'         => 'Open Sans',
+            'Lato'              => 'Lato',
+            'Roboto'            => 'Roboto',
+            'Source Sans Pro'   => 'Source Sans Pro',
+            'Merriweather'      => 'Merriweather',
+            'Playfair Display'  => 'Playfair Display',
+            'system-ui'         => 'System Default',
+        );
+    }
+
     // Site Title & Tagline
     $wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
     $wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
@@ -37,6 +52,29 @@ function beautiful_business_customize_register( $wp_customize ) {
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bbt_primary_color_control', array( 'label' => __( 'Primary Color', 'beautiful-business' ), 'section' => 'bbt_theme_colors_section', 'settings' => 'bbt_primary_color' ) ) );
     $wp_customize->add_setting( 'bbt_secondary_color', array( 'default' => '#6c757d', 'sanitize_callback' => 'sanitize_hex_color', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bbt_secondary_color_control', array( 'label' => __( 'Secondary Color', 'beautiful-business' ), 'section' => 'bbt_theme_colors_section', 'settings' => 'bbt_secondary_color' ) ) );
+    $wp_customize->add_setting( 'bbt_body_text_color', array( 'default' => '#333333', 'sanitize_callback' => 'sanitize_hex_color', 'transport' => 'postMessage' ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bbt_body_text_color_control', array( 'label' => __( 'Body Text Color', 'beautiful-business' ), 'section' => 'bbt_theme_colors_section', 'settings' => 'bbt_body_text_color' ) ) );
+    $wp_customize->add_setting( 'bbt_heading_color', array( 'default' => '#111111', 'sanitize_callback' => 'sanitize_hex_color', 'transport' => 'postMessage' ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bbt_heading_color_control', array( 'label' => __( 'Heading Color', 'beautiful-business' ), 'section' => 'bbt_theme_colors_section', 'settings' => 'bbt_heading_color' ) ) );
+    $wp_customize->add_setting( 'bbt_link_hover_color', array( 'default' => '#0056b3', 'sanitize_callback' => 'sanitize_hex_color', 'transport' => 'postMessage' ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bbt_link_hover_color_control', array( 'label' => __( 'Link Hover Color', 'beautiful-business' ), 'section' => 'bbt_theme_colors_section', 'settings' => 'bbt_link_hover_color' ) ) );
+    $wp_customize->add_setting( 'bbt_background_color', array( 'default' => '#ffffff', 'sanitize_callback' => 'sanitize_hex_color', 'transport' => 'postMessage' ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bbt_background_color_control', array( 'label' => __( 'Main Background Color', 'beautiful-business' ), 'section' => 'bbt_theme_colors_section', 'settings' => 'bbt_background_color' ) ) );
+
+    // --- Typography Panel ---
+    $wp_customize->add_panel( 'bbt_typography_panel', array( 'title' => __( 'Typography', 'beautiful-business' ), 'priority' => 40 ) );
+    $wp_customize->add_section( 'bbt_headings_typo_section', array( 'title' => __( 'Headings (H1-H6)', 'beautiful-business' ), 'panel' => 'bbt_typography_panel', 'priority' => 10 ) );
+    $wp_customize->add_setting( 'bbt_heading_font', array( 'default' => 'Montserrat', 'sanitize_callback' => 'sanitize_text_field' ) );
+    $wp_customize->add_control( 'bbt_heading_font_control', array( 'label' => __( 'Heading Font Family', 'beautiful-business' ), 'section' => 'bbt_headings_typo_section', 'settings' => 'bbt_heading_font', 'type' => 'select', 'choices' => beautiful_business_get_font_choices() ) );
+    $wp_customize->add_section( 'bbt_body_typo_section', array( 'title' => __( 'Body Text', 'beautiful-business' ), 'panel' => 'bbt_typography_panel', 'priority' => 20 ) );
+    $wp_customize->add_setting( 'bbt_body_font', array( 'default' => 'Open Sans', 'sanitize_callback' => 'sanitize_text_field' ) );
+    $wp_customize->add_control( 'bbt_body_font_control', array( 'label' => __( 'Body Font Family', 'beautiful-business' ), 'section' => 'bbt_body_typo_section', 'settings' => 'bbt_body_font', 'type' => 'select', 'choices' => beautiful_business_get_font_choices() ) );
+    $wp_customize->add_setting( 'bbt_base_font_size_desktop', array( 'default' => 16, 'sanitize_callback' => 'absint' ) );
+    $wp_customize->add_control( 'bbt_base_font_size_desktop_control', array( 'label' => __( 'Base Font Size - Desktop (px)', 'beautiful-business' ), 'section' => 'bbt_body_typo_section', 'settings' => 'bbt_base_font_size_desktop', 'type' => 'number', 'input_attrs' => array('min'=>12, 'max'=>24) ) );
+    $wp_customize->add_setting( 'bbt_base_font_size_tablet', array( 'default' => 16, 'sanitize_callback' => 'absint' ) );
+    $wp_customize->add_control( 'bbt_base_font_size_tablet_control', array( 'label' => __( 'Base Font Size - Tablet (px)', 'beautiful-business' ), 'section' => 'bbt_body_typo_section', 'settings' => 'bbt_base_font_size_tablet', 'type' => 'number', 'input_attrs' => array('min'=>12, 'max'=>22) ) );
+    $wp_customize->add_setting( 'bbt_base_font_size_mobile', array( 'default' => 15, 'sanitize_callback' => 'absint' ) );
+    $wp_customize->add_control( 'bbt_base_font_size_mobile_control', array( 'label' => __( 'Base Font Size - Mobile (px)', 'beautiful-business' ), 'section' => 'bbt_body_typo_section', 'settings' => 'bbt_base_font_size_mobile', 'type' => 'number', 'input_attrs' => array('min'=>12, 'max'=>20) ) );
 
     // Footer Settings Section
     $wp_customize->add_section( 'bbt_footer_settings_section', array( 'title' => __( 'Footer Settings', 'beautiful-business' ), 'priority' => 120 ) );
@@ -129,17 +167,9 @@ add_action( 'customize_preview_init', 'beautiful_business_customize_preview_js' 
 
 /**
  * Outputs Customizer CSS to <head>
+ * This is now handled by inc/dynamic-css.php
  */
-function beautiful_business_customizer_css() {
-    ?>
-    <style type="text/css" id="bbt-customizer-css-vars">
-        :root {
-            --bbt-primary-color: <?php echo esc_html( get_theme_mod( 'bbt_primary_color', '#007bff' ) ); ?>;
-            --bbt-secondary-color: <?php echo esc_html( get_theme_mod( 'bbt_secondary_color', '#6c757d' ) ); ?>;
-        }
-    </style>
-    <?php
-}
-add_action( 'wp_head', 'beautiful_business_customizer_css' );
+// function beautiful_business_customizer_css() { ... }
+// add_action( 'wp_head', 'beautiful_business_customizer_css' );
 
 ?>

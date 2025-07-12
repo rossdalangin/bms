@@ -1584,25 +1584,30 @@ article.post .entry-footer { /* For single.php (if we create it) */
 }
 
 @media (max-width: 900px) { /* Breakpoint for switching to mobile menu */
-    .main-navigation, .header-cta {
-        display: none; /* Hide desktop nav and cta */
+    .header-cta {
+        display: none; /* Hide desktop CTA on mobile */
     }
     .menu-toggle {
         display: block; /* Show menu toggle */
     }
-    .site-header-inner {
-        /* justify-content: space-between; is already set */
+    .site-branding {
+        flex-grow: 1; /* Allow branding to take space, pushing toggle to the right */
     }
+    .main-navigation .primary-menu-container {
+        display: none; /* Hide the menu container by default */
+    }
+
     /* When mobile menu is open */
-    .main-navigation.nav-open {
+    .main-navigation.nav-open .primary-menu-container {
         display: block;
         position: absolute;
-        top: 100%;
+        top: 100%; /* Position below the header's bottom border */
         left: 0;
-        width: 100%;
+        right: 0;
         background: #fff;
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         padding: 10px 0;
+        border-top: 1px solid #eaeaea;
     }
     .main-navigation.nav-open #primary-menu {
         display: flex;
@@ -1620,6 +1625,8 @@ article.post .entry-footer { /* For single.php (if we create it) */
     }
     .main-navigation.nav-open #primary-menu a {
         padding: 15px;
+        width: 100%; /* Ensure link is full-width for touch targets */
+        box-sizing: border-box;
     }
     .main-navigation.nav-open ul.sub-menu { /* Sub-menu on mobile */
         position: static;

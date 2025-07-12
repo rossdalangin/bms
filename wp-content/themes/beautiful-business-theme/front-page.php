@@ -160,6 +160,105 @@ get_header(); ?>
         </section>
         <?php endif; ?>
 
+
+        <?php
+        // --- Services Section (Restored) ---
+        $bbt_services_title = get_theme_mod( 'bbt_services_section_title', __( 'Our Services', 'beautiful-business' ) );
+        $bbt_services_count = get_theme_mod( 'bbt_services_section_count', 3 );
+        $bbt_services_query = new WP_Query( array(
+            'post_type'      => 'service',
+            'posts_per_page' => absint( $bbt_services_count ),
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+            'no_found_rows'  => true,
+        ) );
+        if ( $bbt_services_query->have_posts() ) :
+        ?>
+        <section id="services-section" class="homepage-content-section homepage-services-section section-padding alternate-background">
+            <div class="container">
+                <?php if ( ! empty( $bbt_services_title ) ) : ?>
+                    <h2 class="section-title"><span class="section-title-text"><?php echo esc_html( $bbt_services_title ); ?></span></h2>
+                <?php endif; ?>
+
+                <div class="services-grid">
+                    <?php while ( $bbt_services_query->have_posts() ) : $bbt_services_query->the_post(); ?>
+                        <article id="service-hp-<?php the_ID(); ?>" <?php post_class('service-summary-item grid-item'); ?>>
+                            <div class="entry-content-wrap">
+                                <header class="entry-header">
+                                    <?php the_title( sprintf( '<h3 class="entry-title service-item-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' ); ?>
+                                </header>
+                                <div class="entry-summary service-item-summary">
+                                    <?php the_excerpt(); ?>
+                                </div>
+                                <footer class="entry-footer">
+                                    <a href="<?php the_permalink(); ?>" class="read-more-link service-item-read-more"><?php esc_html_e( 'Details', 'beautiful-business' ); ?> <span class="screen-reader-text"><?php echo wp_kses_post( get_the_title() ); ?></span></a>
+                                </footer>
+                            </div>
+                        </article>
+                    <?php endwhile; wp_reset_postdata(); ?>
+                </div><!-- .services-grid -->
+            </div><!-- .container -->
+        </section><!-- #services-section -->
+        <?php endif; ?>
+
+
+        <?php
+        // --- Projects Section ---
+        $bbt_projects_title = get_theme_mod( 'bbt_projects_section_title', __( 'Our Latest Work', 'beautiful-business' ) );
+        $bbt_projects_count = get_theme_mod( 'bbt_projects_section_count', 3 );
+        $bbt_projects_query = new WP_Query( array(
+            'post_type'      => 'project',
+            'posts_per_page' => absint( $bbt_projects_count ),
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+            'no_found_rows'  => true,
+        ) );
+        if ( $bbt_projects_query->have_posts() ) :
+        ?>
+        <section id="projects-section" class="homepage-content-section homepage-projects-section section-padding">
+            <div class="container">
+                <?php if ( ! empty( $bbt_projects_title ) ) : ?>
+                    <h2 class="section-title"><span class="section-title-text"><?php echo esc_html( $bbt_projects_title ); ?></span></h2>
+                <?php endif; ?>
+
+                <div class="projects-grid">
+                    <?php while ( $bbt_projects_query->have_posts() ) : $bbt_projects_query->the_post();
+                        get_template_part( 'template-parts/content', 'summary' );
+                    endwhile; wp_reset_postdata(); ?>
+                </div><!-- .projects-grid -->
+            </div><!-- .container -->
+        </section><!-- #projects-section -->
+        <?php endif; ?>
+
+
+        <?php
+        // --- Testimonials Section (Restored) ---
+        $bbt_testimonials_title = get_theme_mod( 'bbt_testimonials_section_title', __( 'What Our Clients Say', 'beautiful-business' ) );
+        $bbt_testimonials_count = get_theme_mod( 'bbt_testimonials_section_count', 2 );
+        $bbt_testimonials_query = new WP_Query( array(
+            'post_type'      => 'testimonial',
+            'posts_per_page' => absint( $bbt_testimonials_count ),
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+            'no_found_rows'  => true,
+        ) );
+        if ( $bbt_testimonials_query->have_posts() ) :
+        ?>
+        <section id="testimonials-section" class="homepage-content-section homepage-testimonials-section section-padding">
+            <div class="container">
+                <?php if ( ! empty( $bbt_testimonials_title ) ) : ?>
+                    <h2 class="section-title"><span class="section-title-text"><?php echo esc_html( $bbt_testimonials_title ); ?></span></h2>
+                <?php endif; ?>
+
+                <div class="testimonials-list">
+                    <?php while ( $bbt_testimonials_query->have_posts() ) : $bbt_testimonials_query->the_post();
+                        get_template_part( 'template-parts/content', 'testimonial' );
+                    endwhile; wp_reset_postdata(); ?>
+                </div><!-- .testimonials-list -->
+            </div><!-- .container -->
+        </section><!-- #testimonials-section -->
+        <?php endif; ?>
+
         <div class="homepage-content-main container">
             <?php
             // Standard loop to display content IF a static page is set as the front page AND it has content.

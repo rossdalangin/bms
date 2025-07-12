@@ -6,22 +6,23 @@
  * Contains handlers to make Theme Customizer preview reload changes asynchronously.
  */
 
-( function( $ ) {
+( function( $, api ) {
+    'use strict';
 
     // Site title and description.
-    wp.customize( 'blogname', function( value ) {
+    api( 'blogname', function( value ) {
         value.bind( function( to ) {
             $( '.site-title a' ).text( to );
         } );
     } );
-    wp.customize( 'blogdescription', function( value ) {
+    api( 'blogdescription', function( value ) {
         value.bind( function( to ) {
             $( '.site-description' ).text( to );
         } );
     } );
 
     // Header CTA Button
-    wp.customize( 'bbt_header_cta_text', function( value ) {
+    api( 'bbt_header_cta_text', function( value ) {
         value.bind( function( to ) {
             var ctaButton = $( '.header-cta-button' );
             ctaButton.text( to );
@@ -32,158 +33,108 @@
             }
         } );
     } );
-
-    wp.customize( 'bbt_header_cta_url', function( value ) {
+    api( 'bbt_header_cta_url', function( value ) {
         value.bind( function( to ) {
             $( '.header-cta-button' ).attr( 'href', to );
         } );
     } );
 
-    // Theme Colors
-    wp.customize( 'bbt_primary_color', function( value ) {
-        value.bind( function( newval ) {
-            document.documentElement.style.setProperty('--bbt-primary-color', newval );
-        } );
-    } );
-    wp.customize( 'bbt_secondary_color', function( value ) {
-        value.bind( function( newval ) {
-            document.documentElement.style.setProperty('--bbt-secondary-color', newval );
-        } );
-    } );
-    wp.customize( 'bbt_body_text_color', function( value ) {
-        value.bind( function( newval ) {
-            document.documentElement.style.setProperty('--bbt-body-text-color', newval );
-            $( 'body' ).css( 'color', newval );
-        } );
-    } );
-    wp.customize( 'bbt_heading_color', function( value ) {
-        value.bind( function( newval ) {
-            document.documentElement.style.setProperty('--bbt-heading-color', newval );
-            $( 'h1, h2, h3, h4, h5, h6' ).css( 'color', newval );
-        } );
-    } );
-    wp.customize( 'bbt_link_hover_color', function( value ) {
-        value.bind( function( newval ) {
-            document.documentElement.style.setProperty('--bbt-link-hover-color', newval );
-        } );
-    } );
-    wp.customize( 'bbt_background_color', function( value ) {
-        value.bind( function( newval ) {
-            document.documentElement.style.setProperty('--bbt-background-color', newval );
-            $( 'body' ).css( 'background-color', newval );
-        } );
-    } );
+    // Theme Colors (uses dynamic-css.php, but this provides instant preview)
+    api( 'bbt_primary_color', function( value ) { value.bind( function( to ) { document.documentElement.style.setProperty('--bbt-primary-color', to ); } ); } );
+    api( 'bbt_secondary_color', function( value ) { value.bind( function( to ) { document.documentElement.style.setProperty('--bbt-secondary-color', to ); } ); } );
+    api( 'bbt_body_text_color', function( value ) { value.bind( function( to ) { $('body').css('color', to); } ); } );
+    api( 'bbt_heading_color', function( value ) { value.bind( function( to ) { $('h1, h2, h3, h4, h5, h6').css('color', to); } ); } );
+    api( 'bbt_link_hover_color', function( value ) { value.bind( function( to ) { document.documentElement.style.setProperty('--bbt-link-hover-color', to ); } ); } );
+    api( 'bbt_background_color', function( value ) { value.bind( function( to ) { $('body').css('background-color', to); } ); } );
 
     // Footer Copyright Text
-    wp.customize( 'bbt_copyright_text', function( value ) {
-        value.bind( function( newval ) {
-            var processedText = newval;
-            var currentYear = new Date().getFullYear().toString();
-            var siteName = wp.customize( 'blogname' ).get();
-            processedText = processedText.replace( /\[year\]/g, currentYear );
-            processedText = processedText.replace( /\[site_name\]/g, siteName );
-            $( '.site-info .copyright-text' ).html( processedText );
-        } );
-    } );
-
-    // Also update copyright if site name changes
-    wp.customize( 'blogname', function( value ) {
-        value.bind( function( newSiteName ) {
-            $( '.site-title a' ).text( newSiteName );
-            var copyrightSetting = wp.customize( 'bbt_copyright_text' );
-            if ( copyrightSetting ) {
-                var currentCopyrightText = copyrightSetting.get();
-                var currentYear = new Date().getFullYear().toString();
-                var processedText = currentCopyrightText;
-                processedText = processedText.replace( /\[year\]/g, currentYear );
-                processedText = processedText.replace( /\[site_name\]/g, newSiteName );
-                $( '.site-info .copyright-text' ).html( processedText );
-            }
-        } );
-    } );
+    var updateCopyright = function() {
+        var text = api( 'bbt_copyright_text' ).get();
+        var siteName = api( 'blogname' ).get();
+        var year = new Date().getFullYear();
+        text = text.replace( '[year]', year );
+        text = text.replace( '[site_name]', siteName );
+        $( '.site-info .copyright-text' ).html( text );
+    };
+    api( 'bbt_copyright_text', function( value ) { value.bind( updateCopyright ); } );
+    api( 'blogname', function( value ) { value.bind( updateCopyright ); } );
 
     // Homepage Hero Section
-    wp.customize( 'bbt_hero_title', function( value ) { value.bind( function( to ) { $( '#hero-title' ).text( to ); } ); } );
-    wp.customize( 'bbt_hero_subtitle', function( value ) { value.bind( function( to ) { $( '#hero-subtitle' ).html( to ); } ); } );
-    wp.customize( 'bbt_hero_button_text', function( value ) { value.bind( function( to ) { $( '#hero-button' ).text( to ); } ); } );
-    wp.customize( 'bbt_hero_button_url', function( value ) { value.bind( function( to ) { $( '#hero-button' ).attr( 'href', to ); } ); } );
-    wp.customize( 'bbt_hero_background_image', function( value ) {
+    api( 'bbt_hero_title', function( value ) { value.bind( function( to ) { $( '.hero-main-title' ).text( to ); } ); } );
+    api( 'bbt_hero_subtitle', function( value ) { value.bind( function( to ) { $( '.hero-main-subtitle' ).html( to ); } ); } );
+    api( 'bbt_hero_button_text', function( value ) { value.bind( function( to ) { $( '.hero-main-button' ).text( to ); } ); } );
+    api( 'bbt_hero_button_url', function( value ) { value.bind( function( to ) { $( '.hero-main-button' ).attr( 'href', to ); } ); } );
+    api( 'bbt_hero_background_image', function( value ) {
         value.bind( function( to ) {
             var heroSection = $( '#homepage-hero' );
             heroSection.css( 'background-image', to ? 'url(' + to + ')' : 'none' );
-            if (to) { heroSection.addClass('has-background-image'); } else { heroSection.removeClass('has-background-image'); }
+            heroSection.toggleClass('has-background-image', !!to);
+        } );
+    } );
+    api( 'bbt_hero_text_align', function( value ) {
+        value.bind( function( to ) {
+            $( '#homepage-hero .hero-content-container' ).css( 'text-align', to );
         } );
     } );
 
-    // Homepage Sections Panel Titles
-    wp.customize( 'bbt_services_section_title', function( value ) { value.bind( function( to ) { $( '#services-section .section-title-text' ).text( to ); } ); } );
-    wp.customize( 'bbt_testimonials_section_title', function( value ) { value.bind( function( to ) { $( '#testimonials-section .section-title-text' ).text( to ); } ); } );
-
-    // --- Section Order and Visibility Preview (Robust Version) ---
-
+    // --- Section Order and Visibility Preview (Simplified & Robust) ---
     (function() {
-        var parentContainer = $( '#main' );
-        if ( ! parentContainer.length ) {
+        var parentContainer = $( '#main.site-main' );
+        if ( !parentContainer.length ) {
             return;
         }
 
         var sectionKeys = ['hero', 'features', 'services', 'projects', 'cta', 'clients', 'testimonials', 'news'];
-        var initialLoad = true;
 
-        // The single function to update the entire homepage layout
-        function updateHomepageLayout() {
-            var order = wp.customize( 'bbt_homepage_section_order' ).get().split( ',' );
+        // The single, simple function to handle all layout updates
+        var updateLayout = function() {
+            var orderSetting = api( 'bbt_homepage_section_order' ).get();
+            if (!orderSetting) { return; } // Bail if setting not ready
 
-            // Detach all sections and store them
-            var detachedSections = {};
-            $.each( sectionKeys, function( i, id ) {
-                var sectionEl = $( '#homepage-' + id ).detach();
-                if ( sectionEl.length ) {
-                    detachedSections[id] = sectionEl;
+            var order = orderSetting.split(',');
+            var detached = {};
+
+            // Detach all known sections
+            $.each(sectionKeys, function(i, id) {
+                var section = $('#homepage-' + id);
+                if (section.length) {
+                    detached[id] = section.detach();
                 }
             });
 
-            // Loop through the new order and append sections
-            $.each( order, function( i, id ) {
-                if ( detachedSections[id] ) {
-                    var section = detachedSections[id];
-                    var isVisible = wp.customize( 'bbt_show_section_' + id ).get();
+            // Re-append in the correct order and set visibility
+            $.each(order, function(i, id) {
+                if (detached[id]) {
+                    var section = detached[id];
+                    var isVisible = api('bbt_show_section_' + id) ? api('bbt_show_section_' + id).get() : true;
 
-                    // Append to the container first
-                    parentContainer.append( section );
+                    parentContainer.append(section); // Append it to the DOM
 
-                    // Then handle visibility
-                    if ( isVisible ) {
-                        if (!initialLoad) {
-                            section.slideDown(250);
-                        } else {
-                            section.show();
-                        }
+                    if (isVisible) {
+                        section.show();
                     } else {
-                        if (!initialLoad) {
-                            section.slideUp(250);
-                        } else {
-                            section.hide();
-                        }
+                        section.hide();
                     }
                 }
             });
-
-            if (initialLoad) {
-                initialLoad = false;
-            }
-        }
+        };
 
         // Listen to all relevant settings
-        wp.customize( 'bbt_homepage_section_order', function( setting ) {
-            setting.bind( updateHomepageLayout );
+        api('bbt_homepage_section_order', function(setting) {
+            setting.bind(updateLayout);
         });
 
-        $.each( sectionKeys, function( index, sectionId ) {
-            wp.customize( 'bbt_show_section_' + sectionId, function( setting ) {
-                setting.bind( updateHomepageLayout );
+        $.each(sectionKeys, function(i, id) {
+            api('bbt_show_section_' + id, function(setting) {
+                setting.bind(updateLayout);
             });
         });
+
+        // Also run on first load, but with a slight delay to ensure settings are available
+        api.bind('preview-ready', function() {
+             setTimeout(updateLayout, 100);
+        });
+
     })();
 
 } )( jQuery );

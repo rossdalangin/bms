@@ -13,8 +13,8 @@
                 }
             });
 
-            // Handle checkbox toggling
-            $( '.section-visibility-toggle' ).on( 'change', function() {
+            // Handle checkbox toggling using event delegation
+            this.container.on( 'change', '.section-visibility-toggle', function() {
                 var sectionId = $( this ).closest( '.section-order-item' ).data( 'section-id' );
                 var isVisible = $( this ).is( ':checked' );
                 var visibilitySetting = api( 'bbt_show_section_' + sectionId );
@@ -25,7 +25,6 @@
 
                 // Also update the visual state
                 $(this).closest('.section-order-item').toggleClass('is-hidden', !isVisible);
-
             });
 
             // Initial state

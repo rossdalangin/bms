@@ -32,8 +32,8 @@ body {
 .container { /* A simple container for content centering */
     width: 90%;
     max-width: 1100px; /* Common max-width */
-    margin: 20px auto; /* Centering and some top/bottom margin */
-    padding: 0 15px; /* Padding inside the container */
+    margin: 24px auto; /* Centering and some top/bottom margin */
+    padding: 0 16px; /* Padding inside the container */
 }
 
 /* Basic Typography */
@@ -67,6 +67,32 @@ a:focus {
 }
 
 /* ==========================================================================
+   Content Readability
+   ========================================================================== */
+.entry-content > p,
+.entry-content > ul,
+.entry-content > ol,
+.entry-content > blockquote,
+.comment-content > p {
+    max-width: 720px; /* Optimal reading width, approx 65-75 characters */
+}
+
+/* For blocks that are not direct children or are wrapped, we can set a general rule */
+.entry-content p, .entry-content ul, .entry-content ol, .entry-content blockquote {
+    /* This might be too broad, but can be used if needed. Sticking to direct children is safer. */
+}
+
+/* Allow certain elements to break out of this container if they are direct children */
+.entry-content > .alignwide,
+.entry-content > .alignfull,
+.entry-content > .wp-block-gallery,
+.entry-content > .wp-block-table,
+.entry-content > .table-responsive-wrapper {
+    max-width: none;
+}
+
+
+/* ==========================================================================
    Buttons
    ========================================================================== */
 .button,
@@ -78,7 +104,7 @@ input[type="submit"],
 .header-cta-button, /* Ensure CTA button gets base styles */
 .cta-button { /* Ensure CTA button gets base styles */
     display: inline-block;
-    padding: 12px 28px; /* Refined padding */
+    padding: 12px 24px; /* Refined padding */
     font-family: 'Montserrat', sans-serif; /* Use heading font */
     font-size: 0.9em;
     font-weight: 700;
@@ -161,17 +187,16 @@ input[type="submit"]:hover,
 
 /* Homepage Hero Section */
 .homepage-hero-section {
-    padding: 60px 20px; /* Increased padding */
-    text-align: center;
-    background-color: #f0f0f0; /* Default background if no image */
+    padding: 64px 24px;
+    background-color: #f0f0f0;
     background-size: cover;
     background-position: center center;
-    color: #333; /* Default text color, might need to change if bg is dark */
-    position: relative; /* For potential overlay */
+    color: #333;
+    position: relative;
 }
 
 .homepage-hero-section.has-background-image {
-    color: #ffffff; /* White text for dark background images */
+    color: #ffffff;
 }
 
 /* Optional: Add an overlay for better text readability on images */
@@ -182,35 +207,34 @@ input[type="submit"]:hover,
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+    background-color: rgba(0, 0, 0, 0.4);
     z-index: 1;
 }
 
 .homepage-hero-section .hero-content-container {
-    position: relative; /* To ensure content is above overlay */
+    position: relative;
     z-index: 2;
 }
 
 .hero-main-title {
-    font-size: 2.8em; /* Larger title */
-    margin-bottom: 0.5em;
+    font-size: 2.8em;
+    margin-bottom: 8px;
     font-weight: bold;
-    color: inherit; /* Inherit color from parent (changes with background) */
+    color: inherit;
 }
 
 .hero-main-subtitle {
-    font-size: 1.3em; /* Slightly larger subtitle */
-    margin-bottom: 1.5em;
-    color: inherit; /* Inherit color */
-    max-width: 700px; /* Constrain width for readability */
+    font-size: 1.3em;
+    margin-bottom: 24px;
+    color: inherit;
+    max-width: 700px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .hero-main-button {
-    padding: 12px 30px; /* Larger button */
+    padding: 12px 32px;
     font-size: 1.1em;
-    /* Uses .button styles defined earlier, which use CSS variables */
 }
 
 /* Adjustments for smaller screens */
@@ -222,33 +246,25 @@ input[type="submit"]:hover,
         font-size: 1.1em;
     }
     .homepage-hero-section {
-        padding: 40px 15px;
+        padding: 48px 16px;
     }
 }
 
 /* Homepage Sections General */
 .homepage-content-section {
-    padding: 60px 0; /* Default padding for sections */
-    text-align: center; /* Center section titles by default */
+    padding: 64px 0;
+    text-align: center;
 }
-.homepage-content-section:nth-of-type(even) { /* Alternate background for sections */
-    /* background-color: #f9f9f9; */ /* Keeping it simple for now, can enable later */
-}
-.homepage-content-section + .homepage-content-section { /* Add top border if sections stack */
-    /* border-top: 1px solid #eee; */
-}
-
 
 .section-title {
     font-size: 2.2em;
     color: var(--bbt-primary-color);
     margin-top: 0;
-    margin-bottom: 40px;
+    margin-bottom: 48px;
     position: relative;
-    padding-bottom: 15px; /* Space for an underline */
-    text-align: center;
+    padding-bottom: 16px;
 }
-.section-title::after { /* Decorative underline for section titles */
+.section-title::after {
     content: '';
     position: absolute;
     left: 50%;
@@ -262,9 +278,8 @@ input[type="submit"]:hover,
 /* Homepage Services Section */
 .homepage-services-section .services-grid {
     display: grid;
-    gap: 30px;
-    text-align: left; /* Reset text align for items */
-    /* Default to 1 column, then adjust for larger screens */
+    gap: 32px;
+    text-align: left;
     grid-template-columns: 1fr;
 }
 
@@ -276,21 +291,16 @@ input[type="submit"]:hover,
     }
 }
 
-@media (min-width: 769px) { /* Tablets and up - ensure at most 3 columns if many items */
+@media (min-width: 769px) {
     .homepage-services-section .services-grid {
-        /* If you want to strictly limit to 3 columns maximum: */
-        /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
-        /* This can be controlled by the number of items fetched by WP_Query if fixed columns are desired */
-        /* The auto-fit with minmax is generally more flexible. */
-        /* For a fixed 3 column layout that wraps: */
-        /* grid-template-columns: repeat(3, 1fr); */
+        /* Intentionally empty - auto-fit handles it well */
     }
 }
 
 
 .service-summary-item {
     background-color: #fff;
-    padding: 25px;
+    padding: 24px;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.07);
@@ -305,23 +315,22 @@ input[type="submit"]:hover,
 
 
 .service-summary-item .service-item-thumbnail {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     text-align: center;
 }
 .service-summary-item .service-item-thumbnail img {
     max-width: 100%;
     height: auto;
     border-radius: 4px;
-    /* max-height: 180px; object-fit: cover; */ /* Optional fixed height */
 }
 
 .service-summary-item .entry-header {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 .service-summary-item .service-item-title {
-    font-size: 1.4em; /* Title size for service items */
+    font-size: 1.4em;
     margin-top: 0;
-    margin-bottom: 0.5em;
+    margin-bottom: 8px;
     line-height: 1.3;
 }
 .service-summary-item .service-item-title a {
@@ -336,37 +345,29 @@ input[type="submit"]:hover,
     font-size: 0.95em;
     color: #555;
     flex-grow: 1;
-    margin-bottom: 20px; /* Increased margin */
+    margin-bottom: 16px;
 }
 .service-summary-item .service-item-summary p:last-child {
     margin-bottom: 0;
 }
 
 .service-summary-item .service-item-read-more {
-    /* Uses .read-more-link styles already defined */
-    /* Adding specific style to make it more prominent if not a button */
-    margin-top: auto; /* Pushes to bottom if flex item */
-    align-self: flex-start; /* Align to the start of the cross axis */
+    margin-top: auto;
+    align-self: flex-start;
 }
 
 /* Homepage Testimonials Section */
-.homepage-testimonials-section {
-    /* General section styling from .homepage-content-section is already applied */
-}
-
 .testimonials-list {
     display: grid;
-    gap: 30px;
-    /* Default to 1 column for mobile-first */
+    gap: 32px;
     grid-template-columns: 1fr;
 }
 
-/* Override default .testimonial-item margin if it's too much in a grid */
 .testimonials-list .testimonial-item {
-    margin-bottom: 0; /* Gap handles spacing */
+    margin-bottom: 0;
 }
 
-@media (min-width: 769px) { /* Tablets and wider */
+@media (min-width: 769px) {
     .testimonials-list {
         grid-template-columns: repeat(auto-fit, minmax(min(100%/2, max(320px, 100%/3)), 1fr));
     }
@@ -377,19 +378,23 @@ input[type="submit"]:hover,
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+    gap: 32px;
     text-align: center;
 }
 .feature-item .dashicons {
     font-size: 48px;
     color: var(--bbt-primary-color);
-    margin-bottom: 15px;
-    height: 48px; /* Match font-size */
-    width: 48px; /* Match font-size */
+    margin-bottom: 16px;
+    height: 48px;
+    width: 48px;
+    transition: transform 0.3s ease-in-out;
+}
+.feature-item:hover .dashicons {
+    transform: scale(1.1) rotate(-5deg);
 }
 .feature-item .feature-title {
     font-size: 1.4em;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     color: #333;
 }
 .feature-item .feature-text {
@@ -403,7 +408,7 @@ input[type="submit"]:hover,
 
 /* --- Client Logos Section --- */
 .homepage-content-section.alternate-background {
-    background-color: #f7f7f7; /* Refined alternate color */
+    background-color: #f7f7f7;
 }
 .client-logos-grid {
     display: flex;
@@ -413,17 +418,18 @@ input[type="submit"]:hover,
     gap: 40px;
 }
 .client-logo-item {
-    flex-basis: 150px; /* Base size */
+    flex-basis: 150px;
     text-align: center;
 }
 .client-logo-item img {
     max-width: 100%;
     height: auto;
     opacity: 0.7;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .client-logo-item img:hover {
     opacity: 1;
+    transform: scale(1.1); /* Add scale on hover */
 }
 
 /* --- CTA Block Section --- */
@@ -432,14 +438,14 @@ input[type="submit"]:hover,
     color: #ffffff;
 }
 .homepage-cta-section .cta-headline {
-    color: #ffffff; /* Override default section title color */
+    color: #ffffff;
     font-size: 2em;
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 .homepage-cta-section .cta-text {
     font-size: 1.1em;
-    margin-bottom: 25px;
+    margin-bottom: 24px;
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
@@ -449,7 +455,6 @@ input[type="submit"]:hover,
     margin-bottom: 0;
 }
 .homepage-cta-section .cta-button {
-    /* Use a secondary/ghost button style */
     background-color: #ffffff;
     color: var(--bbt-primary-color);
     border-color: #ffffff;
@@ -464,14 +469,14 @@ input[type="submit"]:hover,
 .latest-news-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    gap: 32px;
     text-align: left;
 }
 .news-summary-item {
     background-color: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
-    overflow: hidden; /* To contain the image corners */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     box-shadow: 0 2px 5px rgba(0,0,0,0.07);
@@ -483,27 +488,27 @@ input[type="submit"]:hover,
 }
 .news-summary-item .post-thumbnail a {
     display: block;
-    height: 180px; /* Fixed height for image container */
+    height: 180px;
 }
 .news-summary-item .post-thumbnail img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure image covers the area */
+    object-fit: cover;
 }
 .news-summary-item .entry-header,
 .news-summary-item .entry-summary {
-    padding: 0 20px;
+    padding: 0 24px;
 }
 .news-summary-item .entry-header {
-    padding-top: 20px;
+    padding-top: 24px;
 }
 .news-summary-item .entry-summary {
-    padding-bottom: 20px;
+    padding-bottom: 24px;
     flex-grow: 1;
 }
 .news-summary-item .entry-title {
     font-size: 1.3em;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 .news-summary-item .entry-title a {
     text-decoration: none;
@@ -519,13 +524,13 @@ input[type="submit"]:hover,
 /* About Us Page Specific Styling */
 
 /* Utility classes that might be used on About page and elsewhere */
-.section-padding { /* If not already covered by .homepage-content-section */
-    padding-top: 60px;
-    padding-bottom: 60px;
+.section-padding {
+    padding-top: 64px;
+    padding-bottom: 64px;
 }
 
 .alternate-background {
-    background-color: #f9f9f9; /* A light grey for alternating sections */
+    background-color: #f9f9f9;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 }
@@ -533,23 +538,23 @@ input[type="submit"]:hover,
 .lead-text {
     font-size: 1.2em;
     color: #555;
-    margin-bottom: 1.5em;
-    text-align: center; /* Often lead texts are centered */
+    margin-bottom: 24px;
+    text-align: center;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.page-section-title { /* For H2s within page content */
-    font-size: 2em; /* Slightly smaller than main .section-title */
+.page-section-title {
+    font-size: 2em;
     color: var(--bbt-primary-color);
-    margin-top: 0; /* If it's the first element in a section */
-    margin-bottom: 30px;
+    margin-top: 0;
+    margin-bottom: 32px;
     text-align: center;
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 16px;
 }
-.page-section-title::after { /* Underline similar to .section-title */
+.page-section-title::after {
     content: '';
     position: absolute;
     left: 50%;
@@ -560,48 +565,43 @@ input[type="submit"]:hover,
     background-color: var(--bbt-primary-color);
 }
 
-.subsection-title { /* For H3s within page content sections */
+.subsection-title {
     font-size: 1.6em;
     color: #444;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    text-align: left; /* Or center if preferred */
-}
-
-/* About Page Sections - general spacing if needed */
-.about-section + .about-section {
-    /* margin-top: 40px; /* Space between sections if padding isn't enough */
+    margin-top: 32px;
+    margin-bottom: 16px;
+    text-align: left;
 }
 
 /* Team Members Simple Grid */
 .team-members-simple-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 30px;
+    gap: 32px;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 32px;
 }
 
 .team-member-simple {
-    background-color: #fff; /* If on an .alternate-background */
-    padding: 20px;
+    background-color: #fff;
+    padding: 24px;
     border: 1px solid #e5e5e5;
     border-radius: 5px;
 }
 
 .team-member-photo-simple {
-    max-width: 150px; /* Control image size */
+    max-width: 150px;
     height: 150px;
-    border-radius: 50%; /* Circular photos */
+    border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
     border: 3px solid var(--bbt-primary-color);
 }
 
 .team-member-simple h4 {
     font-size: 1.3em;
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: #333;
 }
 
@@ -614,10 +614,10 @@ input[type="submit"]:hover,
 
 /* Values List Styling */
 .about-values ul {
-    list-style: none; /* Or use a custom list style */
+    list-style: none;
     padding-left: 0;
-    max-width: 600px; /* Center and constrain width */
-    margin: 20px auto 0 auto;
+    max-width: 600px;
+    margin: 24px auto 0 auto;
     text-align: left;
 }
 
@@ -633,70 +633,6 @@ input[type="submit"]:hover,
     color: var(--bbt-primary-color);
 }
 
-/* Ensure .container within these sections works as expected */
-.about-section .container {
-    /* Usually no extra styling needed if .container is global */
-}
-/* End of About Us Page Specific Styling */
-
-/* Contact Us Page Specific Styling */
-
-/* Using .section-padding and .alternate-background utilities defined earlier */
-
-.contact-form-placeholder {
-    border: 2px dashed #ccc;
-    padding: 40px;
-    text-align: center;
-    background-color: #f9f9f9;
-    margin-top: 20px; /* If lead text is present */
-}
-.contact-form-placeholder p {
-    margin-bottom: 0.5em;
-}
-
-.contact-details-grid {
-    display: grid;
-    gap: 40px; /* Space between details and map */
-    align-items: flex-start; /* Align items to the top */
-}
-
-@media (min-width: 769px) { /* Two columns for details and map on wider screens */
-    .contact-details-grid {
-        grid-template-columns: 1fr 1fr; /* Or use fr units like 2fr 3fr if one side should be larger */
-    }
-}
-
-.contact-details address {
-    font-style: normal;
-    line-height: 1.7;
-    margin-bottom: 1.5em;
-}
-
-.contact-details p {
-    line-height: 1.7;
-    margin-bottom: 0.5em; /* Tighter spacing for detail lines */
-}
-.contact-details p strong {
-    color: #333;
-}
-.contact-details a {
-    /* Uses default link styling (primary color) */
-}
-
-.contact-map-placeholder .map-embed-placeholder {
-    border: 1px solid #ccc;
-    min-height: 350px; /* Ensure map has decent height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #e9e9e9;
-    border-radius: 4px;
-}
-.contact-map-placeholder .map-embed-placeholder p {
-    color: #777;
-    font-size: 1.1em;
-}
-
 /* ==========================================================================
    Forms
    ========================================================================== */
@@ -710,28 +646,28 @@ input[type="tel"],
 textarea,
 select {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
+    padding: 11px; /* Adjusted for 2px border */
+    margin-bottom: 16px;
+    border: 2px solid #ccc; /* Thicker base border */
     border-radius: 4px;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
     font-size: 1em;
     background-color: #fdfdfd;
     color: #333;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Add specific styling for select dropdowns */
 select {
-    appearance: none; /* Remove default system UI */
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23555' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 16px;
-    padding-right: 40px; /* Make space for arrow */
+    padding-right: 40px;
 }
 
 textarea {
@@ -749,20 +685,21 @@ input[type="number"]:focus,
 input[type="tel"]:focus,
 textarea:focus,
 select:focus {
-    outline: none; /* Remove default outline */
+    outline: none;
     border-color: var(--bbt-primary-color);
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Use primary color with alpha */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Fallback */
+    box-shadow: 0 0 0 3px var(--bbt-primary-color-rgb, rgba(0, 123, 255, 0.25)); /* Use RGB variable if available */
 }
 
 /* Placeholder text styling */
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+::placeholder {
   color: #999;
-  opacity: 1; /* Firefox */
+  opacity: 1;
 }
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
+:-ms-input-placeholder {
   color: #999;
 }
-::-ms-input-placeholder { /* Microsoft Edge */
+::-ms-input-placeholder {
   color: #999;
 }
 
@@ -772,11 +709,11 @@ select:focus {
 }
 .search-form .search-field {
     flex-grow: 1;
-    margin-bottom: 0; /* Remove bottom margin when in a flex container */
+    margin-bottom: 0;
 }
 .search-form .search-submit {
     margin-bottom: 0;
-    margin-left: 5px;
+    margin-left: 8px;
 }
 /* End of Forms */
 
@@ -787,7 +724,7 @@ select:focus {
    Card / Summary Item Layouts
    ========================================================================== */
 
-.grid-item { /* A general class for items in our various grids */
+.grid-item {
     background-color: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
@@ -803,7 +740,7 @@ select:focus {
 /* Thumbnail / Image styling */
 .grid-item .post-thumbnail a {
     display: block;
-    height: 200px; /* Taller, more prominent image area */
+    height: 200px;
 }
 .grid-item .post-thumbnail img {
     width: 100%;
@@ -813,7 +750,7 @@ select:focus {
 
 /* Content wrapper for padding */
 .grid-item .entry-content-wrap {
-    padding: 25px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -821,14 +758,14 @@ select:focus {
 
 /* Header within the card */
 .grid-item .entry-header {
-    margin-bottom: 15px;
-    border-bottom: none; /* Override default single header style */
+    margin-bottom: 16px;
+    border-bottom: none;
     padding-bottom: 0;
 }
 .grid-item .entry-title {
     font-size: 1.3em;
     line-height: 1.3;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 .grid-item .entry-title a {
     text-decoration: none;
@@ -841,7 +778,7 @@ select:focus {
 /* Summary/Excerpt */
 .grid-item .entry-summary {
     flex-grow: 1;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     font-size: 0.95em;
     color: #555;
 }
@@ -851,11 +788,11 @@ select:focus {
 
 /* Footer of the card */
 .grid-item .entry-footer {
-    margin-top: auto; /* Pushes footer to the bottom */
-    padding-top: 15px;
+    margin-top: auto;
+    padding-top: 16px;
     border-top: 1px solid #f0f0f0;
-    display: block; /* Override flex from single post footer */
-    text-align: right; /* Align link to the right */
+    display: block;
+    text-align: right;
 }
 .grid-item .read-more-link {
     font-family: 'Montserrat', sans-serif;
@@ -873,8 +810,8 @@ select:focus {
 .service-item,
 .project-item {
     border: 1px solid #e0e0e0;
-    padding: 20px;
-    margin-bottom: 30px;
+    padding: 24px;
+    margin-bottom: 32px;
     border-radius: 5px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -887,22 +824,22 @@ select:focus {
 
 .service-item .entry-title,
 .project-item .entry-title {
-    margin-top: 0; /* Remove default top margin for titles within items */
+    margin-top: 0;
     font-size: 1.8em;
 }
 .service-item .entry-title a,
 .project-item .entry-title a {
-    text-decoration: none; /* Ensure no underline on these titles */
+    text-decoration: none;
 }
 .service-item .entry-title a:hover,
 .project-item .entry-title a:hover {
-    text-decoration: underline; /* Add underline on hover */
+    text-decoration: underline;
 }
 
 
-.post-thumbnail { /* General thumbnail styling for archives */
-    margin-bottom: 15px;
-    text-align: center; /* Center thumbnail if it's smaller than container */
+.post-thumbnail {
+    margin-bottom: 16px;
+    text-align: center;
 }
 .post-thumbnail img {
     max-width: 100%;
@@ -911,8 +848,8 @@ select:focus {
 }
 
 .entry-summary,
-.entry-content { /* For single pages as well */
-    margin-bottom: 20px;
+.entry-content {
+    margin-bottom: 24px;
     line-height: 1.7;
 }
 
@@ -920,47 +857,46 @@ select:focus {
     margin-bottom: 0;
 }
 
-.read-more-link { /* For 'Learn More' / 'View Project' links */
+.read-more-link {
     display: inline-block;
-    /* Inherits .button styles if class "button" is also added, or style separately */
-    /* For now, let it be a styled text link */
     font-weight: bold;
     color: var(--bbt-primary-color);
+    transition: transform 0.2s ease-out;
 }
 .read-more-link:hover {
     text-decoration: underline;
+    transform: translateX(4px);
 }
 
 
 /* Specific to Project Archive Grid (optional, if we want a grid) */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 32px;
 }
-/* .project-item in a grid might not need bottom margin if gap handles it */
 .projects-grid .project-item {
-    margin-bottom: 0; /* If using grid gap */
+    margin-bottom: 0;
 }
 
 /* Single Posts/Pages Headers & Titles */
-.single .entry-header, /* Covers single posts of any CPT and default posts */
-.page .entry-header {   /* Covers pages */
-    margin-bottom: 20px;
+.single .entry-header,
+.page .entry-header {
+    margin-bottom: 24px;
     border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
+    padding-bottom: 16px;
 }
-.single .entry-title, /* Covers single posts of any CPT and default posts */
-.page .entry-title {   /* Covers pages */
-    font-size: 2.2em; /* Consistent title size for single views */
+.single .entry-title,
+.page .entry-title {
+    font-size: 2.2em;
     margin-top: 0;
 }
 
 /* Featured image on single views */
 .single .post-thumbnail,
 .page .post-thumbnail {
-    margin-bottom: 25px;
-    text-align: left; /* Align to left for single post image */
+    margin-bottom: 24px;
+    text-align: left;
 }
 .service-single .post-thumbnail img,
 .project-single .post-thumbnail img {
@@ -968,7 +904,7 @@ select:focus {
 }
 
 .entry-footer {
-    margin-top: 20px;
+    margin-top: 24px;
     font-size: 0.9em;
     color: #777;
 }
@@ -980,7 +916,7 @@ select:focus {
 /* Archive Page Headers (e.g., "Services", "Projects" titles) */
 .page-header {
     margin-bottom: 40px;
-    padding-bottom: 15px;
+    padding-bottom: 16px;
     border-bottom: 2px solid var(--bbt-primary-color);
 }
 .page-header .page-title {
@@ -991,15 +927,15 @@ select:focus {
 .archive-description {
     font-size: 1.1em;
     color: var(--bbt-secondary-color);
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 /* Posts navigation styling */
 .posts-navigation .nav-links {
     display: flex;
     justify-content: space-between;
-    margin-top: 30px;
-    padding-top: 20px;
+    margin-top: 32px;
+    padding-top: 24px;
     border-top: 1px solid #eee;
 }
 .posts-navigation .nav-previous a,
@@ -1016,35 +952,35 @@ select:focus {
 /* Template Part: content-testimonial.php styling */
 .testimonial-item {
     border: 1px solid #e0e0e0;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
     border-radius: 5px;
     background-color: #f9f9f9;
-    display: flex; /* For side-by-side photo and text */
-    align-items: flex-start; /* Align items to the top */
-    gap: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
 }
 .testimonial-photo img.client-photo {
-    border-radius: 50%; /* Circular photo */
-    width: 80px; /* Fixed size */
+    border-radius: 50%;
+    width: 80px;
     height: 80px;
-    object-fit: cover; /* Ensure image covers the area */
+    object-fit: cover;
 }
 .testimonial-content {
-    flex: 1; /* Allow content to take remaining space */
+    flex: 1;
 }
 .testimonial-content p:last-of-type {
-    margin-bottom: 0.5em; /* Reduce margin on last paragraph before meta */
+    margin-bottom: 8px;
 }
 .testimonial-meta {
-    margin-top: 10px;
+    margin-top: 8px;
     font-size: 0.9em;
-    text-align: left; /* Or right, depending on design */
+    text-align: left;
 }
 .testimonial-meta .client-name {
     font-weight: bold;
     color: var(--bbt-primary-color);
-    margin-bottom: 0.2em;
+    margin-bottom: 0;
 }
 .testimonial-meta .client-position {
     color: var(--bbt-secondary-color);
@@ -1055,12 +991,12 @@ select:focus {
 /* Responsive for testimonials */
 @media (max-width: 600px) {
     .testimonial-item {
-        flex-direction: column; /* Stack photo and text */
-        align-items: center; /* Center items when stacked */
+        flex-direction: column;
+        align-items: center;
         text-align: center;
     }
     .testimonial-photo {
-        margin-bottom: 15px;
+        margin-bottom: 16px;
     }
     .testimonial-meta {
         text-align: center;
@@ -1072,12 +1008,12 @@ select:focus {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 1.5em;
-    font-size: 0.95em; /* Slightly smaller for tables */
+    font-size: 0.95em;
 }
 .entry-content th,
 .entry-content td {
     border: 1px solid #ddd;
-    padding: 10px; /* Increased padding */
+    padding: 8px;
     text-align: left;
 }
 .entry-content th {
@@ -1085,36 +1021,34 @@ select:focus {
     font-weight: bold;
 }
 /* Wrapper for responsive tables */
-.table-responsive-wrapper { /* Renamed for clarity */
+.table-responsive-wrapper {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
     margin-bottom: 1.5em;
-    border: 1px solid #ddd; /* Optional border around the scrollable area */
+    border: 1px solid #ddd;
 }
 
 /* Image Alignment & Captions */
-img.alignleft, .alignleft img { /* Consider block editor image block as well */
+img.alignleft, .alignleft img {
     float: left;
-    margin: 0.5em 1.5em 1em 0;
+    margin: 8px 24px 16px 0;
 }
 img.alignright, .alignright img {
     float: right;
-    margin: 0.5em 0 1em 1.5em;
+    margin: 8px 0 16px 24px;
 }
 img.aligncenter, .aligncenter img {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 0.5em;
-    margin-bottom: 1em;
+    margin-top: 8px;
+    margin-bottom: 16px;
 }
 .alignwide {
     margin-left: auto;
     margin-right: auto;
     clear: both;
 }
-/* For fullwidth blocks to break out of .container, .container needs to allow it or be absent */
-/* This is a simplified approach; true fullwidth often needs negative margins relative to viewport */
 .alignfull {
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
@@ -1124,10 +1058,10 @@ img.aligncenter, .aligncenter img {
 }
 /* WordPress Caption Styling */
 .wp-caption {
-    max-width: 100%; /* Ensure caption doesn't overflow its container */
+    max-width: 100%;
     margin-bottom: 1.5em;
     background: #f9f9f9;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #eee;
 }
 .wp-caption img[class*="wp-image-"] {
@@ -1135,20 +1069,20 @@ img.aligncenter, .aligncenter img {
     margin-left: auto;
     margin-right: auto;
 }
-.wp-caption .wp-caption-text { /* Keep .wp-caption-text for WP < 5.x */
+.wp-caption .wp-caption-text {
     font-size: 0.9em;
     color: #555;
     text-align: center;
-    margin: 0.8em 0;
-    padding: 0 5px;
+    margin: 8px 0;
+    padding: 0 8px;
 }
-figure.wp-block-image.aligncenter figcaption, /* Gutenberg */
+figure.wp-block-image.aligncenter figcaption,
 figure.wp-block-image.alignleft figcaption,
 figure.wp-block-image.alignright figcaption {
     font-size: 0.9em;
     color: #555;
-    text-align: center; /* Default, can be overridden by block alignment */
-    margin-top: 0.5em;
+    text-align: center;
+    margin-top: 8px;
 }
 
 
@@ -1157,8 +1091,8 @@ figure.wp-block-image.alignright figcaption {
 .entry-content::after,
 .comment-content::after,
 .widget::after,
-.site-header::after, /* For header if elements are floated */
-.site-footer::after { /* For footer if elements are floated */
+.site-header::after,
+.site-footer::after {
     content: "";
     display: table;
     clear: both;
@@ -1167,24 +1101,24 @@ figure.wp-block-image.alignright figcaption {
 /* Comments Section */
 .comments-area {
     margin-top: 40px;
-    padding-top: 30px;
+    padding-top: 32px;
     border-top: 1px solid #eee;
 }
 .comments-title,
 .comment-reply-title {
     font-size: 1.8em;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     color: var(--bbt-primary-color);
 }
 .comment-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 30px 0;
+    margin: 0 0 32px 0;
 }
 .comment-list .comment,
-.comment-list .pingback, /* Style pingbacks/trackbacks similarly */
+.comment-list .pingback,
 .comment-list .trackback {
-    padding: 20px 0; /* Increased padding */
+    padding: 16px 0;
     border-bottom: 1px dotted #ddd;
 }
 .comment-list .comment:last-child,
@@ -1192,21 +1126,21 @@ figure.wp-block-image.alignright figcaption {
 .comment-list .trackback:last-child {
     border-bottom: none;
 }
-.comment-list .children { /* Nested comments */
+.comment-list .children {
     list-style: none;
-    padding-left: 30px; /* Indent replies */
-    margin-top: 15px;
+    padding-left: 32px;
+    margin-top: 16px;
 }
-.comment-author { /* Wrapper for avatar and author name/link */
-    margin-bottom: 0.5em;
+.comment-author {
+    margin-bottom: 8px;
 }
 .comment-author .avatar {
     float: left;
-    margin-right: 15px;
+    margin-right: 16px;
     border-radius: 50%;
     border: 2px solid #eee;
 }
-.comment-author .fn { /* Author name */
+.comment-author .fn {
     font-weight: bold;
     color: #333;
 }
@@ -1216,8 +1150,8 @@ figure.wp-block-image.alignright figcaption {
 .comment-metadata, .comment-meta {
     font-size: 0.85em;
     color: var(--bbt-secondary-color);
-    margin-bottom: 10px; /* Space after meta */
-    clear: left; /* If avatar is floated */
+    margin-bottom: 8px;
+    clear: left;
 }
 .comment-metadata a, .comment-meta a {
     color: var(--bbt-secondary-color);
@@ -1228,8 +1162,8 @@ figure.wp-block-image.alignright figcaption {
     text-decoration: underline;
 }
 .comment-content {
-    clear: both; /* Ensure it clears floated avatar */
-    padding-top: 5px; /* Space if avatar is tall */
+    clear: both;
+    padding-top: 8px;
 }
 .comment-content p:last-child {
     margin-bottom: 0;
@@ -1237,9 +1171,9 @@ figure.wp-block-image.alignright figcaption {
 .reply .comment-reply-link {
     font-size: 0.9em;
     display: inline-block;
-    margin-top: 10px; /* Space above reply link */
+    margin-top: 8px;
     text-decoration: none;
-    padding: 5px 10px;
+    padding: 4px 8px;
     border: 1px solid var(--bbt-primary-color);
     color: var(--bbt-primary-color);
     border-radius: 3px;
@@ -1252,11 +1186,11 @@ figure.wp-block-image.alignright figcaption {
 
 /* Comment Form basic styling */
 .comment-form {
-    margin-top: 30px;
+    margin-top: 32px;
 }
 .comment-form label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
     font-size: 0.9em;
 }
@@ -1264,8 +1198,7 @@ figure.wp-block-image.alignright figcaption {
 .comment-form input[type="email"],
 .comment-form input[type="url"],
 .comment-form textarea {
-    /* Uses generic form styles already defined */
-    margin-bottom: 15px; /* Ensure spacing */
+    margin-bottom: 16px;
 }
 .comment-form .form-submit input#submit {
     /* Uses .button style */
@@ -1273,13 +1206,13 @@ figure.wp-block-image.alignright figcaption {
 .logged-in-as, .comment-notes, .form-allowed-tags {
     font-size: 0.9em;
     color: #777;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
     line-height: 1.5;
 }
 .form-allowed-tags code {
     font-size: 0.9em;
     background-color: #f5f5f5;
-    padding: 1px 3px;
+    padding: 2px 4px;
 }
 /* End of Comments Section Styling */
 
@@ -1288,14 +1221,14 @@ figure.wp-block-image.alignright figcaption {
 .entry-meta {
     font-size: 0.85em;
     color: var(--bbt-secondary-color);
-    margin-bottom: 1em; /* Space below meta before summary/content */
+    margin-bottom: 16px;
 }
 
 .entry-meta .posted-on,
 .entry-meta .byline,
-.entry-meta .cat-links, /* These might be in entry-footer instead */
-.entry-meta .tags-links { /* These might be in entry-footer instead */
-    margin-right: 15px; /* Space between meta items */
+.entry-meta .cat-links,
+.entry-meta .tags-links {
+    margin-right: 16px;
 }
 .entry-meta a {
     color: var(--bbt-secondary-color);
@@ -1306,15 +1239,15 @@ figure.wp-block-image.alignright figcaption {
     text-decoration: underline;
 }
 
-.blog-post-summary .entry-footer, /* For home.php and index.php */
-article.post .entry-footer { /* For single.php (if we create it) */
-    margin-top: 1.5em;
-    padding-top: 1em;
+.blog-post-summary .entry-footer,
+article.post .entry-footer {
+    margin-top: 16px;
+    padding-top: 16px;
     border-top: 1px solid #eee;
     font-size: 0.9em;
-    display: flex; /* For better alignment of items */
-    flex-wrap: wrap; /* Allow items to wrap */
-    gap: 15px; /* Space between footer meta items */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
     align-items: center;
 }
 
@@ -1334,18 +1267,18 @@ article.post .entry-footer { /* For single.php (if we create it) */
     color: var(--bbt-primary-color);
 }
 
-.entry-footer .continue-reading-link, /* Class added in home.php/index.php */
-.entry-footer .read-more-link { /* General class */
-    margin-left: auto; /* Push to the right if flex */
+.entry-footer .continue-reading-link,
+.entry-footer .read-more-link {
+    margin-left: auto;
 }
 /* End of Entry Meta/Footer Styling */
 
 /* Single Post Navigation (the_post_navigation) */
-.post-navigation { /* Wrapper class for the_post_navigation */
-    margin: 30px 0;
-    padding: 20px 0;
+.post-navigation {
+    margin: 32px 0;
+    padding: 24px 0;
     border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee; /* Add bottom border too */
+    border-bottom: 1px solid #eee;
 }
 .post-navigation .nav-links {
     display: flex;
@@ -1354,7 +1287,7 @@ article.post .entry-footer { /* For single.php (if we create it) */
 }
 .post-navigation .nav-previous,
 .post-navigation .nav-next {
-    flex-basis: 48%; /* Allow them to take roughly half width */
+    flex-basis: 48%;
 }
 .post-navigation .nav-next {
     text-align: right;
@@ -1363,7 +1296,7 @@ article.post .entry-footer { /* For single.php (if we create it) */
     display: block;
     font-size: 0.85em;
     color: var(--bbt-secondary-color);
-    margin-bottom: 0.25em;
+    margin-bottom: 4px;
 }
 .post-navigation .nav-title {
     font-weight: bold;
@@ -1391,26 +1324,26 @@ article.post .entry-footer { /* For single.php (if we create it) */
 
 /* 404 Page Styling */
 .error-404 .page-header {
-    margin-bottom: 30px; /* Adjust spacing */
-    border-bottom: none; /* Remove default border from .page-header */
+    margin-bottom: 32px;
+    border-bottom: none;
 }
 .error-404 .page-title {
-    font-size: 2.5em; /* Make it prominent */
-    color: var(--bbt-secondary-color); /* Or primary, depending on desired emphasis */
+    font-size: 2.5em;
+    color: var(--bbt-secondary-color);
 }
-.error-404 .page-title::after { /* Remove underline from .page-title for 404 */
+.error-404 .page-title::after {
     display: none;
 }
 
 .error-404 .page-content p {
     font-size: 1.1em;
-    margin-bottom: 1.5em;
-    max-width: 600px; /* Constrain width for readability */
+    margin-bottom: 24px;
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
-.error-404 .search-form { /* Assuming default WP search form */
-    margin: 30px auto;
+.error-404 .search-form {
+    margin: 32px auto;
     max-width: 400px;
     /* display: flex; is now handled by global .search-form style */
 }
@@ -1423,8 +1356,8 @@ article.post .entry-footer { /* For single.php (if we create it) */
 .site-header {
     background-color: #ffffff;
     border-bottom: 1px solid #eaeaea;
-    padding: 10px 0;
-    position: sticky; /* Sticky header */
+    padding: 16px 0; /* Increased padding */
+    position: sticky;
     top: 0;
     z-index: 1000;
     width: 100%;
@@ -1434,14 +1367,15 @@ article.post .entry-footer { /* For single.php (if we create it) */
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 /* Site Branding */
 .site-branding {
-    flex-shrink: 0; /* Don't shrink the logo/title */
+    flex-shrink: 0;
 }
 .site-branding .custom-logo {
-    max-height: 50px; /* Control logo height */
+    max-height: 50px;
     width: auto;
 }
 .site-branding .site-title {
@@ -1461,9 +1395,9 @@ article.post .entry-footer { /* For single.php (if we create it) */
 
 /* Main Navigation */
 .main-navigation {
-    flex-grow: 1; /* Allow nav to take up space */
+    flex-grow: 1;
     display: flex;
-    justify-content: flex-end; /* Align menu to the right, before CTA */
+    justify-content: flex-end;
 }
 
 #primary-menu {
@@ -1475,21 +1409,21 @@ article.post .entry-footer { /* For single.php (if we create it) */
 
 #primary-menu li.menu-item {
     position: relative;
-    margin: 0 10px; /* Spacing between items */
+    margin: 0 8px;
 }
 
 #primary-menu li.menu-item > a {
     display: block;
-    padding: 15px 10px;
+    padding: 16px 8px;
     text-decoration: none;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 400; /* Regular weight for nav items */
+    font-weight: 400;
     font-size: 0.9em;
     color: #555;
     position: relative;
     transition: color 0.3s ease;
 }
-#primary-menu li.menu-item > a::after { /* Underline effect on hover */
+#primary-menu li.menu-item > a::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -1524,7 +1458,7 @@ article.post .entry-footer { /* For single.php (if we create it) */
     top: 100%;
     background-color: #ffffff;
     border: 1px solid #eaeaea;
-    padding: 5px 0;
+    padding: 8px 0;
     z-index: 1001;
     min-width: 200px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -1546,12 +1480,12 @@ article.post .entry-footer { /* For single.php (if we create it) */
     margin: 0;
 }
 #primary-menu ul.sub-menu li.menu-item > a {
-    padding: 10px 20px;
+    padding: 8px 16px;
     font-size: 0.85em;
     border-bottom: none;
 }
 #primary-menu ul.sub-menu li.menu-item > a::after {
-    display: none; /* No underline effect for dropdown items */
+    display: none;
 }
 #primary-menu ul.sub-menu li.menu-item > a:hover {
     background-color: var(--bbt-primary-color);
@@ -1560,53 +1494,52 @@ article.post .entry-footer { /* For single.php (if we create it) */
 
 /* Header CTA Button */
 .header-cta {
-    margin-left: 20px; /* Space between nav and CTA */
+    margin-left: 16px;
 }
 .header-cta-button {
-    /* Uses .button styles */
-    padding: 8px 20px; /* Slightly smaller padding for header button */
+    padding: 8px 24px;
     font-size: 0.9em;
     font-weight: 700;
 }
 
 /* Mobile Menu Toggle & Layout */
 .menu-toggle {
-    display: none; /* Hidden on desktop */
-    margin-left: 15px;
+    display: none;
+    margin-left: 16px;
     background: none;
     border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 8px 10px;
+    padding: 8px;
     cursor: pointer;
 }
-.menu-toggle .icon-bars { /* Will add this span inside the button text later */
+.menu-toggle .icon-bars {
     /* SVG or font icon would go here */
 }
 
-@media (max-width: 900px) { /* Breakpoint for switching to mobile menu */
+@media (max-width: 900px) {
     .header-cta {
-        display: none; /* Hide desktop CTA on mobile */
+        display: none;
     }
     .menu-toggle {
-        display: block; /* Show menu toggle */
+        display: block;
     }
     .site-branding {
-        flex-grow: 1; /* Allow branding to take space, pushing toggle to the right */
+        flex-grow: 1;
     }
     .main-navigation .primary-menu-container {
-        display: none; /* Hide the menu container by default */
+        display: none;
     }
 
     /* When mobile menu is open */
     .main-navigation.nav-open .primary-menu-container {
         display: block;
         position: absolute;
-        top: 100%; /* Position below the header's bottom border */
+        top: 100%;
         left: 0;
         right: 0;
         background: #fff;
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        padding: 10px 0;
+        padding: 8px 0;
         border-top: 1px solid #eaeaea;
     }
     .main-navigation.nav-open #primary-menu {
@@ -1624,11 +1557,11 @@ article.post .entry-footer { /* For single.php (if we create it) */
         border-bottom: none;
     }
     .main-navigation.nav-open #primary-menu a {
-        padding: 15px;
-        width: 100%; /* Ensure link is full-width for touch targets */
+        padding: 16px;
+        width: 100%;
         box-sizing: border-box;
     }
-    .main-navigation.nav-open ul.sub-menu { /* Sub-menu on mobile */
+    .main-navigation.nav-open ul.sub-menu {
         position: static;
         box-shadow: none;
         border: none;
@@ -1636,11 +1569,9 @@ article.post .entry-footer { /* For single.php (if we create it) */
         transform: none;
         opacity: 1;
         visibility: visible;
-        display: none; /* Rely on JS to toggle */
+        display: none;
     }
     .main-navigation.nav-open li.menu-item.sub-menu-open > ul.sub-menu {
         display: block;
     }
 }
-
-[end of wp-content/themes/beautiful-business-theme/style.css]

@@ -27,26 +27,20 @@ get_header(); ?>
             while ( have_posts() ) :
                 the_post();
                 ?>
-                <article id="post-<?php the_ID(); ?>" <?php post_class('service-item'); ?>>
-                    <header class="entry-header">
-                        <?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-                    </header><!-- .entry-header -->
-
+                <article id="post-<?php the_ID(); ?>" <?php post_class('service-list-item'); ?>>
                     <?php if ( has_post_thumbnail() ) : ?>
-                        <div class="post-thumbnail">
-                            <a href="<?php the_permalink(); ?>">
-                                <?php the_post_thumbnail('medium'); // Or 'large', 'thumbnail', or a custom size ?>
-                            </a>
+                        <div class="service-list-thumbnail">
+                            <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail('thumbnail'); ?></a>
                         </div>
                     <?php endif; ?>
-
-                    <div class="entry-summary">
-                        <?php the_excerpt(); ?>
-                    </div><!-- .entry-summary -->
-
-                    <footer class="entry-footer">
-                        <a href="<?php the_permalink(); ?>" class="read-more-link"><?php esc_html_e( 'Learn More', 'beautiful-business' ); ?></a>
-                    </footer><!-- .entry-footer -->
+                    <div class="service-list-content">
+                        <header class="entry-header">
+                            <?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+                        </header>
+                        <div class="entry-summary">
+                            <?php the_excerpt(); ?>
+                        </div>
+                    </div>
                 </article><!-- #post-<?php the_ID(); ?> -->
                 <?php
             endwhile;

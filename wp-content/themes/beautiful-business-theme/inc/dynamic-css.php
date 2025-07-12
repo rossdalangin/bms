@@ -49,6 +49,23 @@ function beautiful_business_enqueue_dynamic_google_fonts() {
 }
 add_action( 'wp_enqueue_scripts', 'beautiful_business_enqueue_dynamic_google_fonts' );
 
+/**
+ * Helper function to convert hex color to rgb.
+ */
+function beautiful_business_hex_to_rgb( $hex ) {
+    $hex = str_replace( '#', '', $hex );
+    if ( strlen( $hex ) == 3 ) {
+        $r = hexdec( substr( $hex, 0, 1 ) . substr( $hex, 0, 1 ) );
+        $g = hexdec( substr( $hex, 1, 1 ) . substr( $hex, 1, 1 ) );
+        $b = hexdec( substr( $hex, 2, 1 ) . substr( $hex, 2, 1 ) );
+    } else {
+        $r = hexdec( substr( $hex, 0, 2 ) );
+        $g = hexdec( substr( $hex, 2, 2 ) );
+        $b = hexdec( substr( $hex, 4, 2 ) );
+    }
+    return "$r, $g, $b";
+}
+
 
 /**
  * Generate and output the dynamic CSS.
@@ -90,7 +107,9 @@ function beautiful_business_output_dynamic_css() {
 
     // Add color variables to :root
     $css .= ":root {";
+    $primary_color_rgb = beautiful_business_hex_to_rgb($primary_color);
     $css .= "--bbt-primary-color: " . esc_attr($primary_color) . ";";
+    $css .= "--bbt-primary-color-rgb: " . esc_attr($primary_color_rgb) . ";";
     $css .= "--bbt-secondary-color: " . esc_attr($secondary_color) . ";";
     $css .= "--bbt-body-text-color: " . esc_attr($body_text_color) . ";";
     $css .= "--bbt-heading-color: " . esc_attr($heading_color) . ";";
@@ -152,7 +171,11 @@ function beautiful_business_output_dynamic_css() {
     $css .= "a { color: var(--bbt-primary-color); }";
     $css .= "a:hover, a:focus { color: var(--bbt-link-hover-color); }";
 
-    // We will add more CSS here for section-specific styles in subsequent steps.
+    // --- Section Specific Styles ---
+    // Hero Section
+    $hero_text_align = get_theme_mod('bbt_hero_text_align', 'center');
+    $css .= ".homepage-hero-section { text-align: " . esc_attr($hero_text_align) . "; }";
+
 
     $css .= '</style>';
 

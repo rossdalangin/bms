@@ -94,6 +94,23 @@ function beautiful_business_customize_register( $wp_customize ) {
     $wp_customize->add_setting( 'bbt_hero_background_image', array( 'default' => '', 'sanitize_callback' => 'esc_url_raw', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'bbt_hero_background_image_control', array( 'label' => __( 'Hero Background Image', 'beautiful-business' ), 'section' => 'bbt_homepage_hero_section', 'settings' => 'bbt_hero_background_image' ) ) );
 
+    // Hero Text Alignment
+    $wp_customize->add_setting( 'bbt_hero_text_align', array(
+        'default'           => 'center',
+        'sanitize_callback' => 'sanitize_text_field', // Simple validation
+    ) );
+    $wp_customize->add_control( 'bbt_hero_text_align_control', array(
+        'label'    => __( 'Text Alignment', 'beautiful-business' ),
+        'section'  => 'bbt_homepage_hero_section',
+        'settings' => 'bbt_hero_text_align',
+        'type'     => 'select',
+        'choices'  => array(
+            'left'   => __( 'Left', 'beautiful-business' ),
+            'center' => __( 'Center', 'beautiful-business' ),
+            'right'  => __( 'Right', 'beautiful-business' ),
+        ),
+    ) );
+
     // Homepage Sections Panel
     $wp_customize->add_panel( 'bbt_homepage_sections_panel', array( 'title' => __( 'Homepage Sections', 'beautiful-business' ), 'priority' => 35, 'description' => __( 'Manage content sections on the homepage.', 'beautiful-business') ) );
 

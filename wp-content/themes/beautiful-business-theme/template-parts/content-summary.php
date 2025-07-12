@@ -38,7 +38,7 @@
         </div><!-- .entry-summary -->
 
         <footer class="entry-footer">
-            <a href="<?php the_permalink(); ?>" class="read-more-link"><?php esc_html_e( 'Read More', 'beautiful-business' ); ?><span class="screen-reader-text"> <?php echo wp_kses_post( get_the_title() ); ?></span></a>
+            <a href="<?php the_permalink(); ?>" class="button button-secondary read-more-link"><?php esc_html_e( 'Read More', 'beautiful-business' ); ?><span class="screen-reader-text"> <?php echo wp_kses_post( get_the_title() ); ?></span></a>
         </footer><!-- .entry-footer -->
     </div><!-- .entry-content-wrap -->
 </article><!-- #post-<?php the_ID(); ?> -->

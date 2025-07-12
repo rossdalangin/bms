@@ -1,0 +1,1322 @@
+/*
+Theme Name: Beautiful Business Theme
+Theme URI: https://example.com/beautiful-business-theme
+Author: Jules AI
+Author URI: https://example.com
+Description: A beautiful and modern WordPress theme for businesses, featuring custom post types and Customizer options.
+Version: 1.0.0
+Requires at least: 5.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: beautiful-business
+Tags: custom-background, custom-logo, custom-menu, featured-images, theme-options, threaded-comments, translation-ready, blog, portfolio, business, one-column, two-columns, left-sidebar, right-sidebar, accessibility-ready, responsive-layout
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+/* Basic Reset / Placeholder */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif; /* Basic font stack */
+    line-height: 1.6;
+    color: #333; /* Default text color */
+    background-color: #fff; /* Default background */
+}
+
+.container { /* A simple container for content centering */
+    width: 90%;
+    max-width: 1100px; /* Common max-width */
+    margin: 20px auto; /* Centering and some top/bottom margin */
+    padding: 0 15px; /* Padding inside the container */
+}
+
+/* Basic Typography */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+a {
+    /* color: #007bff; */ /* A common blue for links */
+    color: var(--bbt-primary-color);
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    text-decoration: underline;
+    opacity: 0.8; /* Slight feedback on hover */
+}
+
+.site-description {
+    color: var(--bbt-secondary-color);
+    font-size: 0.9em;
+}
+
+/* Basic Button Style */
+.button,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.wp-block-button__link {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 4px;
+    border: 1px solid var(--bbt-primary-color);
+    background-color: var(--bbt-primary-color);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.button:hover,
+button:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.wp-block-button__link:hover,
+.button:focus,
+button:focus,
+input[type="button"]:focus,
+input[type="reset"]:focus,
+input[type="submit"]:focus,
+.wp-block-button__link:focus {
+    background-color: #ffffff;
+    color: var(--bbt-primary-color);
+    border: 1px solid var(--bbt-primary-color);
+    text-decoration: none;
+}
+
+
+/* Screen reader text */
+.screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute !important;
+    width: 1px;
+    word-wrap: normal !important;
+}
+
+/* Homepage Hero Section */
+.homepage-hero-section {
+    padding: 60px 20px; /* Increased padding */
+    text-align: center;
+    background-color: #f0f0f0; /* Default background if no image */
+    background-size: cover;
+    background-position: center center;
+    color: #333; /* Default text color, might need to change if bg is dark */
+    position: relative; /* For potential overlay */
+}
+
+.homepage-hero-section.has-background-image {
+    color: #ffffff; /* White text for dark background images */
+}
+
+/* Optional: Add an overlay for better text readability on images */
+.homepage-hero-section.has-background-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+    z-index: 1;
+}
+
+.homepage-hero-section .hero-content-container {
+    position: relative; /* To ensure content is above overlay */
+    z-index: 2;
+}
+
+.hero-main-title {
+    font-size: 2.8em; /* Larger title */
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    color: inherit; /* Inherit color from parent (changes with background) */
+}
+
+.hero-main-subtitle {
+    font-size: 1.3em; /* Slightly larger subtitle */
+    margin-bottom: 1.5em;
+    color: inherit; /* Inherit color */
+    max-width: 700px; /* Constrain width for readability */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-main-button {
+    padding: 12px 30px; /* Larger button */
+    font-size: 1.1em;
+    /* Uses .button styles defined earlier, which use CSS variables */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .hero-main-title {
+        font-size: 2.2em;
+    }
+    .hero-main-subtitle {
+        font-size: 1.1em;
+    }
+    .homepage-hero-section {
+        padding: 40px 15px;
+    }
+}
+
+/* Homepage Sections General */
+.homepage-content-section {
+    padding: 60px 0; /* Default padding for sections */
+    text-align: center; /* Center section titles by default */
+}
+.homepage-content-section:nth-of-type(even) { /* Alternate background for sections */
+    /* background-color: #f9f9f9; */ /* Keeping it simple for now, can enable later */
+}
+.homepage-content-section + .homepage-content-section { /* Add top border if sections stack */
+    /* border-top: 1px solid #eee; */
+}
+
+
+.section-title {
+    font-size: 2.2em;
+    color: var(--bbt-primary-color);
+    margin-top: 0;
+    margin-bottom: 40px;
+    position: relative;
+    padding-bottom: 15px; /* Space for an underline */
+    text-align: center;
+}
+.section-title::after { /* Decorative underline for section titles */
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--bbt-primary-color);
+}
+
+/* Homepage Services Section */
+.homepage-services-section .services-grid {
+    display: grid;
+    gap: 30px;
+    text-align: left; /* Reset text align for items */
+    /* Default to 1 column, then adjust for larger screens */
+    grid-template-columns: 1fr;
+}
+
+
+/* Responsive adjustments for services grid based on screen size */
+@media (min-width: 500px) {
+    .homepage-services-section .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+@media (min-width: 769px) { /* Tablets and up - ensure at most 3 columns if many items */
+    .homepage-services-section .services-grid {
+        /* If you want to strictly limit to 3 columns maximum: */
+        /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
+        /* This can be controlled by the number of items fetched by WP_Query if fixed columns are desired */
+        /* The auto-fit with minmax is generally more flexible. */
+        /* For a fixed 3 column layout that wraps: */
+        /* grid-template-columns: repeat(3, 1fr); */
+    }
+}
+
+
+.service-summary-item {
+    background-color: #fff;
+    padding: 25px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.service-summary-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+
+.service-summary-item .service-item-thumbnail {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.service-summary-item .service-item-thumbnail img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    /* max-height: 180px; object-fit: cover; */ /* Optional fixed height */
+}
+
+.service-summary-item .entry-header {
+    margin-bottom: 10px;
+}
+.service-summary-item .service-item-title {
+    font-size: 1.4em; /* Title size for service items */
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    line-height: 1.3;
+}
+.service-summary-item .service-item-title a {
+    text-decoration: none;
+    color: #333;
+}
+.service-summary-item .service-item-title a:hover {
+    color: var(--bbt-primary-color);
+}
+
+.service-summary-item .service-item-summary {
+    font-size: 0.95em;
+    color: #555;
+    flex-grow: 1;
+    margin-bottom: 20px; /* Increased margin */
+}
+.service-summary-item .service-item-summary p:last-child {
+    margin-bottom: 0;
+}
+
+.service-summary-item .service-item-read-more {
+    /* Uses .read-more-link styles already defined */
+    /* Adding specific style to make it more prominent if not a button */
+    margin-top: auto; /* Pushes to bottom if flex item */
+    align-self: flex-start; /* Align to the start of the cross axis */
+}
+
+/* Homepage Testimonials Section */
+.homepage-testimonials-section {
+    /* General section styling from .homepage-content-section is already applied */
+}
+
+.testimonials-list {
+    display: grid;
+    gap: 30px;
+    /* Default to 1 column for mobile-first */
+    grid-template-columns: 1fr;
+}
+
+/* Override default .testimonial-item margin if it's too much in a grid */
+.testimonials-list .testimonial-item {
+    margin-bottom: 0; /* Gap handles spacing */
+}
+
+@media (min-width: 769px) { /* Tablets and wider */
+    .testimonials-list {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%/2, max(320px, 100%/3)), 1fr));
+    }
+}
+/* End of Homepage Testimonials Section */
+
+/* About Us Page Specific Styling */
+
+/* Utility classes that might be used on About page and elsewhere */
+.section-padding { /* If not already covered by .homepage-content-section */
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.alternate-background {
+    background-color: #f9f9f9; /* A light grey for alternating sections */
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.lead-text {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 1.5em;
+    text-align: center; /* Often lead texts are centered */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-section-title { /* For H2s within page content */
+    font-size: 2em; /* Slightly smaller than main .section-title */
+    color: var(--bbt-primary-color);
+    margin-top: 0; /* If it's the first element in a section */
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 10px;
+}
+.page-section-title::after { /* Underline similar to .section-title */
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background-color: var(--bbt-primary-color);
+}
+
+.subsection-title { /* For H3s within page content sections */
+    font-size: 1.6em;
+    color: #444;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-align: left; /* Or center if preferred */
+}
+
+/* About Page Sections - general spacing if needed */
+.about-section + .about-section {
+    /* margin-top: 40px; /* Space between sections if padding isn't enough */
+}
+
+/* Team Members Simple Grid */
+.team-members-simple-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.team-member-simple {
+    background-color: #fff; /* If on an .alternate-background */
+    padding: 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+}
+
+.team-member-photo-simple {
+    max-width: 150px; /* Control image size */
+    height: 150px;
+    border-radius: 50%; /* Circular photos */
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid var(--bbt-primary-color);
+}
+
+.team-member-simple h4 {
+    font-size: 1.3em;
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.team-member-title-simple {
+    font-size: 0.95em;
+    color: var(--bbt-secondary-color);
+    font-style: italic;
+    margin-bottom: 0;
+}
+
+/* Values List Styling */
+.about-values ul {
+    list-style: none; /* Or use a custom list style */
+    padding-left: 0;
+    max-width: 600px; /* Center and constrain width */
+    margin: 20px auto 0 auto;
+    text-align: left;
+}
+
+.about-values ul li {
+    padding: 8px 0;
+    font-size: 1.05em;
+    border-bottom: 1px dotted #ddd;
+}
+.about-values ul li:last-child {
+    border-bottom: none;
+}
+.about-values ul li strong {
+    color: var(--bbt-primary-color);
+}
+
+/* Ensure .container within these sections works as expected */
+.about-section .container {
+    /* Usually no extra styling needed if .container is global */
+}
+/* End of About Us Page Specific Styling */
+
+/* Contact Us Page Specific Styling */
+
+/* Using .section-padding and .alternate-background utilities defined earlier */
+
+.contact-form-placeholder {
+    border: 2px dashed #ccc;
+    padding: 40px;
+    text-align: center;
+    background-color: #f9f9f9;
+    margin-top: 20px; /* If lead text is present */
+}
+.contact-form-placeholder p {
+    margin-bottom: 0.5em;
+}
+
+.contact-details-grid {
+    display: grid;
+    gap: 40px; /* Space between details and map */
+    align-items: flex-start; /* Align items to the top */
+}
+
+@media (min-width: 769px) { /* Two columns for details and map on wider screens */
+    .contact-details-grid {
+        grid-template-columns: 1fr 1fr; /* Or use fr units like 2fr 3fr if one side should be larger */
+    }
+}
+
+.contact-details address {
+    font-style: normal;
+    line-height: 1.7;
+    margin-bottom: 1.5em;
+}
+
+.contact-details p {
+    line-height: 1.7;
+    margin-bottom: 0.5em; /* Tighter spacing for detail lines */
+}
+.contact-details p strong {
+    color: #333;
+}
+.contact-details a {
+    /* Uses default link styling (primary color) */
+}
+
+.contact-map-placeholder .map-embed-placeholder {
+    border: 1px solid #ccc;
+    min-height: 350px; /* Ensure map has decent height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e9e9e9;
+    border-radius: 4px;
+}
+.contact-map-placeholder .map-embed-placeholder p {
+    color: #777;
+    font-size: 1.1em;
+}
+
+/* Basic Form Styling (will likely be overridden by form plugins) */
+/* These are very generic and aim to provide a minimal baseline */
+.wpcf7-form input[type="text"], /* Example for CF7 */
+.wpcf7-form input[type="email"],
+.wpcf7-form input[type="url"],
+.wpcf7-form input[type="tel"],
+.wpcf7-form input[type="number"],
+.wpcf7-form input[type="search"],
+.wpcf7-form textarea,
+/* Generic form elements if no plugin-specific classes are known */
+form input[type="text"],
+form input[type="email"],
+form input[type="url"],
+form input[type="tel"],
+form input[type="number"],
+form input[type="search"],
+form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Important for width: 100% */
+    font-size: 1em;
+    background-color: #fff;
+}
+
+.wpcf7-form textarea,
+form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Submit button will use .button styles if class is applied */
+/* End of Contact Us Page Specific Styling */
+
+
+/* CPT Archive and Single Styling */
+
+/* Common styles for CPT archive items */
+.service-item,
+.project-item {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.service-item:last-child,
+.project-item:last-child {
+    margin-bottom: 0;
+}
+
+.service-item .entry-title,
+.project-item .entry-title {
+    margin-top: 0; /* Remove default top margin for titles within items */
+    font-size: 1.8em;
+}
+.service-item .entry-title a,
+.project-item .entry-title a {
+    text-decoration: none; /* Ensure no underline on these titles */
+}
+.service-item .entry-title a:hover,
+.project-item .entry-title a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+
+.post-thumbnail { /* General thumbnail styling for archives */
+    margin-bottom: 15px;
+    text-align: center; /* Center thumbnail if it's smaller than container */
+}
+.post-thumbnail img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.entry-summary,
+.entry-content { /* For single pages as well */
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.entry-summary p:last-child {
+    margin-bottom: 0;
+}
+
+.read-more-link { /* For 'Learn More' / 'View Project' links */
+    display: inline-block;
+    /* Inherits .button styles if class "button" is also added, or style separately */
+    /* For now, let it be a styled text link */
+    font-weight: bold;
+    color: var(--bbt-primary-color);
+}
+.read-more-link:hover {
+    text-decoration: underline;
+}
+
+
+/* Specific to Project Archive Grid (optional, if we want a grid) */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 30px;
+}
+/* .project-item in a grid might not need bottom margin if gap handles it */
+.projects-grid .project-item {
+    margin-bottom: 0; /* If using grid gap */
+}
+
+/* Single Posts/Pages Headers & Titles */
+.single .entry-header, /* Covers single posts of any CPT and default posts */
+.page .entry-header {   /* Covers pages */
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+.single .entry-title, /* Covers single posts of any CPT and default posts */
+.page .entry-title {   /* Covers pages */
+    font-size: 2.2em; /* Consistent title size for single views */
+    margin-top: 0;
+}
+
+/* Featured image on single views */
+.single .post-thumbnail,
+.page .post-thumbnail {
+    margin-bottom: 25px;
+    text-align: left; /* Align to left for single post image */
+}
+.service-single .post-thumbnail img,
+.project-single .post-thumbnail img {
+    border-radius: 5px;
+}
+
+.entry-footer {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #777;
+}
+.entry-footer .edit-link a {
+    color: var(--bbt-secondary-color);
+}
+
+
+/* Archive Page Headers (e.g., "Services", "Projects" titles) */
+.page-header {
+    margin-bottom: 40px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--bbt-primary-color);
+}
+.page-header .page-title {
+    font-size: 2.5em;
+    color: var(--bbt-primary-color);
+    margin-top: 0;
+}
+.archive-description {
+    font-size: 1.1em;
+    color: var(--bbt-secondary-color);
+    margin-top: 10px;
+}
+
+/* Posts navigation styling */
+.posts-navigation .nav-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+.posts-navigation .nav-previous a,
+.posts-navigation .nav-next a {
+    color: var(--bbt-primary-color);
+    font-weight: bold;
+    text-decoration: none;
+}
+.posts-navigation .nav-previous a:hover,
+.posts-navigation .nav-next a:hover {
+    text-decoration: underline;
+}
+
+/* Template Part: content-testimonial.php styling */
+.testimonial-item {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: flex; /* For side-by-side photo and text */
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px;
+}
+.testimonial-photo img.client-photo {
+    border-radius: 50%; /* Circular photo */
+    width: 80px; /* Fixed size */
+    height: 80px;
+    object-fit: cover; /* Ensure image covers the area */
+}
+.testimonial-content {
+    flex: 1; /* Allow content to take remaining space */
+}
+.testimonial-content p:last-of-type {
+    margin-bottom: 0.5em; /* Reduce margin on last paragraph before meta */
+}
+.testimonial-meta {
+    margin-top: 10px;
+    font-size: 0.9em;
+    text-align: left; /* Or right, depending on design */
+}
+.testimonial-meta .client-name {
+    font-weight: bold;
+    color: var(--bbt-primary-color);
+    margin-bottom: 0.2em;
+}
+.testimonial-meta .client-position {
+    color: var(--bbt-secondary-color);
+    font-style: italic;
+    margin-bottom: 0;
+}
+
+/* Responsive for testimonials */
+@media (max-width: 600px) {
+    .testimonial-item {
+        flex-direction: column; /* Stack photo and text */
+        align-items: center; /* Center items when stacked */
+        text-align: center;
+    }
+    .testimonial-photo {
+        margin-bottom: 15px;
+    }
+    .testimonial-meta {
+        text-align: center;
+    }
+}
+
+/* Table Responsiveness */
+.entry-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5em;
+    font-size: 0.95em; /* Slightly smaller for tables */
+}
+.entry-content th,
+.entry-content td {
+    border: 1px solid #ddd;
+    padding: 10px; /* Increased padding */
+    text-align: left;
+}
+.entry-content th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+/* Wrapper for responsive tables */
+.table-responsive-wrapper { /* Renamed for clarity */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    margin-bottom: 1.5em;
+    border: 1px solid #ddd; /* Optional border around the scrollable area */
+}
+
+/* Image Alignment & Captions */
+img.alignleft, .alignleft img { /* Consider block editor image block as well */
+    float: left;
+    margin: 0.5em 1.5em 1em 0;
+}
+img.alignright, .alignright img {
+    float: right;
+    margin: 0.5em 0 1em 1.5em;
+}
+img.aligncenter, .aligncenter img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+.alignwide {
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+/* For fullwidth blocks to break out of .container, .container needs to allow it or be absent */
+/* This is a simplified approach; true fullwidth often needs negative margins relative to viewport */
+.alignfull {
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    max-width: 100vw;
+    width: 100vw;
+    clear: both;
+}
+/* WordPress Caption Styling */
+.wp-caption {
+    max-width: 100%; /* Ensure caption doesn't overflow its container */
+    margin-bottom: 1.5em;
+    background: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #eee;
+}
+.wp-caption img[class*="wp-image-"] {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.wp-caption .wp-caption-text { /* Keep .wp-caption-text for WP < 5.x */
+    font-size: 0.9em;
+    color: #555;
+    text-align: center;
+    margin: 0.8em 0;
+    padding: 0 5px;
+}
+figure.wp-block-image.aligncenter figcaption, /* Gutenberg */
+figure.wp-block-image.alignleft figcaption,
+figure.wp-block-image.alignright figcaption {
+    font-size: 0.9em;
+    color: #555;
+    text-align: center; /* Default, can be overridden by block alignment */
+    margin-top: 0.5em;
+}
+
+
+/* Clear floats utility */
+.clearfix::after,
+.entry-content::after,
+.comment-content::after,
+.widget::after,
+.site-header::after, /* For header if elements are floated */
+.site-footer::after { /* For footer if elements are floated */
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Comments Section */
+.comments-area {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+}
+.comments-title,
+.comment-reply-title {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: var(--bbt-primary-color);
+}
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+}
+.comment-list .comment,
+.comment-list .pingback, /* Style pingbacks/trackbacks similarly */
+.comment-list .trackback {
+    padding: 20px 0; /* Increased padding */
+    border-bottom: 1px dotted #ddd;
+}
+.comment-list .comment:last-child,
+.comment-list .pingback:last-child,
+.comment-list .trackback:last-child {
+    border-bottom: none;
+}
+.comment-list .children { /* Nested comments */
+    list-style: none;
+    padding-left: 30px; /* Indent replies */
+    margin-top: 15px;
+}
+.comment-author { /* Wrapper for avatar and author name/link */
+    margin-bottom: 0.5em;
+}
+.comment-author .avatar {
+    float: left;
+    margin-right: 15px;
+    border-radius: 50%;
+    border: 2px solid #eee;
+}
+.comment-author .fn { /* Author name */
+    font-weight: bold;
+    color: #333;
+}
+.comment-author .says {
+    font-style: italic;
+}
+.comment-metadata, .comment-meta {
+    font-size: 0.85em;
+    color: var(--bbt-secondary-color);
+    margin-bottom: 10px; /* Space after meta */
+    clear: left; /* If avatar is floated */
+}
+.comment-metadata a, .comment-meta a {
+    color: var(--bbt-secondary-color);
+    text-decoration: none;
+}
+.comment-metadata a:hover, .comment-meta a:hover {
+    color: var(--bbt-primary-color);
+    text-decoration: underline;
+}
+.comment-content {
+    clear: both; /* Ensure it clears floated avatar */
+    padding-top: 5px; /* Space if avatar is tall */
+}
+.comment-content p:last-child {
+    margin-bottom: 0;
+}
+.reply .comment-reply-link {
+    font-size: 0.9em;
+    display: inline-block;
+    margin-top: 10px; /* Space above reply link */
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid var(--bbt-primary-color);
+    color: var(--bbt-primary-color);
+    border-radius: 3px;
+}
+.reply .comment-reply-link:hover {
+    background-color: var(--bbt-primary-color);
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Comment Form basic styling */
+.comment-form {
+    margin-top: 30px;
+}
+.comment-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.comment-form input[type="text"],
+.comment-form input[type="email"],
+.comment-form input[type="url"],
+.comment-form textarea {
+    /* Uses generic form styles already defined */
+    margin-bottom: 15px; /* Ensure spacing */
+}
+.comment-form .form-submit input#submit {
+    /* Uses .button style */
+}
+.logged-in-as, .comment-notes, .form-allowed-tags {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+.form-allowed-tags code {
+    font-size: 0.9em;
+    background-color: #f5f5f5;
+    padding: 1px 3px;
+}
+/* End of Comments Section Styling */
+
+
+/* Entry Meta and Footer Styling for Blog Posts */
+.entry-meta {
+    font-size: 0.85em;
+    color: var(--bbt-secondary-color);
+    margin-bottom: 1em; /* Space below meta before summary/content */
+}
+
+.entry-meta .posted-on,
+.entry-meta .byline,
+.entry-meta .cat-links, /* These might be in entry-footer instead */
+.entry-meta .tags-links { /* These might be in entry-footer instead */
+    margin-right: 15px; /* Space between meta items */
+}
+.entry-meta a {
+    color: var(--bbt-secondary-color);
+    text-decoration: none;
+}
+.entry-meta a:hover {
+    color: var(--bbt-primary-color);
+    text-decoration: underline;
+}
+
+.blog-post-summary .entry-footer, /* For home.php and index.php */
+article.post .entry-footer { /* For single.php (if we create it) */
+    margin-top: 1.5em;
+    padding-top: 1em;
+    border-top: 1px solid #eee;
+    font-size: 0.9em;
+    display: flex; /* For better alignment of items */
+    flex-wrap: wrap; /* Allow items to wrap */
+    gap: 15px; /* Space between footer meta items */
+    align-items: center;
+}
+
+.entry-footer .cat-links,
+.entry-footer .tags-links,
+.entry-footer .comments-link {
+    /* margin-right: 15px; - Replaced by gap */
+}
+.entry-footer .cat-links a,
+.entry-footer .tags-links a,
+.entry-footer .comments-link a {
+    color: var(--bbt-secondary-color);
+}
+.entry-footer .cat-links a:hover,
+.entry-footer .tags-links a:hover,
+.entry-footer .comments-link a:hover {
+    color: var(--bbt-primary-color);
+}
+
+.entry-footer .continue-reading-link, /* Class added in home.php/index.php */
+.entry-footer .read-more-link { /* General class */
+    margin-left: auto; /* Push to the right if flex */
+}
+/* End of Entry Meta/Footer Styling */
+
+/* Single Post Navigation (the_post_navigation) */
+.post-navigation { /* Wrapper class for the_post_navigation */
+    margin: 30px 0;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee; /* Add bottom border too */
+}
+.post-navigation .nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.post-navigation .nav-previous,
+.post-navigation .nav-next {
+    flex-basis: 48%; /* Allow them to take roughly half width */
+}
+.post-navigation .nav-next {
+    text-align: right;
+}
+.post-navigation .nav-subtitle {
+    display: block;
+    font-size: 0.85em;
+    color: var(--bbt-secondary-color);
+    margin-bottom: 0.25em;
+}
+.post-navigation .nav-title {
+    font-weight: bold;
+    color: var(--bbt-primary-color);
+    font-size: 1.1em;
+}
+.post-navigation a {
+    text-decoration: none;
+}
+.post-navigation a:hover .nav-title {
+    text-decoration: underline;
+}
+/* End of Single Post Navigation */
+
+/* Utility Classes */
+.text-align-center {
+    text-align: center;
+}
+.text-align-left {
+    text-align: left;
+}
+.text-align-right {
+    text-align: right;
+}
+
+/* 404 Page Styling */
+.error-404 .page-header {
+    margin-bottom: 30px; /* Adjust spacing */
+    border-bottom: none; /* Remove default border from .page-header */
+}
+.error-404 .page-title {
+    font-size: 2.5em; /* Make it prominent */
+    color: var(--bbt-secondary-color); /* Or primary, depending on desired emphasis */
+}
+.error-404 .page-title::after { /* Remove underline from .page-title for 404 */
+    display: none;
+}
+
+.error-404 .page-content p {
+    font-size: 1.1em;
+    margin-bottom: 1.5em;
+    max-width: 600px; /* Constrain width for readability */
+    margin-left: auto;
+    margin-right: auto;
+}
+.error-404 .search-form { /* Assuming default WP search form */
+    margin: 30px auto;
+    max-width: 400px;
+    display: flex; /* Align field and button */
+}
+.error-404 .search-form label { /* For screen-reader-text label */
+   /* Already handled by .screen-reader-text */
+}
+.error-404 .search-form .search-field {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.error-404 .search-form .search-submit {
+    /* Uses .button styles */
+    padding: 10px 15px;
+    width: auto;
+}
+/* End of 404 Page Styling */
+
+/* Navigation Menu Styling (Refinements and Base) */
+.main-navigation {
+    background-color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    clear: both;
+    position: relative;
+    z-index: 999;
+    border-bottom: 1px solid #eee; /* Subtle separator */
+}
+
+/* Site Header adjustments to ensure branding and nav align well */
+.site-header {
+    /* The .container class is used on both .site-branding and .main-navigation */
+    /* so they will align based on that. */
+}
+
+/* Responsive Navigation - Mobile First Approach */
+/* .main-navigation is already defined above */
+
+.menu-toggle {
+    display: none; /* Hidden by default, shown in mobile media query */
+    background-color: var(--bbt-primary-color);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+.menu-toggle:hover {
+    opacity: 0.9;
+}
+
+#primary-menu { /* This is the ul element */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* For horizontal menu on desktop */
+    flex-wrap: wrap; /* Allow items to wrap if container is too small */
+}
+
+#primary-menu li.menu-item {
+    position: relative; /* For dropdowns */
+    margin-right: 1px; /* Minimal separation */
+}
+
+#primary-menu li.menu-item:last-child {
+    margin-right: 0;
+}
+
+#primary-menu li.menu-item > a {
+    display: block;
+    padding: 10px 15px; /* Good padding for desktop */
+    text-decoration: none;
+    color: var(--bbt-primary-color);
+    border-bottom: 2px solid transparent; /* For active/hover indication */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+#primary-menu li.menu-item > a:hover,
+#primary-menu li.menu-item > a:focus,
+#primary-menu li.current-menu-item > a,
+#primary-menu li.current-menu-ancestor > a {
+    text-decoration: none; /* Remove underline for nav items */
+    background-color: #f0f0f0;
+    border-bottom-color: var(--bbt-primary-color);
+}
+
+/* Sub-menu basic styling */
+#primary-menu ul.sub-menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    padding: 0;
+    z-index: 1000;
+    min-width: 200px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#primary-menu li.menu-item:hover > ul.sub-menu,
+#primary-menu li.menu-item.focus > ul.sub-menu { /* JS might add .focus class for keyboard nav */
+    display: block;
+}
+
+#primary-menu ul.sub-menu li.menu-item {
+    width: 100%;
+    margin-right: 0;
+    border-bottom: 1px solid #f0f0f0; /* Separator for dropdown items */
+}
+#primary-menu ul.sub-menu li.menu-item:last-child {
+    border-bottom: none;
+}
+
+#primary-menu ul.sub-menu li.menu-item > a {
+    padding: 10px 15px;
+    white-space: nowrap;
+    border-bottom: none; /* No bottom border for sub-menu items themselves */
+}
+#primary-menu ul.sub-menu li.menu-item > a:hover,
+#primary-menu ul.sub-menu li.menu-item > a:focus {
+    background-color: var(--bbt-primary-color);
+    color: #ffffff;
+    border-bottom: none;
+}
+
+
+/* Medium screens and up (Tablet & Desktop) */
+@media (min-width: 769px) {
+    /* .main-navigation ul - Desktop styles are mostly covered above by default flex display */
+    .menu-toggle {
+        display: none !important; /* Ensure toggle is hidden on larger screens */
+    }
+    #primary-menu {
+        display: flex !important; /* Ensure menu is visible */
+    }
+}
+
+
+/* Smaller screens (Mobile) - Tablet breakpoint often around 768px */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* Show the toggle button */
+        margin-bottom: 10px;
+    }
+
+    .main-navigation ul#primary-menu { /* Target the main UL */
+        display: none; /* Hide menu by default on mobile */
+        width: 100%;
+        flex-direction: column; /* Stack items vertically */
+        border-top: 1px solid #eee;
+    }
+
+    /* This class would be toggled by JS on .main-navigation or ul#primary-menu */
+    .main-navigation.nav-open ul#primary-menu,
+    ul#primary-menu.nav-open {
+        display: flex;
+    }
+
+    #primary-menu li.menu-item {
+        margin-right: 0; /* Remove right margin for vertical stacking */
+        width: 100%;
+        border-bottom: 1px solid #eee; /* Separator for items */
+    }
+    #primary-menu li.menu-item:last-child {
+        border-bottom: none;
+    }
+    #primary-menu li.menu-item > a {
+        padding: 12px 15px; /* Adjust padding for touch targets */
+        border-bottom: none; /* Remove desktop border */
+    }
+    #primary-menu li.menu-item > a:hover,
+    #primary-menu li.menu-item > a:focus,
+    #primary-menu li.current-menu-item > a,
+    #primary-menu li.current-menu-ancestor > a {
+        background-color: var(--bbt-primary-color); /* Consistent hover/active style */
+        color: #ffffff;
+        border-bottom: none;
+    }
+
+    /* Sub-menu on mobile */
+    #primary-menu ul.sub-menu {
+        position: static; /* No absolute positioning */
+        border: none;
+        border-top: 1px dashed #ddd;
+        background-color: #f9f9f9;
+        width: 100%;
+        padding-left: 15px; /* Indent sub-menu items */
+        box-shadow: none;
+    }
+     /* No hover display for submenus on mobile; rely on JS or make them always visible if parent is active */
+    #primary-menu li.menu-item:hover > ul.sub-menu {
+        display: none; /* Prevent hover opening on touch devices if not handled by JS */
+    }
+    /* If JS is used to toggle sub-menus on mobile with a class like .sub-menu-open on the parent li */
+    #primary-menu li.menu-item.sub-menu-open > ul.sub-menu {
+        display: block;
+    }
+
+
+    /* General content adjustments */
+    .container {
+        width: 95%; /* Slightly more width on mobile */
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    h1 { font-size: 1.8em; } /* Adjust heading sizes */
+    h2 { font-size: 1.5em; }
+    h3 { font-size: 1.3em; }
+
+    /* Footer adjustments */
+    .site-footer .site-info {
+        /* flex-direction: column; // If .site-info is flex */
+        text-align: center;
+    }
+    .site-footer .site-info > * { /* If direct children are to be stacked */
+        display: block;
+        margin-bottom: 10px;
+    }
+    .site-footer .site-info .sep {
+        display: none; /* Hide separator on mobile */
+    }
+}

@@ -11,7 +11,7 @@ $button_text = get_theme_mod( 'bbt_cta_button_text', __( 'Contact Us', 'beautifu
 $button_url = get_theme_mod( 'bbt_cta_button_url', '#contact' );
 ?>
 
-<section class="homepage-content-section homepage-cta-section">
+<section id="homepage-cta" class="homepage-content-section homepage-cta-section">
     <div class="container">
         <?php if ( ! empty( $headline ) ) : ?>
             <h2 class="cta-headline"><?php echo esc_html( $headline ); ?></h2>

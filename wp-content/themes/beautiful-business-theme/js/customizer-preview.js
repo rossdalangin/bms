@@ -119,4 +119,62 @@
     wp.customize( 'bbt_services_section_title', function( value ) { value.bind( function( to ) { $( '#services-section .section-title-text' ).text( to ); } ); } );
     wp.customize( 'bbt_testimonials_section_title', function( value ) { value.bind( function( to ) { $( '#testimonials-section .section-title-text' ).text( to ); } ); } );
 
+    // --- Section Order and Visibility Preview ---
+
+    // Helper function to show/hide a section
+    function handleSectionVisibility( sectionId, isVisible ) {
+        var section = $( '#homepage-' + sectionId );
+        if ( section.length ) {
+            if ( isVisible ) {
+                section.slideDown( 200 ); // Animate showing
+            } else {
+                section.slideUp( 200 ); // Animate hiding
+            }
+        }
+    }
+
+    var sectionKeys = ['hero', 'features', 'services', 'projects', 'cta', 'clients', 'testimonials', 'news'];
+
+    // Create listeners for each section's visibility setting
+    $.each( sectionKeys, function( index, sectionId ) {
+        wp.customize( 'bbt_show_section_' + sectionId, function( setting ) {
+            setting.bind( function( isVisible ) {
+                // Initial state on load
+                if ( ! wp.customize.preview.isRendered() ) {
+                    handleSectionVisibility( sectionId, isVisible );
+                }
+                // Subsequent changes
+                wp.customize.preview.bind( 'active', function() {
+                    handleSectionVisibility( sectionId, isVisible );
+                });
+            } );
+        } );
+    });
+
+    // Create a listener for the section order setting
+    wp.customize( 'bbt_homepage_section_order', function( setting ) {
+        setting.bind( function( newOrder ) {
+            var sections = newOrder.split( ',' );
+            var parentContainer = $( '#main' ); // The container for all homepage sections
+
+            if ( parentContainer.length ) {
+                // Detach all homepage sections
+                var detachedSections = {};
+                $.each( sectionKeys, function( index, sectionId ) {
+                    var sectionEl = $( '#homepage-' + sectionId ).detach();
+                    if(sectionEl.length) {
+                        detachedSections[sectionId] = sectionEl;
+                    }
+                });
+
+                // Re-append them in the new order
+                $.each( sections, function( index, sectionId ) {
+                    if ( detachedSections[sectionId] ) {
+                        parentContainer.append( detachedSections[sectionId] );
+                    }
+                });
+            }
+        });
+    });
+
 } )( jQuery );

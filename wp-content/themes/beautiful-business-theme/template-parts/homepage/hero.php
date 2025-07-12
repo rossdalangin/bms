@@ -23,7 +23,7 @@ if ( ! empty( $hero_bg_image ) ) {
 }
 ?>
 
-<section class="<?php echo esc_attr( $hero_classes ); ?>" <?php echo $hero_style; ?>>
+<section id="homepage-hero" class="<?php echo esc_attr( $hero_classes ); ?>" <?php echo $hero_style; ?>>
     <div class="container hero-content-container" style="text-align: <?php echo esc_attr( $hero_text_align ); ?>;">
         <?php if ( ! empty( $hero_title ) ) : ?>
             <h1 class="hero-main-title"><?php echo esc_html( $hero_title ); ?></h1>

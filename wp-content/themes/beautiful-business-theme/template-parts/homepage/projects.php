@@ -15,7 +15,7 @@ $projects_query = new WP_Query( array(
 ) );
 
 if ( $projects_query->have_posts() ) : ?>
-    <section class="homepage-content-section homepage-projects-section alternate-background">
+    <section id="homepage-projects" class="homepage-content-section homepage-projects-section alternate-background">
         <div class="container">
             <?php if ( ! empty( $section_title ) ) : ?>
                 <h2 class="section-title"><?php echo esc_html( $section_title ); ?></h2>

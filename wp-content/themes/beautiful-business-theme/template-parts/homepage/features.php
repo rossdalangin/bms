@@ -7,7 +7,7 @@
 
 ?>
 
-<section class="homepage-content-section homepage-features-section">
+<section id="homepage-features" class="homepage-content-section homepage-features-section">
     <div class="container">
         <div class="features-grid">
             <?php for ( $i = 1; $i <= 3; $i++ ) :

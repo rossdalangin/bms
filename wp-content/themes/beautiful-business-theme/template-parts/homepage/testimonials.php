@@ -15,7 +15,7 @@ $testimonials_query = new WP_Query( array(
 ) );
 
 if ( $testimonials_query->have_posts() ) : ?>
-    <section class="homepage-content-section homepage-testimonials-section">
+    <section id="homepage-testimonials" class="homepage-content-section homepage-testimonials-section">
         <div class="container">
             <?php if ( ! empty( $section_title ) ) : ?>
                 <h2 class="section-title"><?php echo esc_html( $section_title ); ?></h2>

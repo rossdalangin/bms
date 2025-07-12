@@ -14,7 +14,7 @@ for ( $i = 1; $i <= 4; $i++ ) {
 }
 
 if ( ! empty( $logos ) ) : ?>
-    <section class="homepage-content-section homepage-client-logos-section alternate-background">
+    <section id="homepage-clients" class="homepage-content-section homepage-client-logos-section alternate-background">
         <div class="container">
             <div class="client-logos-grid">
                 <?php foreach ( $logos as $logo_url ) : ?>

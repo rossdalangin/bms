@@ -29,32 +29,7 @@ get_header(); ?>
                  * If you want to override this in a child theme, then include a file
                  * called content-___.php (where ___ is the Post Format name) and that will be used instead.
                  */
-                // get_template_part( 'template-parts/content', get_post_format() ); // We'll create this later
-                ?>
-                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                    <header class="entry-header">
-                        <?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-                        <?php if ( 'post' === get_post_type() ) : ?>
-                        <div class="entry-meta">
-                            <?php
-                                beautiful_business_posted_on();
-                                beautiful_business_posted_by();
-                            ?>
-                        </div><!-- .entry-meta -->
-                        <?php endif; ?>
-                    </header><!-- .entry-header -->
-
-                    <div class="entry-summary"> <?php // Changed from entry-content to entry-summary for consistency with home.php ?>
-                        <?php the_excerpt(); ?>
-                    </div><!-- .entry-summary -->
-
-                    <footer class="entry-footer">
-                        <?php beautiful_business_entry_footer_meta(); ?>
-                        <?php // For index.php, a general "Read More" might be more appropriate than "Continue Reading" if it's mixed content ?>
-                        <a href="<?php the_permalink(); ?>" class="read-more-link continue-reading-link"><?php esc_html_e( 'Read More', 'beautiful-business' ); ?><span class="screen-reader-text"> <?php echo wp_kses_post( get_the_title() ); ?></span></a>
-                    </footer><!-- .entry-footer -->
-                </article><!-- #post-<?php the_ID(); ?> -->
-                <?php
+                get_template_part( 'template-parts/content', 'summary' );
 
             endwhile;
 

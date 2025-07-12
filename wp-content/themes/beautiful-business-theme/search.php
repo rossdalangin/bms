@@ -29,34 +29,7 @@ get_header(); ?>
                 the_post();
 
                 /**
-                 * Run the loop for the search to output the results.
-                 * We'll use a simplified summary format, similar to archives.
-                 * A 'content-search.php' template part could be created for more customization.
-                 */
-                ?>
-                <article id="post-<?php the_ID(); ?>" <?php post_class('search-result-item'); ?>>
-                    <header class="entry-header">
-                        <?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-
-                        <?php if ( 'post' === get_post_type() ) : ?>
-                        <div class="entry-meta">
-                            <?php
-                                beautiful_business_posted_on();
-                                beautiful_business_posted_by();
-                            ?>
-                        </div><!-- .entry-meta -->
-                        <?php endif; ?>
-                    </header><!-- .entry-header -->
-
-                    <div class="entry-summary">
-                        <?php the_excerpt(); ?>
-                    </div><!-- .entry-summary -->
-
-                    <footer class="entry-footer">
-                         <a href="<?php the_permalink(); ?>" class="read-more-link"><?php esc_html_e( 'View Post', 'beautiful-business' ); ?><span class="screen-reader-text"> <?php echo wp_kses_post( get_the_title() ); ?></span></a>
-                    </footer><!-- .entry-footer -->
-                </article><!-- #post-<?php the_ID(); ?> -->
-                <?php
+                 get_template_part( 'template-parts/content', 'summary' );
             endwhile;
 
             the_posts_navigation(); // For pagination of search results

@@ -21,10 +21,12 @@ Use it to make something cool, have fun, and share what you've learned with othe
 body {
     margin: 0;
     padding: 0;
-    font-family: sans-serif; /* Basic font stack */
+    font-family: 'Open Sans', sans-serif;
     line-height: 1.6;
     color: #333; /* Default text color */
     background-color: #fff; /* Default background */
+    -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .container { /* A simple container for content centering */
@@ -38,7 +40,8 @@ body {
 h1, h2, h3, h4, h5, h6 {
     margin-top: 1.5em;
     margin-bottom: 0.5em;
-    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700; /* Use bold weight */
 }
 
 p {
@@ -62,26 +65,45 @@ a:focus {
     font-size: 0.9em;
 }
 
-/* Basic Button Style */
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
 .button,
 button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"],
-.wp-block-button__link {
+.wp-block-button__link,
+.header-cta-button, /* Ensure CTA button gets base styles */
+.cta-button { /* Ensure CTA button gets base styles */
     display: inline-block;
-    padding: 10px 20px;
-    font-size: 1em;
+    padding: 12px 28px; /* Refined padding */
+    font-family: 'Montserrat', sans-serif; /* Use heading font */
+    font-size: 0.9em;
+    font-weight: 700;
     line-height: 1.5;
     text-align: center;
     text-decoration: none;
+    text-transform: uppercase; /* Corporate style */
+    letter-spacing: 1px; /* Corporate style */
     white-space: nowrap;
     border-radius: 4px;
-    border: 1px solid var(--bbt-primary-color);
-    background-color: var(--bbt-primary-color);
-    color: #ffffff;
+    border: 2px solid transparent; /* Use border for all states */
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Primary Button Style */
+.button,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.wp-block-button__link,
+.header-cta-button {
+    background-color: var(--bbt-primary-color);
+    border-color: var(--bbt-primary-color);
+    color: #ffffff;
 }
 
 .button:hover,
@@ -90,16 +112,35 @@ input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 .wp-block-button__link:hover,
-.button:focus,
-button:focus,
-input[type="button"]:focus,
-input[type="reset"]:focus,
-input[type="submit"]:focus,
-.wp-block-button__link:focus {
+.header-cta-button:hover {
+    background-color: transparent;
+    color: var(--bbt-primary-color);
+    border-color: var(--bbt-primary-color);
+    text-decoration: none;
+}
+
+/* Secondary/Ghost Button Style */
+.button-secondary {
+    background-color: transparent;
+    border-color: var(--bbt-primary-color);
+    color: var(--bbt-primary-color);
+}
+.button-secondary:hover {
+    background-color: var(--bbt-primary-color);
+    border-color: var(--bbt-primary-color);
+    color: #ffffff;
+}
+
+/* Special Case: CTA button on colored background already has a custom hover */
+.homepage-cta-section .cta-button {
     background-color: #ffffff;
     color: var(--bbt-primary-color);
-    border: 1px solid var(--bbt-primary-color);
-    text-decoration: none;
+    border-color: #ffffff;
+}
+.homepage-cta-section .cta-button:hover {
+    background-color: transparent;
+    color: #ffffff;
+    border-color: #ffffff;
 }
 
 
@@ -331,6 +372,149 @@ input[type="submit"]:focus,
 }
 /* End of Homepage Testimonials Section */
 
+/* --- Features Section --- */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+.feature-item .dashicons {
+    font-size: 48px;
+    color: var(--bbt-primary-color);
+    margin-bottom: 15px;
+    height: 48px; /* Match font-size */
+    width: 48px; /* Match font-size */
+}
+.feature-item .feature-title {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #333;
+}
+.feature-item .feature-text {
+    font-size: 0.95em;
+    color: #555;
+}
+.feature-item .feature-text p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* --- Client Logos Section --- */
+.homepage-content-section.alternate-background {
+    background-color: #f7f7f7; /* Refined alternate color */
+}
+.client-logos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+.client-logo-item {
+    flex-basis: 150px; /* Base size */
+    text-align: center;
+}
+.client-logo-item img {
+    max-width: 100%;
+    height: auto;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+.client-logo-item img:hover {
+    opacity: 1;
+}
+
+/* --- CTA Block Section --- */
+.homepage-cta-section {
+    background-color: var(--bbt-primary-color);
+    color: #ffffff;
+}
+.homepage-cta-section .cta-headline {
+    color: #ffffff; /* Override default section title color */
+    font-size: 2em;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.homepage-cta-section .cta-text {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9;
+}
+.homepage-cta-section .cta-text p:last-child {
+    margin-bottom: 0;
+}
+.homepage-cta-section .cta-button {
+    /* Use a secondary/ghost button style */
+    background-color: #ffffff;
+    color: var(--bbt-primary-color);
+    border-color: #ffffff;
+}
+.homepage-cta-section .cta-button:hover {
+    background-color: transparent;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+/* --- Latest News Section --- */
+.latest-news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    text-align: left;
+}
+.news-summary-item {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden; /* To contain the image corners */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.news-summary-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.news-summary-item .post-thumbnail a {
+    display: block;
+    height: 180px; /* Fixed height for image container */
+}
+.news-summary-item .post-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure image covers the area */
+}
+.news-summary-item .entry-header,
+.news-summary-item .entry-summary {
+    padding: 0 20px;
+}
+.news-summary-item .entry-header {
+    padding-top: 20px;
+}
+.news-summary-item .entry-summary {
+    padding-bottom: 20px;
+    flex-grow: 1;
+}
+.news-summary-item .entry-title {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
+.news-summary-item .entry-title a {
+    text-decoration: none;
+    color: #333;
+}
+.news-summary-item .entry-title a:hover {
+    color: var(--bbt-primary-color);
+}
+.news-summary-item .entry-meta {
+    font-size: 0.8em;
+}
+
 /* About Us Page Specific Styling */
 
 /* Utility classes that might be used on About page and elsewhere */
@@ -512,41 +696,174 @@ input[type="submit"]:focus,
     font-size: 1.1em;
 }
 
-/* Basic Form Styling (will likely be overridden by form plugins) */
-/* These are very generic and aim to provide a minimal baseline */
-.wpcf7-form input[type="text"], /* Example for CF7 */
-.wpcf7-form input[type="email"],
-.wpcf7-form input[type="url"],
-.wpcf7-form input[type="tel"],
-.wpcf7-form input[type="number"],
-.wpcf7-form input[type="search"],
-.wpcf7-form textarea,
-/* Generic form elements if no plugin-specific classes are known */
-form input[type="text"],
-form input[type="email"],
-form input[type="url"],
-form input[type="tel"],
-form input[type="number"],
-form input[type="search"],
-form textarea {
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+textarea,
+select {
     width: 100%;
-    padding: 10px 12px;
+    padding: 12px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Important for width: 100% */
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
     font-size: 1em;
-    background-color: #fff;
+    background-color: #fdfdfd;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.wpcf7-form textarea,
-form textarea {
-    min-height: 120px;
+/* Add specific styling for select dropdowns */
+select {
+    appearance: none; /* Remove default system UI */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23555' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px; /* Make space for arrow */
+}
+
+textarea {
+    min-height: 140px;
     resize: vertical;
 }
 
-/* Submit button will use .button styles if class is applied */
+/* Focus styles for accessibility and modern look */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+textarea:focus,
+select:focus {
+    outline: none; /* Remove default outline */
+    border-color: var(--bbt-primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Use primary color with alpha */
+}
+
+/* Placeholder text styling */
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #999;
+  opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #999;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #999;
+}
+
+/* Search Form Specifics */
+.search-form {
+    display: flex;
+}
+.search-form .search-field {
+    flex-grow: 1;
+    margin-bottom: 0; /* Remove bottom margin when in a flex container */
+}
+.search-form .search-submit {
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+/* End of Forms */
+
+
 /* End of Contact Us Page Specific Styling */
+
+/* ==========================================================================
+   Card / Summary Item Layouts
+   ========================================================================== */
+
+.grid-item { /* A general class for items in our various grids */
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.grid-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Thumbnail / Image styling */
+.grid-item .post-thumbnail a {
+    display: block;
+    height: 200px; /* Taller, more prominent image area */
+}
+.grid-item .post-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Content wrapper for padding */
+.grid-item .entry-content-wrap {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* Header within the card */
+.grid-item .entry-header {
+    margin-bottom: 15px;
+    border-bottom: none; /* Override default single header style */
+    padding-bottom: 0;
+}
+.grid-item .entry-title {
+    font-size: 1.3em;
+    line-height: 1.3;
+    margin-bottom: 10px;
+}
+.grid-item .entry-title a {
+    text-decoration: none;
+    color: #333;
+}
+.grid-item .entry-title a:hover {
+    color: var(--bbt-primary-color);
+}
+
+/* Summary/Excerpt */
+.grid-item .entry-summary {
+    flex-grow: 1;
+    margin-bottom: 20px;
+    font-size: 0.95em;
+    color: #555;
+}
+.grid-item .entry-summary p:last-child {
+    margin-bottom: 0;
+}
+
+/* Footer of the card */
+.grid-item .entry-footer {
+    margin-top: auto; /* Pushes footer to the bottom */
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+    display: block; /* Override flex from single post footer */
+    text-align: right; /* Align link to the right */
+}
+.grid-item .read-more-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+/* End of Card / Summary Item Layouts */
 
 
 /* CPT Archive and Single Styling */
@@ -1033,6 +1350,7 @@ article.post .entry-footer { /* For single.php (if we create it) */
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on very small screens */
 }
 .post-navigation .nav-previous,
 .post-navigation .nav-next {
@@ -1094,95 +1412,111 @@ article.post .entry-footer { /* For single.php (if we create it) */
 .error-404 .search-form { /* Assuming default WP search form */
     margin: 30px auto;
     max-width: 400px;
-    display: flex; /* Align field and button */
-}
-.error-404 .search-form label { /* For screen-reader-text label */
-   /* Already handled by .screen-reader-text */
-}
-.error-404 .search-form .search-field {
-    flex-grow: 1;
-    padding: 10px;
-    margin-right: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-.error-404 .search-form .search-submit {
-    /* Uses .button styles */
-    padding: 10px 15px;
-    width: auto;
+    /* display: flex; is now handled by global .search-form style */
 }
 /* End of 404 Page Styling */
 
-/* Navigation Menu Styling (Refinements and Base) */
-.main-navigation {
-    background-color: #fff;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    clear: both;
-    position: relative;
-    z-index: 999;
-    border-bottom: 1px solid #eee; /* Subtle separator */
-}
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
 
-/* Site Header adjustments to ensure branding and nav align well */
 .site-header {
-    /* The .container class is used on both .site-branding and .main-navigation */
-    /* so they will align based on that. */
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaeaea;
+    padding: 10px 0;
+    position: sticky; /* Sticky header */
+    top: 0;
+    z-index: 1000;
+    width: 100%;
 }
 
-/* Responsive Navigation - Mobile First Approach */
-/* .main-navigation is already defined above */
-
-.menu-toggle {
-    display: none; /* Hidden by default, shown in mobile media query */
-    background-color: var(--bbt-primary-color);
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    font-size: 1em;
-    cursor: pointer;
-}
-.menu-toggle:hover {
-    opacity: 0.9;
+.site-header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-#primary-menu { /* This is the ul element */
+/* Site Branding */
+.site-branding {
+    flex-shrink: 0; /* Don't shrink the logo/title */
+}
+.site-branding .custom-logo {
+    max-height: 50px; /* Control logo height */
+    width: auto;
+}
+.site-branding .site-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 0;
+}
+.site-branding .site-title a {
+    text-decoration: none;
+    color: #333;
+}
+.site-branding .site-description {
+    font-size: 0.85em;
+    margin: 0;
+    color: var(--bbt-secondary-color);
+}
+
+/* Main Navigation */
+.main-navigation {
+    flex-grow: 1; /* Allow nav to take up space */
+    display: flex;
+    justify-content: flex-end; /* Align menu to the right, before CTA */
+}
+
+#primary-menu {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex; /* For horizontal menu on desktop */
-    flex-wrap: wrap; /* Allow items to wrap if container is too small */
+    display: flex;
 }
 
 #primary-menu li.menu-item {
-    position: relative; /* For dropdowns */
-    margin-right: 1px; /* Minimal separation */
-}
-
-#primary-menu li.menu-item:last-child {
-    margin-right: 0;
+    position: relative;
+    margin: 0 10px; /* Spacing between items */
 }
 
 #primary-menu li.menu-item > a {
     display: block;
-    padding: 10px 15px; /* Good padding for desktop */
+    padding: 15px 10px;
     text-decoration: none;
-    color: var(--bbt-primary-color);
-    border-bottom: 2px solid transparent; /* For active/hover indication */
-    transition: border-color 0.3s ease, background-color 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400; /* Regular weight for nav items */
+    font-size: 0.9em;
+    color: #555;
+    position: relative;
+    transition: color 0.3s ease;
 }
-
+#primary-menu li.menu-item > a::after { /* Underline effect on hover */
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--bbt-primary-color);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
 #primary-menu li.menu-item > a:hover,
-#primary-menu li.menu-item > a:focus,
+#primary-menu li.menu-item > a:focus {
+    color: #333;
+}
+#primary-menu li.menu-item > a:hover::after,
+#primary-menu li.menu-item > a:focus::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
 #primary-menu li.current-menu-item > a,
 #primary-menu li.current-menu-ancestor > a {
-    text-decoration: none; /* Remove underline for nav items */
-    background-color: #f0f0f0;
-    border-bottom-color: var(--bbt-primary-color);
+    color: var(--bbt-primary-color);
+    font-weight: 700;
 }
 
-/* Sub-menu basic styling */
+/* Sub-menu styling */
 #primary-menu ul.sub-menu {
     display: none;
     position: absolute;
@@ -1190,133 +1524,114 @@ article.post .entry-footer { /* For single.php (if we create it) */
     top: 100%;
     background-color: #ffffff;
     border: 1px solid #eaeaea;
-    padding: 0;
-    z-index: 1000;
+    padding: 5px 0;
+    z-index: 1001;
     min-width: 200px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
 }
-
 #primary-menu li.menu-item:hover > ul.sub-menu,
-#primary-menu li.menu-item.focus > ul.sub-menu { /* JS might add .focus class for keyboard nav */
+#primary-menu li.menu-item.focus > ul.sub-menu {
     display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
-
 #primary-menu ul.sub-menu li.menu-item {
     width: 100%;
-    margin-right: 0;
-    border-bottom: 1px solid #f0f0f0; /* Separator for dropdown items */
+    margin: 0;
 }
-#primary-menu ul.sub-menu li.menu-item:last-child {
+#primary-menu ul.sub-menu li.menu-item > a {
+    padding: 10px 20px;
+    font-size: 0.85em;
     border-bottom: none;
 }
-
-#primary-menu ul.sub-menu li.menu-item > a {
-    padding: 10px 15px;
-    white-space: nowrap;
-    border-bottom: none; /* No bottom border for sub-menu items themselves */
+#primary-menu ul.sub-menu li.menu-item > a::after {
+    display: none; /* No underline effect for dropdown items */
 }
-#primary-menu ul.sub-menu li.menu-item > a:hover,
-#primary-menu ul.sub-menu li.menu-item > a:focus {
+#primary-menu ul.sub-menu li.menu-item > a:hover {
     background-color: var(--bbt-primary-color);
     color: #ffffff;
-    border-bottom: none;
 }
 
-
-/* Medium screens and up (Tablet & Desktop) */
-@media (min-width: 769px) {
-    /* .main-navigation ul - Desktop styles are mostly covered above by default flex display */
-    .menu-toggle {
-        display: none !important; /* Ensure toggle is hidden on larger screens */
-    }
-    #primary-menu {
-        display: flex !important; /* Ensure menu is visible */
-    }
+/* Header CTA Button */
+.header-cta {
+    margin-left: 20px; /* Space between nav and CTA */
+}
+.header-cta-button {
+    /* Uses .button styles */
+    padding: 8px 20px; /* Slightly smaller padding for header button */
+    font-size: 0.9em;
+    font-weight: 700;
 }
 
+/* Mobile Menu Toggle & Layout */
+.menu-toggle {
+    display: none; /* Hidden on desktop */
+    margin-left: 15px;
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+.menu-toggle .icon-bars { /* Will add this span inside the button text later */
+    /* SVG or font icon would go here */
+}
 
-/* Smaller screens (Mobile) - Tablet breakpoint often around 768px */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block; /* Show the toggle button */
-        margin-bottom: 10px;
+@media (max-width: 900px) { /* Breakpoint for switching to mobile menu */
+    .main-navigation, .header-cta {
+        display: none; /* Hide desktop nav and cta */
     }
-
-    .main-navigation ul#primary-menu { /* Target the main UL */
-        display: none; /* Hide menu by default on mobile */
+    .menu-toggle {
+        display: block; /* Show menu toggle */
+    }
+    .site-header-inner {
+        /* justify-content: space-between; is already set */
+    }
+    /* When mobile menu is open */
+    .main-navigation.nav-open {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
         width: 100%;
-        flex-direction: column; /* Stack items vertically */
-        border-top: 1px solid #eee;
+        background: #fff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        padding: 10px 0;
     }
-
-    /* This class would be toggled by JS on .main-navigation or ul#primary-menu */
-    .main-navigation.nav-open ul#primary-menu,
-    ul#primary-menu.nav-open {
+    .main-navigation.nav-open #primary-menu {
         display: flex;
+        flex-direction: column;
+        align-items: center;
     }
-
-    #primary-menu li.menu-item {
-        margin-right: 0; /* Remove right margin for vertical stacking */
+    .main-navigation.nav-open #primary-menu li.menu-item {
         width: 100%;
-        border-bottom: 1px solid #eee; /* Separator for items */
-    }
-    #primary-menu li.menu-item:last-child {
-        border-bottom: none;
-    }
-    #primary-menu li.menu-item > a {
-        padding: 12px 15px; /* Adjust padding for touch targets */
-        border-bottom: none; /* Remove desktop border */
-    }
-    #primary-menu li.menu-item > a:hover,
-    #primary-menu li.menu-item > a:focus,
-    #primary-menu li.current-menu-item > a,
-    #primary-menu li.current-menu-ancestor > a {
-        background-color: var(--bbt-primary-color); /* Consistent hover/active style */
-        color: #ffffff;
-        border-bottom: none;
-    }
-
-    /* Sub-menu on mobile */
-    #primary-menu ul.sub-menu {
-        position: static; /* No absolute positioning */
-        border: none;
-        border-top: 1px dashed #ddd;
-        background-color: #f9f9f9;
-        width: 100%;
-        padding-left: 15px; /* Indent sub-menu items */
-        box-shadow: none;
-    }
-     /* No hover display for submenus on mobile; rely on JS or make them always visible if parent is active */
-    #primary-menu li.menu-item:hover > ul.sub-menu {
-        display: none; /* Prevent hover opening on touch devices if not handled by JS */
-    }
-    /* If JS is used to toggle sub-menus on mobile with a class like .sub-menu-open on the parent li */
-    #primary-menu li.menu-item.sub-menu-open > ul.sub-menu {
-        display: block;
-    }
-
-
-    /* General content adjustments */
-    .container {
-        width: 95%; /* Slightly more width on mobile */
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-
-    h1 { font-size: 1.8em; } /* Adjust heading sizes */
-    h2 { font-size: 1.5em; }
-    h3 { font-size: 1.3em; }
-
-    /* Footer adjustments */
-    .site-footer .site-info {
-        /* flex-direction: column; // If .site-info is flex */
         text-align: center;
+        margin: 0;
+        border-bottom: 1px solid #f0f0f0;
     }
-    .site-footer .site-info > * { /* If direct children are to be stacked */
+    .main-navigation.nav-open #primary-menu li.menu-item:last-child {
+        border-bottom: none;
+    }
+    .main-navigation.nav-open #primary-menu a {
+        padding: 15px;
+    }
+    .main-navigation.nav-open ul.sub-menu { /* Sub-menu on mobile */
+        position: static;
+        box-shadow: none;
+        border: none;
+        background: #f9f9f9;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        display: none; /* Rely on JS to toggle */
+    }
+    .main-navigation.nav-open li.menu-item.sub-menu-open > ul.sub-menu {
         display: block;
-        margin-bottom: 10px;
-    }
-    .site-footer .site-info .sep {
-        display: none; /* Hide separator on mobile */
     }
 }

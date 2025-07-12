@@ -20,6 +20,27 @@
         } );
     } );
 
+    // Header CTA Button
+    wp.customize( 'bbt_header_cta_text', function( value ) {
+        value.bind( function( to ) {
+            // Assume an element with class .header-cta-button exists in header.php
+            var ctaButton = $( '.header-cta-button' );
+            ctaButton.text( to );
+            // Show/hide button based on if text is present
+            if ( '' === to ) {
+                ctaButton.hide();
+            } else {
+                ctaButton.show();
+            }
+        } );
+    } );
+
+    wp.customize( 'bbt_header_cta_url', function( value ) {
+        value.bind( function( to ) {
+            $( '.header-cta-button' ).attr( 'href', to );
+        } );
+    } );
+
     // Add more live previews here as settings are added.
 
     // Theme Colors

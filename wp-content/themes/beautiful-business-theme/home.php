@@ -46,38 +46,7 @@ get_header(); ?>
                  * to handle the display of each post in the loop for better organization.
                  * For now, we can keep the simplified display from index.php or expand slightly.
                  */
-                // get_template_part( 'template-parts/content', get_post_type() ); // More generic
-                // For now, using a simplified structure similar to index.php:
-                ?>
-                <article id="post-<?php the_ID(); ?>" <?php post_class('blog-post-summary'); ?>>
-                    <?php if ( has_post_thumbnail() ) : ?>
-                        <div class="post-thumbnail">
-                            <a href="<?php the_permalink(); ?>">
-                                <?php the_post_thumbnail('large'); // Or 'medium_large' ?>
-                            </a>
-                        </div>
-                    <?php endif; ?>
-                    <header class="entry-header">
-                        <?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-
-                        <div class="entry-meta">
-                            <?php
-                                beautiful_business_posted_on();
-                                beautiful_business_posted_by();
-                            ?>
-                        </div><!-- .entry-meta -->
-                    </header><!-- .entry-header -->
-
-                    <div class="entry-summary">
-                        <?php the_excerpt(); ?>
-                    </div><!-- .entry-summary -->
-
-                    <footer class="entry-footer">
-                        <?php beautiful_business_entry_footer_meta(); ?>
-                        <a href="<?php the_permalink(); ?>" class="read-more-link continue-reading-link"><?php esc_html_e( 'Continue Reading', 'beautiful-business' ); ?><span class="screen-reader-text"> <?php echo wp_kses_post( get_the_title() ); ?></span></a>
-                    </footer><!-- .entry-footer -->
-                </article><!-- #post-<?php the_ID(); ?> -->
-                <?php
+                get_template_part( 'template-parts/content', 'summary' );
             endwhile;
 
             the_posts_navigation();

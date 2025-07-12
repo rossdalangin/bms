@@ -54,104 +54,111 @@ get_header(); ?>
         </section>
 
         <?php
-        // Services Section
-        $bbt_services_title = get_theme_mod( 'bbt_services_section_title', __( 'Our Services', 'beautiful-business' ) );
-        $bbt_services_count = get_theme_mod( 'bbt_services_section_count', 3 );
-
-        // Only display section if there's a title or if services are to be shown (count > 0 implied by default)
-        // Or, more strictly, if $bbt_services_count > 0 and we have posts.
-        $bbt_display_services_section = ! empty( $bbt_services_title ) || ( isset($bbt_services_count) && $bbt_services_count > 0 );
-
-
-        if ( $bbt_display_services_section ) :
-            $bbt_services_args = array(
-                'post_type'      => 'service',
-                'posts_per_page' => absint( $bbt_services_count ),
-                'orderby'        => 'date',
-                'order'          => 'DESC',
-                'no_found_rows'  => true,
-            );
-            $bbt_services_query = new WP_Query( $bbt_services_args );
-
-            if ( $bbt_services_query->have_posts() ) :
-        ?>
-        <section id="services-section" class="homepage-content-section homepage-services-section section-padding">
+        // --- Features Section ---
+        $bbt_display_features = false;
+        for ( $i = 1; $i <= 3; $i++ ) {
+            if ( get_theme_mod( "bbt_feature_{$i}_title", '' ) ) {
+                $bbt_display_features = true;
+                break;
+            }
+        }
+        if ( $bbt_display_features ) : ?>
+        <section id="features-section" class="homepage-content-section">
             <div class="container">
-                <?php if ( ! empty( $bbt_services_title ) ) : ?>
-                    <h2 class="section-title"><span class="section-title-text"><?php echo esc_html( $bbt_services_title ); ?></span></h2>
-                <?php endif; ?>
+                <div class="features-grid">
+                    <?php for ( $i = 1; $i <= 3; $i++ ) :
+                        $bbt_icon = get_theme_mod( "bbt_feature_{$i}_icon", 'dashicons-star-filled' );
+                        $bbt_title = get_theme_mod( "bbt_feature_{$i}_title" );
+                        $bbt_text = get_theme_mod( "bbt_feature_{$i}_text" );
 
-                <div class="services-grid">
-                    <?php
-                    while ( $bbt_services_query->have_posts() ) : $bbt_services_query->the_post();
+                        if ( ! empty( $bbt_title ) ) :
                     ?>
-                        <article id="service-hp-<?php the_ID(); ?>" <?php post_class('service-summary-item grid-item'); ?>>
-                            <?php if ( has_post_thumbnail() ) : ?>
-                                <div class="service-item-thumbnail post-thumbnail">
-                                    <a href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
-                                        <?php the_post_thumbnail('medium'); ?>
-                                    </a>
-                                </div>
-                            <?php endif; ?>
-                            <header class="entry-header">
-                                <?php the_title( sprintf( '<h3 class="entry-title service-item-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' ); ?>
-                            </header>
-                            <div class="entry-summary service-item-summary">
-                                <?php the_excerpt(); ?>
-                            </div>
-                            <a href="<?php the_permalink(); ?>" class="read-more-link service-item-read-more"><?php esc_html_e( 'Details', 'beautiful-business' ); ?> <span class="screen-reader-text"><?php echo wp_kses_post( get_the_title() ); ?></span></a>
-                        </article>
+                    <div class="feature-item">
+                        <?php if ( ! empty( $bbt_icon ) ) : ?>
+                            <span class="dashicons <?php echo esc_attr( $bbt_icon ); ?>"></span>
+                        <?php endif; ?>
+                        <h3 class="feature-title"><?php echo esc_html( $bbt_title ); ?></h3>
+                        <div class="feature-text"><?php echo wp_kses_post( $bbt_text ); ?></div>
+                    </div>
                     <?php
-                    endwhile;
-                    wp_reset_postdata();
+                        endif; // End check for empty title
+                    endfor;
                     ?>
-                </div><!-- .services-grid -->
-            </div><!-- .container -->
-        </section><!-- #services-section -->
-            <?php
-            endif; // End if $bbt_services_query->have_posts()
-        endif; // End if $bbt_display_services_section
-        ?>
+                </div>
+            </div>
+        </section>
+        <?php endif; ?>
+
 
         <?php
-        // Testimonials Section
-        $bbt_testimonials_title = get_theme_mod( 'bbt_testimonials_section_title', __( 'What Our Clients Say', 'beautiful-business' ) );
-        $bbt_testimonials_count = get_theme_mod( 'bbt_testimonials_section_count', 2 );
-
-        $bbt_display_testimonials_section = ! empty( $bbt_testimonials_title ) || ( isset($bbt_testimonials_count) && $bbt_testimonials_count > 0 );
-
-        if ( $bbt_display_testimonials_section ) :
-            $bbt_testimonials_args = array(
-                'post_type'      => 'testimonial',
-                'posts_per_page' => absint( $bbt_testimonials_count ),
-                'orderby'        => 'date',
-                'order'          => 'DESC',
-                'no_found_rows'  => true,
-            );
-            $bbt_testimonials_query = new WP_Query( $bbt_testimonials_args );
-
-            if ( $bbt_testimonials_query->have_posts() ) :
-        ?>
-        <section id="testimonials-section" class="homepage-content-section homepage-testimonials-section section-padding">
+        // --- Client Logos Section ---
+        $bbt_display_logos = false;
+        for ( $i = 1; $i <= 4; $i++ ) {
+            if ( get_theme_mod( "bbt_client_logo_{$i}" ) ) {
+                $bbt_display_logos = true;
+                break;
+            }
+        }
+        if ( $bbt_display_logos ) : ?>
+        <section id="client-logos-section" class="homepage-content-section alternate-background">
             <div class="container">
-                <?php if ( ! empty( $bbt_testimonials_title ) ) : ?>
-                    <h2 class="section-title"><span class="section-title-text"><?php echo esc_html( $bbt_testimonials_title ); ?></span></h2>
-                <?php endif; ?>
+                <div class="client-logos-grid">
+                    <?php for ( $i = 1; $i <= 4; $i++ ) :
+                        $bbt_logo_url = get_theme_mod( "bbt_client_logo_{$i}" );
+                        if ( $bbt_logo_url ) : ?>
+                        <div class="client-logo-item">
+                            <img src="<?php echo esc_url( $bbt_logo_url ); ?>" alt="<?php printf( esc_attr__( 'Client Logo %d', 'beautiful-business' ), $i ); ?>">
+                        </div>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                </div>
+            </div>
+        </section>
+        <?php endif; ?>
 
-                <div class="testimonials-list">
-                    <?php
-                    while ( $bbt_testimonials_query->have_posts() ) : $bbt_testimonials_query->the_post();
-                        get_template_part( 'template-parts/content', 'testimonial' );
-                    endwhile;
-                    wp_reset_postdata(); // Restore original Post Data
-                    ?>
-                </div><!-- .testimonials-list -->
-            </div><!-- .container -->
-        </section><!-- #testimonials-section -->
-            <?php
-            endif; // End if $bbt_testimonials_query->have_posts()
-        endif; // End if $bbt_display_testimonials_section
-        ?>
+
+        <?php
+        // --- CTA Block Section ---
+        $bbt_cta_headline = get_theme_mod( 'bbt_cta_headline' );
+        if ( $bbt_cta_headline ) : ?>
+        <section id="cta-section" class="homepage-content-section homepage-cta-section">
+            <div class="container">
+                <h2 class="cta-headline"><?php echo esc_html( $bbt_cta_headline ); ?></h2>
+                <div class="cta-text"><?php echo wp_kses_post( get_theme_mod( 'bbt_cta_text' ) ); ?></div>
+                <?php
+                $bbt_cta_btn_text = get_theme_mod( 'bbt_cta_button_text' );
+                if ( $bbt_cta_btn_text ) : ?>
+                <a href="<?php echo esc_url( get_theme_mod( 'bbt_cta_button_url', '#' ) ); ?>" class="button cta-button">
+                    <?php echo esc_html( $bbt_cta_btn_text ); ?>
+                </a>
+                <?php endif; ?>
+            </div>
+        </section>
+        <?php endif; ?>
+
+
+        <?php
+        // --- Latest News Section ---
+        $bbt_news_title = get_theme_mod( 'bbt_news_section_title', __( 'From Our Blog', 'beautiful-business' ) );
+        $bbt_news_count = get_theme_mod( 'bbt_news_section_count', 3 );
+        $bbt_news_query = new WP_Query( array(
+            'post_type'             => 'post',
+            'posts_per_page'        => absint( $bbt_news_count ),
+            'ignore_sticky_posts'   => 1,
+            'no_found_rows'         => true,
+        ) );
+        if ( $bbt_news_query->have_posts() ) : ?>
+        <section id="latest-news-section" class="homepage-content-section">
+            <div class="container">
+                <h2 class="section-title"><span class="section-title-text"><?php echo esc_html( $bbt_news_title ); ?></span></h2>
+                <div class="latest-news-grid">
+                    <?php while ( $bbt_news_query->have_posts() ) : $bbt_news_query->the_post();
+                        get_template_part('template-parts/content', 'summary');
+                    endwhile; wp_reset_postdata(); ?>
+                </div>
+            </div>
+        </section>
+        <?php endif; ?>
 
         <div class="homepage-content-main container">
             <?php

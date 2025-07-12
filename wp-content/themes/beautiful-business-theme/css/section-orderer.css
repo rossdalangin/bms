@@ -1,0 +1,55 @@
+.beautiful-business-section-order-list {
+    margin-top: 12px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 3px;
+}
+
+.beautiful-business-section-order-list .section-order-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+    user-select: none;
+}
+
+.beautiful-business-section-order-list .section-order-item:last-child {
+    border-bottom: none;
+}
+
+.section-order-item .handle {
+    cursor: move;
+    margin-right: 10px;
+    color: #888;
+}
+
+.section-order-item .section-label {
+    flex-grow: 1;
+    font-weight: 500;
+}
+
+.section-order-item .section-visibility-toggle {
+    /* Hide the actual checkbox */
+    display: none;
+}
+
+.section-order-item .visibility-icon {
+    cursor: pointer;
+    color: #4CAF50; /* Green for visible */
+    font-size: 20px;
+    line-height: 1;
+}
+
+/* Style for hidden sections */
+.section-order-item.is-hidden .section-label {
+    color: #999;
+    text-decoration: line-through;
+}
+
+.section-order-item.is-hidden .visibility-icon {
+    color: #F44336; /* Red for hidden */
+}
+
+.section-order-item.is-hidden .visibility-icon::before {
+    content: "\f530"; /* dashicons-hidden */
+}

@@ -104,6 +104,31 @@ if ( ! function_exists( 'beautiful_business_setup' ) ) :
 endif;
 add_action( 'after_setup_theme', 'beautiful_business_setup' );
 
+/**
+ * Sanitize checkbox.
+ *
+ * @param bool $checked Whether the checkbox is checked.
+ * @return bool
+ */
+function beautiful_business_sanitize_checkbox( $checked ) {
+    return ( ( isset( $checked ) && true === $checked ) ? true : false );
+}
+
+/**
+ * Sanitize section order.
+ *
+ * @param string $order The section order.
+ * @return string
+ */
+function beautiful_business_sanitize_section_order( $order ) {
+    $order_array = explode( ',', $order );
+    $sanitized_order = array();
+    foreach ( $order_array as $section_id ) {
+        $sanitized_order[] = sanitize_key( $section_id );
+    }
+    return implode( ',', $sanitized_order );
+}
+
 if ( ! function_exists( 'beautiful_business_posted_on' ) ) :
     /**
      * Prints HTML with meta information for the current post-date/time.

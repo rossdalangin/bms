@@ -29,9 +29,18 @@ class Beautiful_Business_Info_Control extends WP_Customize_Control {
             <?php endif; ?>
 
             <?php if ( ! empty( $this->url ) && ! empty( $this->url_text ) ) : ?>
-                <a href="<?php echo esc_url( $this->url ); ?>" class="button button-primary" target="_blank">
-                    <?php echo esc_html( $this->url_text ); ?>
-                </a>
+                <?php if ( class_exists( 'OCDI_Plugin' ) ) : ?>
+                    <a href="<?php echo esc_url( $this->url ); ?>" class="button button-primary">
+                        <?php echo esc_html( $this->url_text ); ?>
+                    </a>
+                <?php else : ?>
+                    <p class="description" style="color: #c92c2c;">
+                        <?php esc_html_e( 'Please install and activate the "One Click Demo Import" plugin to use this feature.', 'beautiful-business' ); ?>
+                    </p>
+                    <a href="<?php echo esc_url( admin_url( 'themes.php?page=tgmpa-install-plugins' ) ); ?>" class="button button-secondary">
+                        <?php esc_html_e( 'Install Plugin', 'beautiful-business' ); ?>
+                    </a>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         <?php

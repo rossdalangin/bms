@@ -137,6 +137,31 @@
 
     })();
 
+    // --- Live Preview for Section Order ---
+    api('bbt_homepage_section_order', function(setting) {
+        setting.bind(function(newOrder) {
+            var order = newOrder.split(',');
+            var parentContainer = $('#main.site-main');
+            if (!parentContainer.length) { return; }
+
+            var detached = {};
+            // Detach all known sections
+            $.each(order, function(i, id) {
+                var section = $('#homepage-' + id);
+                if (section.length) {
+                    detached[id] = section.detach();
+                }
+            });
+
+            // Re-append in the correct order
+            $.each(order, function(i, id) {
+                if (detached[id]) {
+                    parentContainer.append(detached[id]);
+                }
+            });
+        });
+    });
+
     // --- Live Preview for Section Visibility ---
     var homepageSections = ['hero', 'features', 'services', 'projects', 'cta', 'clients', 'testimonials', 'news'];
     $.each(homepageSections, function(index, id) {

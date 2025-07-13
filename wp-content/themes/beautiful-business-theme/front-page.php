@@ -19,44 +19,19 @@ get_header();
         <main id="main" class="site-main">
 
             <?php
-            // Hero Section
-            if ( get_theme_mod( 'bbt_show_section_hero', true ) ) {
-                get_template_part( 'template-parts/homepage/hero' );
-            }
+            // Get the section order from the Customizer
+            $default_order = 'hero,features,services,projects,cta,clients,testimonials,news';
+            $section_order_str = get_theme_mod( 'bbt_homepage_section_order', $default_order );
+            $section_order = explode( ',', $section_order_str );
 
-            // Features Section
-            if ( get_theme_mod( 'bbt_show_section_features', true ) ) {
-                get_template_part( 'template-parts/homepage/features' );
-            }
+            // Loop through the sections in the defined order
+            foreach ( $section_order as $section_id ) {
+                $section_id = trim( $section_id );
 
-            // Services Section
-            if ( get_theme_mod( 'bbt_show_section_services', true ) ) {
-                get_template_part( 'template-parts/homepage/services' );
-            }
-
-            // Projects Section
-            if ( get_theme_mod( 'bbt_show_section_projects', true ) ) {
-                get_template_part( 'template-parts/homepage/projects' );
-            }
-
-            // CTA Section
-            if ( get_theme_mod( 'bbt_show_section_cta', true ) ) {
-                get_template_part( 'template-parts/homepage/cta' );
-            }
-
-            // Client Logos Section
-            if ( get_theme_mod( 'bbt_show_section_clients', true ) ) {
-                get_template_part( 'template-parts/homepage/client-logos' );
-            }
-
-            // Testimonials Section
-            if ( get_theme_mod( 'bbt_show_section_testimonials', true ) ) {
-                get_template_part( 'template-parts/homepage/testimonials' );
-            }
-
-            // Latest News Section
-            if ( get_theme_mod( 'bbt_show_section_news', true ) ) {
-                get_template_part( 'template-parts/homepage/latest-news' );
+                // Check if the section is set to be visible
+                if ( get_theme_mod( 'bbt_show_section_' . $section_id, true ) ) {
+                    get_template_part( 'template-parts/homepage/' . $section_id );
+                }
             }
             ?>
 

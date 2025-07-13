@@ -1,0 +1,29 @@
+.beautiful-business-reorder-list {
+    margin-top: 12px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 3px;
+}
+
+.beautiful-business-reorder-list .reorder-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+    user-select: none;
+}
+
+.beautiful-business-reorder-list .reorder-item:last-child {
+    border-bottom: none;
+}
+
+.reorder-item .handle {
+    cursor: move;
+    margin-right: 10px;
+    color: #888;
+}
+
+.reorder-item .section-label {
+    flex-grow: 1;
+    font-weight: 500;
+}

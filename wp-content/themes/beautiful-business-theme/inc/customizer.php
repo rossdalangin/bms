@@ -135,6 +135,40 @@ function beautiful_business_customize_register( $wp_customize ) {
     // Homepage Sections Panel
     $wp_customize->add_panel( 'bbt_homepage_sections_panel', array( 'title' => __( 'Homepage Sections', 'beautiful-business' ), 'priority' => 35, 'description' => __( 'Manage content sections on the homepage.', 'beautiful-business') ) );
 
+    // --- Section Order ---
+    $wp_customize->add_section( 'bbt_homepage_order_section', array(
+        'title' => __( 'Section Order', 'beautiful-business' ),
+        'panel' => 'bbt_homepage_sections_panel',
+        'priority' => 6,
+        'description' => __( 'Drag and drop the sections to change their order on the homepage.', 'beautiful-business' ),
+    ) );
+
+    require_once get_template_directory() . '/inc/customizer-controls/reorder-control.php';
+
+    $bbt_homepage_sections_for_order = array(
+        'hero'         => __( 'Hero Section', 'beautiful-business' ),
+        'features'     => __( 'Features Section', 'beautiful-business' ),
+        'services'     => __( 'Services Section', 'beautiful-business' ),
+        'projects'     => __( 'Projects Section', 'beautiful-business' ),
+        'cta'          => __( 'CTA Section', 'beautiful-business' ),
+        'clients'      => __( 'Client Logos Section', 'beautiful-business' ),
+        'testimonials' => __( 'Testimonials Section', 'beautiful-business' ),
+        'news'         => __( 'Latest News Section', 'beautiful-business' ),
+    );
+
+    $wp_customize->add_setting( 'bbt_homepage_section_order', array(
+        'default'           => implode( ',', array_keys( $bbt_homepage_sections_for_order ) ),
+        'sanitize_callback' => 'beautiful_business_sanitize_section_order',
+        'transport'         => 'postMessage',
+    ) );
+
+    $wp_customize->add_control( new Beautiful_Business_Reorder_Control( $wp_customize, 'bbt_homepage_section_order_control', array(
+        'label'    => __( 'Homepage Section Order', 'beautiful-business' ),
+        'section'  => 'bbt_homepage_order_section',
+        'settings' => 'bbt_homepage_section_order',
+        'choices'  => $bbt_homepage_sections_for_order,
+    ) ) );
+
     // --- Show/Hide Sections ---
     $wp_customize->add_section( 'bbt_homepage_visibility_section', array(
         'title' => __( 'Show / Hide Sections', 'beautiful-business' ),

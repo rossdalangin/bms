@@ -198,12 +198,17 @@ input[type="submit"]:hover,
 
 /* Homepage Hero Section */
 .homepage-hero-section {
-    padding: 64px 24px;
     background-color: #f0f0f0;
     background-size: cover;
     background-position: center center;
     color: #333;
     position: relative;
+    padding: 0; /* Remove padding from the main section */
+}
+
+.homepage-hero-section .section-inner {
+    padding-top: 64px;
+    padding-bottom: 64px;
 }
 
 .homepage-hero-section.has-background-image {

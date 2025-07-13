@@ -12,7 +12,7 @@ $hero_button_url = get_theme_mod( 'bbt_hero_button_url', '#services' );
 $hero_bg_image = get_theme_mod( 'bbt_hero_background_image', '' );
 $hero_text_align = get_theme_mod( 'bbt_hero_text_align', 'center' );
 
-$hero_classes = 'homepage-hero-section';
+$hero_classes = 'homepage-hero-section homepage-content-section'; // Added homepage-content-section
 if ( ! empty( $hero_bg_image ) ) {
     $hero_classes .= ' has-background-image';
 }

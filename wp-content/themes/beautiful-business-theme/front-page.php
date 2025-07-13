@@ -19,29 +19,45 @@ get_header();
         <main id="main" class="site-main">
 
             <?php
-            // Display Hero Section
-            get_template_part( 'template-parts/homepage/hero' );
+            // Hero Section
+            if ( get_theme_mod( 'bbt_show_section_hero', true ) ) {
+                get_template_part( 'template-parts/homepage/hero' );
+            }
 
-            // Display Features Section
-            get_template_part( 'template-parts/homepage/features' );
+            // Features Section
+            if ( get_theme_mod( 'bbt_show_section_features', true ) ) {
+                get_template_part( 'template-parts/homepage/features' );
+            }
 
-            // Display Services Section
-            get_template_part( 'template-parts/homepage/services' );
+            // Services Section
+            if ( get_theme_mod( 'bbt_show_section_services', true ) ) {
+                get_template_part( 'template-parts/homepage/services' );
+            }
 
-            // Display Projects Section
-            get_template_part( 'template-parts/homepage/projects' );
+            // Projects Section
+            if ( get_theme_mod( 'bbt_show_section_projects', true ) ) {
+                get_template_part( 'template-parts/homepage/projects' );
+            }
 
-            // Display CTA Section
-            get_template_part( 'template-parts/homepage/cta' );
+            // CTA Section
+            if ( get_theme_mod( 'bbt_show_section_cta', true ) ) {
+                get_template_part( 'template-parts/homepage/cta' );
+            }
 
-            // Display Client Logos Section
-            get_template_part( 'template-parts/homepage/client-logos' );
+            // Client Logos Section
+            if ( get_theme_mod( 'bbt_show_section_clients', true ) ) {
+                get_template_part( 'template-parts/homepage/client-logos' );
+            }
 
-            // Display Testimonials Section
-            get_template_part( 'template-parts/homepage/testimonials' );
+            // Testimonials Section
+            if ( get_theme_mod( 'bbt_show_section_testimonials', true ) ) {
+                get_template_part( 'template-parts/homepage/testimonials' );
+            }
 
-            // Display Latest News Section
-            get_template_part( 'template-parts/homepage/latest-news' );
+            // Latest News Section
+            if ( get_theme_mod( 'bbt_show_section_news', true ) ) {
+                get_template_part( 'template-parts/homepage/latest-news' );
+            }
             ?>
 
         </main><!-- #main -->

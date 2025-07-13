@@ -135,6 +135,39 @@ function beautiful_business_customize_register( $wp_customize ) {
     // Homepage Sections Panel
     $wp_customize->add_panel( 'bbt_homepage_sections_panel', array( 'title' => __( 'Homepage Sections', 'beautiful-business' ), 'priority' => 35, 'description' => __( 'Manage content sections on the homepage.', 'beautiful-business') ) );
 
+    // --- Show/Hide Sections ---
+    $wp_customize->add_section( 'bbt_homepage_visibility_section', array(
+        'title' => __( 'Show / Hide Sections', 'beautiful-business' ),
+        'panel' => 'bbt_homepage_sections_panel',
+        'priority' => 5,
+        'description' => __( 'Check a box to show the corresponding section on the homepage.', 'beautiful-business' ),
+    ) );
+
+    $bbt_homepage_sections = array(
+        'hero'         => __( 'Show Hero Section', 'beautiful-business' ),
+        'features'     => __( 'Show Features Section', 'beautiful-business' ),
+        'services'     => __( 'Show Services Section', 'beautiful-business' ),
+        'projects'     => __( 'Show Projects Section', 'beautiful-business' ),
+        'cta'          => __( 'Show CTA Section', 'beautiful-business' ),
+        'clients'      => __( 'Show Client Logos Section', 'beautiful-business' ),
+        'testimonials' => __( 'Show Testimonials Section', 'beautiful-business' ),
+        'news'         => __( 'Show Latest News Section', 'beautiful-business' ),
+    );
+
+    foreach ( $bbt_homepage_sections as $id => $label ) {
+        $wp_customize->add_setting( 'bbt_show_section_' . $id, array(
+            'default'           => true,
+            'sanitize_callback' => 'beautiful_business_sanitize_checkbox',
+            'transport'         => 'postMessage',
+        ) );
+        $wp_customize->add_control( 'bbt_show_section_' . $id . '_control', array(
+            'label'    => $label,
+            'section'  => 'bbt_homepage_visibility_section',
+            'settings' => 'bbt_show_section_' . $id,
+            'type'     => 'checkbox',
+        ) );
+    }
+
     // --- Services Section ---
     $wp_customize->add_section( 'bbt_homepage_services_section', array( 'title' => __( 'Services Section', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 10 ) );
     $wp_customize->add_setting( 'bbt_services_section_title', array( 'default' => __( 'Our Services', 'beautiful-business' ), 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );

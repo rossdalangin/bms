@@ -137,4 +137,19 @@
 
     })();
 
+    // --- Live Preview for Section Visibility ---
+    var homepageSections = ['hero', 'features', 'services', 'projects', 'cta', 'clients', 'testimonials', 'news'];
+    $.each(homepageSections, function(index, id) {
+        api('bbt_show_section_' + id, function(setting) {
+            setting.bind(function(isVisible) {
+                var section = $('#homepage-' + id);
+                if (isVisible) {
+                    section.slideDown(200);
+                } else {
+                    section.slideUp(200);
+                }
+            });
+        });
+    });
+
 } )( jQuery );

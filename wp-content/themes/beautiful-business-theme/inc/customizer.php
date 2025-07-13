@@ -30,24 +30,63 @@ function beautiful_business_customize_register( $wp_customize ) {
         );
     }
 
-    // Site Title & Tagline
+    // --- Re-organize Core Sections & Panels ---
+
+    // 1. General Settings Panel
+    $wp_customize->add_panel( 'bbt_general_settings_panel', array(
+        'title'      => __( 'General Settings', 'beautiful-business' ),
+        'priority'   => 10,
+    ) );
+
+    $wp_customize->get_section( 'title_tagline' )->panel = 'bbt_general_settings_panel';
+    $wp_customize->get_section( 'title_tagline' )->priority = 5;
+
+    $wp_customize->get_section( 'colors' )->panel = 'bbt_general_settings_panel';
+    $wp_customize->get_section( 'colors' )->title = __( 'Background Color', 'beautiful-business' ); // Rename for clarity
+    $wp_customize->get_section( 'colors' )->priority = 15;
+
+    $wp_customize->get_panel( 'nav_menus' )->panel = 'bbt_general_settings_panel';
+    $wp_customize->get_panel( 'nav_menus' )->priority = 20;
+
+    $wp_customize->get_section( 'background_image' )->panel = 'bbt_general_settings_panel';
+    $wp_customize->get_section( 'background_image' )->priority = 25;
+
+    // 2. Homepage Sections Panel
+    $wp_customize->add_panel( 'bbt_homepage_sections_panel', array(
+        'title'      => __( 'Homepage Sections', 'beautiful-business' ),
+        'priority'   => 20,
+    ) );
+
+    $wp_customize->get_section( 'static_front_page' )->panel = 'bbt_homepage_sections_panel';
+    $wp_customize->get_section( 'static_front_page' )->priority = 5;
+
+    // --- Custom Panels and Sections ---
+
+    // Site Title & Tagline (already moved)
     $wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
     $wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
-
     if ( isset( $wp_customize->selective_refresh ) ) {
         $wp_customize->selective_refresh->add_partial( 'blogname', array( 'selector' => '.site-title a', 'render_callback' => function() { bloginfo( 'name' ); } ) );
         $wp_customize->selective_refresh->add_partial( 'blogdescription', array( 'selector' => '.site-description', 'render_callback' => function() { bloginfo( 'description' ); } ) );
     }
 
-    // Header Settings Section
-    $wp_customize->add_section( 'bbt_header_settings_section', array( 'title' => __( 'Header Settings', 'beautiful-business' ), 'priority' => 20 ) );
+    // Header Settings
+    $wp_customize->add_section( 'bbt_header_settings_section', array(
+        'title' => __( 'Header Settings', 'beautiful-business' ),
+        'priority' => 30,
+        'panel' => 'bbt_general_settings_panel',
+    ) );
     $wp_customize->add_setting( 'bbt_header_cta_text', array( 'default' => __( 'Get a Quote', 'beautiful-business' ), 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_header_cta_text_control', array( 'label' => __( 'Header Button Text', 'beautiful-business' ), 'section' => 'bbt_header_settings_section', 'settings' => 'bbt_header_cta_text', 'type' => 'text' ) );
     $wp_customize->add_setting( 'bbt_header_cta_url', array( 'default' => '#contact', 'sanitize_callback' => 'esc_url_raw', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_header_cta_url_control', array( 'label' => __( 'Header Button URL', 'beautiful-business' ), 'section' => 'bbt_header_settings_section', 'settings' => 'bbt_header_cta_url', 'type' => 'url' ) );
 
-    // Theme Colors Section
-    $wp_customize->add_section( 'bbt_theme_colors_section', array( 'title' => __( 'Theme Colors', 'beautiful-business' ), 'priority' => 30 ) );
+    // Theme Colors
+    $wp_customize->add_section( 'bbt_theme_colors_section', array(
+        'title' => __( 'Theme Colors', 'beautiful-business' ),
+        'priority' => 10,
+        'panel' => 'bbt_general_settings_panel',
+    ) );
     $wp_customize->add_setting( 'bbt_primary_color', array( 'default' => '#007bff', 'sanitize_callback' => 'sanitize_hex_color', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bbt_primary_color_control', array( 'label' => __( 'Primary Color', 'beautiful-business' ), 'section' => 'bbt_theme_colors_section', 'settings' => 'bbt_primary_color' ) ) );
     $wp_customize->add_setting( 'bbt_secondary_color', array( 'default' => '#6c757d', 'sanitize_callback' => 'sanitize_hex_color', 'transport' => 'postMessage' ) );
@@ -58,11 +97,13 @@ function beautiful_business_customize_register( $wp_customize ) {
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bbt_heading_color_control', array( 'label' => __( 'Heading Color', 'beautiful-business' ), 'section' => 'bbt_theme_colors_section', 'settings' => 'bbt_heading_color' ) ) );
     $wp_customize->add_setting( 'bbt_link_hover_color', array( 'default' => '#0056b3', 'sanitize_callback' => 'sanitize_hex_color', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bbt_link_hover_color_control', array( 'label' => __( 'Link Hover Color', 'beautiful-business' ), 'section' => 'bbt_theme_colors_section', 'settings' => 'bbt_link_hover_color' ) ) );
-    $wp_customize->add_setting( 'bbt_background_color', array( 'default' => '#ffffff', 'sanitize_callback' => 'sanitize_hex_color', 'transport' => 'postMessage' ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bbt_background_color_control', array( 'label' => __( 'Main Background Color', 'beautiful-business' ), 'section' => 'bbt_theme_colors_section', 'settings' => 'bbt_background_color' ) ) );
 
-    // --- Typography Panel ---
-    $wp_customize->add_panel( 'bbt_typography_panel', array( 'title' => __( 'Typography', 'beautiful-business' ), 'priority' => 40 ) );
+    // Typography
+    $wp_customize->add_panel( 'bbt_typography_panel', array(
+        'title' => __( 'Typography', 'beautiful-business' ),
+        'priority' => 35,
+        'panel' => 'bbt_general_settings_panel',
+    ) );
     $wp_customize->add_section( 'bbt_headings_typo_section', array( 'title' => __( 'Headings (H1-H6)', 'beautiful-business' ), 'panel' => 'bbt_typography_panel', 'priority' => 10 ) );
     $wp_customize->add_setting( 'bbt_heading_font', array( 'default' => 'Montserrat', 'sanitize_callback' => 'sanitize_text_field' ) );
     $wp_customize->add_control( 'bbt_heading_font_control', array( 'label' => __( 'Heading Font Family', 'beautiful-business' ), 'section' => 'bbt_headings_typo_section', 'settings' => 'bbt_heading_font', 'type' => 'select', 'choices' => beautiful_business_get_font_choices() ) );
@@ -76,13 +117,45 @@ function beautiful_business_customize_register( $wp_customize ) {
     $wp_customize->add_setting( 'bbt_base_font_size_mobile', array( 'default' => 15, 'sanitize_callback' => 'absint' ) );
     $wp_customize->add_control( 'bbt_base_font_size_mobile_control', array( 'label' => __( 'Base Font Size - Mobile (px)', 'beautiful-business' ), 'section' => 'bbt_body_typo_section', 'settings' => 'bbt_base_font_size_mobile', 'type' => 'number', 'input_attrs' => array('min'=>12, 'max'=>20) ) );
 
-    // Footer Settings Section
-    $wp_customize->add_section( 'bbt_footer_settings_section', array( 'title' => __( 'Footer Settings', 'beautiful-business' ), 'priority' => 120 ) );
+    // Page Settings
+    $wp_customize->add_section( 'bbt_page_settings_section', array(
+        'title'      => __( 'Page Layout', 'beautiful-business' ),
+        'panel'      => 'bbt_general_settings_panel',
+        'priority'   => 40,
+    ) );
+    $wp_customize->add_setting( 'bbt_content_max_width', array( 'default' => '1200px', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
+    $wp_customize->add_control( 'bbt_content_max_width_control', array( 'label' => __( 'Content Max Width', 'beautiful-business' ), 'description' => __( 'e.g., 1200px or 90%', 'beautiful-business' ), 'section' => 'bbt_page_settings_section', 'settings' => 'bbt_content_max_width', 'type' => 'text' ) );
+    $wp_customize->add_setting( 'bbt_screen_width', array( 'default' => 'default', 'sanitize_callback' => 'sanitize_key', 'transport' => 'postMessage' ) );
+    $wp_customize->add_control( 'bbt_screen_width_control', array( 'label' => __( 'Screen Width', 'beautiful-business' ), 'section' => 'bbt_page_settings_section', 'settings' => 'bbt_screen_width', 'type' => 'select', 'choices' => array( 'default' => __( 'Default', 'beautiful-business' ), 'fullwidth' => __( 'Full Width', 'beautiful-business' ) ) ) );
+
+    // Footer Settings
+    $wp_customize->add_section( 'bbt_footer_settings_section', array(
+        'title' => __( 'Footer Settings', 'beautiful-business' ),
+        'priority' => 45,
+        'panel' => 'bbt_general_settings_panel',
+    ) );
     $wp_customize->add_setting( 'bbt_copyright_text', array( 'default' => __( '&copy; [year] [site_name]. All rights reserved.', 'beautiful-business' ), 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_copyright_text_control', array( 'label' => __( 'Copyright Text', 'beautiful-business' ), 'description' => __( 'Placeholders: [year], [site_name]', 'beautiful-business'), 'section' => 'bbt_footer_settings_section', 'settings' => 'bbt_copyright_text', 'type' => 'textarea' ) );
 
-    // Homepage Hero Section
-    $wp_customize->add_section( 'bbt_homepage_hero_section', array( 'title' => __( 'Homepage Hero', 'beautiful-business' ), 'priority' => 25, 'description' => __( 'Settings for the main hero section on the homepage.', 'beautiful-business') ) );
+    // Demo Import
+    $wp_customize->add_section( 'bbt_demo_import_section', array(
+        'title' => __( 'Demo Content Import', 'beautiful-business' ),
+        'priority' => 50,
+        'panel' => 'bbt_general_settings_panel',
+    ) );
+    require_once get_template_directory() . '/inc/customizer-controls/info-control.php';
+    $wp_customize->add_setting( 'bbt_demo_import_info', array( 'default' => '', 'sanitize_callback' => 'wp_kses_post' ) );
+    $wp_customize->add_control( new Beautiful_Business_Info_Control( $wp_customize, 'bbt_demo_import_info', array( 'label' => __( 'Import Demo Content', 'beautiful-business' ), 'description' => __( 'To get your site looking like the theme demo, please install the recommended "One Click Demo Import" plugin. Once activated, you can import the demo content from the page linked below.', 'beautiful-business' ), 'section' => 'bbt_demo_import_section', 'url' => esc_url( admin_url( 'themes.php?page=pt-one-click-demo-import' ) ), 'url_text' => __( 'Go to Demo Import Page', 'beautiful-business' ) ) ) );
+
+    // --- Homepage Section Content and Settings ---
+
+    // Homepage Hero
+    $wp_customize->add_section( 'bbt_homepage_hero_section', array(
+        'title' => __( 'Hero Section', 'beautiful-business' ),
+        'priority' => 10,
+        'panel' => 'bbt_homepage_sections_panel',
+        'description' => __( 'Settings for the main hero section on the homepage.', 'beautiful-business')
+    ) );
     $wp_customize->add_setting( 'bbt_hero_title', array( 'default' => __( 'Welcome to Beautiful Business', 'beautiful-business' ), 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_hero_title_control', array( 'label' => __( 'Hero Title', 'beautiful-business' ), 'section' => 'bbt_homepage_hero_section', 'settings' => 'bbt_hero_title', 'type' => 'text' ) );
     $wp_customize->add_setting( 'bbt_hero_subtitle', array( 'default' => __( 'Your success is our priority. Discover our services.', 'beautiful-business' ), 'sanitize_callback' => 'wp_kses_post', 'transport' => 'postMessage' ) );
@@ -93,134 +166,11 @@ function beautiful_business_customize_register( $wp_customize ) {
     $wp_customize->add_control( 'bbt_hero_button_url_control', array( 'label' => __( 'Hero Button URL', 'beautiful-business' ), 'section' => 'bbt_homepage_hero_section', 'settings' => 'bbt_hero_button_url', 'type' => 'url' ) );
     $wp_customize->add_setting( 'bbt_hero_background_image', array( 'default' => '', 'sanitize_callback' => 'esc_url_raw', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'bbt_hero_background_image_control', array( 'label' => __( 'Hero Background Image', 'beautiful-business' ), 'section' => 'bbt_homepage_hero_section', 'settings' => 'bbt_hero_background_image' ) ) );
+    $wp_customize->add_setting( 'bbt_hero_text_align', array( 'default' => 'center', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
+    $wp_customize->add_control( 'bbt_hero_text_align_control', array( 'label' => __( 'Text Alignment', 'beautiful-business' ), 'section' => 'bbt_homepage_hero_section', 'settings' => 'bbt_hero_text_align', 'type' => 'select', 'choices' => array( 'left' => __( 'Left', 'beautiful-business' ), 'center' => __( 'Center', 'beautiful-business' ), 'right' => __( 'Right', 'beautiful-business' ) ) ) );
 
-    // Hero Text Alignment
-    $wp_customize->add_setting( 'bbt_hero_text_align', array(
-        'default'           => 'center',
-        'sanitize_callback' => 'sanitize_text_field', // Simple validation
-    ) );
-    $wp_customize->add_control( 'bbt_hero_text_align_control', array(
-        'label'    => __( 'Text Alignment', 'beautiful-business' ),
-        'section'  => 'bbt_homepage_hero_section',
-        'settings' => 'bbt_hero_text_align',
-        'type'     => 'select',
-        'choices'  => array(
-            'left'   => __( 'Left', 'beautiful-business' ),
-            'center' => __( 'Center', 'beautiful-business' ),
-            'right'  => __( 'Right', 'beautiful-business' ),
-        ),
-    ) );
-
-    // --- General Settings Panel ---
-    $wp_customize->add_panel( 'bbt_general_settings_panel', array(
-        'title'      => __( 'General Settings', 'beautiful-business' ),
-        'priority'   => 15,
-    ) );
-
-    // Page Settings Section
-    $wp_customize->add_section( 'bbt_page_settings_section', array(
-        'title'      => __( 'Page Settings', 'beautiful-business' ),
-        'panel'      => 'bbt_general_settings_panel',
-        'priority'   => 10,
-    ) );
-
-    // Content Max Width
-    $wp_customize->add_setting( 'bbt_content_max_width', array(
-        'default'           => '1200px',
-        'sanitize_callback' => 'sanitize_text_field', // Simple sanitization, can be improved with a custom one for CSS values
-        'transport'         => 'postMessage',
-    ) );
-    $wp_customize->add_control( 'bbt_content_max_width_control', array(
-        'label'       => __( 'Content Max Width', 'beautiful-business' ),
-        'description' => __( 'e.g., 1200px or 90%', 'beautiful-business' ),
-        'section'     => 'bbt_page_settings_section',
-        'settings'    => 'bbt_content_max_width',
-        'type'        => 'text',
-    ) );
-
-    // Screen Width
-    $wp_customize->add_setting( 'bbt_screen_width', array(
-        'default'           => 'default',
-        'sanitize_callback' => 'sanitize_key',
-        'transport'         => 'postMessage',
-    ) );
-    $wp_customize->add_control( 'bbt_screen_width_control', array(
-        'label'       => __( 'Screen Width', 'beautiful-business' ),
-        'section'     => 'bbt_page_settings_section',
-        'settings'    => 'bbt_screen_width',
-        'type'        => 'select',
-        'choices'     => array(
-            'default'   => __( 'Default', 'beautiful-business' ),
-            'fullwidth' => __( 'Full Width', 'beautiful-business' ),
-        ),
-    ) );
-
-    // Demo Import Section
-    $wp_customize->add_section( 'bbt_demo_import_section', array(
-        'title'      => __( 'Demo Content Import', 'beautiful-business' ),
-        'priority'   => 10,
-    ) );
-
-    require_once get_template_directory() . '/inc/customizer-controls/info-control.php';
-
-    $wp_customize->add_setting( 'bbt_demo_import_info', array(
-        'default' => '',
-        'sanitize_callback' => 'wp_kses_post',
-    ) );
-
-    $wp_customize->add_control( new Beautiful_Business_Info_Control( $wp_customize, 'bbt_demo_import_info', array(
-        'label'       => __( 'Import Demo Content', 'beautiful-business' ),
-        'description' => __( 'To get your site looking like the theme demo, please install the recommended "One Click Demo Import" plugin. Once activated, you can import the demo content from the page linked below.', 'beautiful-business' ),
-        'section'     => 'bbt_demo_import_section',
-        'url'         => esc_url( admin_url( 'themes.php?page=pt-one-click-demo-import' ) ),
-        'url_text'    => __( 'Go to Demo Import Page', 'beautiful-business' ),
-    ) ) );
-
-    // Homepage Sections Panel
-    $wp_customize->add_panel( 'bbt_homepage_sections_panel', array( 'title' => __( 'Homepage Sections', 'beautiful-business' ), 'priority' => 35, 'description' => __( 'Manage content sections on the homepage.', 'beautiful-business') ) );
-
-    // --- Section Order ---
-    $wp_customize->add_section( 'bbt_homepage_order_section', array(
-        'title' => __( 'Section Order', 'beautiful-business' ),
-        'panel' => 'bbt_homepage_sections_panel',
-        'priority' => 6,
-        'description' => __( 'Drag and drop the sections to change their order on the homepage.', 'beautiful-business' ),
-    ) );
-
-    require_once get_template_directory() . '/inc/customizer-controls/reorder-control.php';
-
-    $bbt_homepage_sections_for_order = array(
-        'hero'         => __( 'Hero Section', 'beautiful-business' ),
-        'features'     => __( 'Features Section', 'beautiful-business' ),
-        'services'     => __( 'Services Section', 'beautiful-business' ),
-        'projects'     => __( 'Projects Section', 'beautiful-business' ),
-        'cta'          => __( 'CTA Section', 'beautiful-business' ),
-        'clients'      => __( 'Client Logos Section', 'beautiful-business' ),
-        'testimonials' => __( 'Testimonials Section', 'beautiful-business' ),
-        'news'         => __( 'Latest News Section', 'beautiful-business' ),
-    );
-
-    $wp_customize->add_setting( 'bbt_homepage_section_order', array(
-        'default'           => implode( ',', array_keys( $bbt_homepage_sections_for_order ) ),
-        'sanitize_callback' => 'beautiful_business_sanitize_section_order',
-        'transport'         => 'postMessage',
-    ) );
-
-    $wp_customize->add_control( new Beautiful_Business_Reorder_Control( $wp_customize, 'bbt_homepage_section_order_control', array(
-        'label'    => __( 'Homepage Section Order', 'beautiful-business' ),
-        'section'  => 'bbt_homepage_order_section',
-        'settings' => 'bbt_homepage_section_order',
-        'choices'  => $bbt_homepage_sections_for_order,
-    ) ) );
-
-    // --- Show/Hide Sections ---
-    $wp_customize->add_section( 'bbt_homepage_visibility_section', array(
-        'title' => __( 'Show / Hide Sections', 'beautiful-business' ),
-        'panel' => 'bbt_homepage_sections_panel',
-        'priority' => 5,
-        'description' => __( 'Check a box to show the corresponding section on the homepage.', 'beautiful-business' ),
-    ) );
-
+    // --- Show/Hide & Reorder Sections ---
+    $wp_customize->add_section( 'bbt_homepage_visibility_section', array( 'title' => __( 'Show / Hide Sections', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 15, 'description' => __( 'Check a box to show the corresponding section on the homepage.', 'beautiful-business' ) ) );
     $bbt_homepage_sections = array(
         'hero'         => __( 'Show Hero Section', 'beautiful-business' ),
         'features'     => __( 'Show Features Section', 'beautiful-business' ),
@@ -231,44 +181,46 @@ function beautiful_business_customize_register( $wp_customize ) {
         'testimonials' => __( 'Show Testimonials Section', 'beautiful-business' ),
         'news'         => __( 'Show Latest News Section', 'beautiful-business' ),
     );
-
     foreach ( $bbt_homepage_sections as $id => $label ) {
-        $wp_customize->add_setting( 'bbt_show_section_' . $id, array(
-            'default'           => true,
-            'sanitize_callback' => 'beautiful_business_sanitize_checkbox',
-            'transport'         => 'postMessage',
-        ) );
-        $wp_customize->add_control( 'bbt_show_section_' . $id . '_control', array(
-            'label'    => $label,
-            'section'  => 'bbt_homepage_visibility_section',
-            'settings' => 'bbt_show_section_' . $id,
-            'type'     => 'checkbox',
-        ) );
+        $wp_customize->add_setting( 'bbt_show_section_' . $id, array( 'default' => true, 'sanitize_callback' => 'beautiful_business_sanitize_checkbox', 'transport' => 'postMessage' ) );
+        $wp_customize->add_control( 'bbt_show_section_' . $id . '_control', array( 'label' => $label, 'section' => 'bbt_homepage_visibility_section', 'settings' => 'bbt_show_section_' . $id, 'type' => 'checkbox' ) );
     }
 
-    // --- Services Section ---
-    $wp_customize->add_section( 'bbt_homepage_services_section', array( 'title' => __( 'Services Section', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 10 ) );
+    $wp_customize->add_section( 'bbt_homepage_order_section', array( 'title' => __( 'Section Order', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 20, 'description' => __( 'Drag and drop the sections to change their order on the homepage.', 'beautiful-business' ) ) );
+    require_once get_template_directory() . '/inc/customizer-controls/reorder-control.php';
+    $bbt_homepage_sections_for_order = array(
+        'hero'         => __( 'Hero Section', 'beautiful-business' ),
+        'features'     => __( 'Features Section', 'beautiful-business' ),
+        'services'     => __( 'Services Section', 'beautiful-business' ),
+        'projects'     => __( 'Projects Section', 'beautiful-business' ),
+        'cta'          => __( 'CTA Section', 'beautiful-business' ),
+        'clients'      => __( 'Client Logos Section', 'beautiful-business' ),
+        'testimonials' => __( 'Testimonials Section', 'beautiful-business' ),
+        'news'         => __( 'Latest News Section', 'beautiful-business' ),
+    );
+    $wp_customize->add_setting( 'bbt_homepage_section_order', array( 'default' => implode( ',', array_keys( $bbt_homepage_sections_for_order ) ), 'sanitize_callback' => 'beautiful_business_sanitize_section_order', 'transport' => 'postMessage' ) );
+    $wp_customize->add_control( new Beautiful_Business_Reorder_Control( $wp_customize, 'bbt_homepage_section_order_control', array( 'label' => __( 'Homepage Section Order', 'beautiful-business' ), 'section' => 'bbt_homepage_order_section', 'settings' => 'bbt_homepage_section_order', 'choices' => $bbt_homepage_sections_for_order ) ) );
+
+    // --- Section Content ---
+    $wp_customize->add_section( 'bbt_homepage_services_section', array( 'title' => __( 'Services Section Content', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 25 ) );
     $wp_customize->add_setting( 'bbt_services_section_title', array( 'default' => __( 'Our Services', 'beautiful-business' ), 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_services_section_title_control', array( 'label' => __( 'Section Title', 'beautiful-business' ), 'section' => 'bbt_homepage_services_section', 'settings' => 'bbt_services_section_title' ) );
     $wp_customize->add_setting( 'bbt_services_section_count', array( 'default' => 3, 'sanitize_callback' => 'absint', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_services_section_count_control', array( 'label' => __( 'Number of Services', 'beautiful-business' ), 'section' => 'bbt_homepage_services_section', 'settings' => 'bbt_services_section_count', 'type' => 'number', 'input_attrs' => array('min'=>1, 'max'=>9) ) );
 
-    // --- Projects Section ---
-    $wp_customize->add_section( 'bbt_homepage_projects_section', array( 'title' => __( 'Projects Section', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 15 ) );
+    $wp_customize->add_section( 'bbt_homepage_projects_section', array( 'title' => __( 'Projects Section Content', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 30 ) );
     $wp_customize->add_setting( 'bbt_projects_section_title', array( 'default' => __( 'Our Latest Work', 'beautiful-business' ), 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_projects_section_title_control', array( 'label' => __( 'Section Title', 'beautiful-business' ), 'section' => 'bbt_homepage_projects_section', 'settings' => 'bbt_projects_section_title' ) );
     $wp_customize->add_setting( 'bbt_projects_section_count', array( 'default' => 3, 'sanitize_callback' => 'absint', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_projects_section_count_control', array( 'label' => __( 'Number of Projects', 'beautiful-business' ), 'section' => 'bbt_homepage_projects_section', 'settings' => 'bbt_projects_section_count', 'type' => 'number', 'input_attrs' => array('min'=>1, 'max'=>9) ) );
 
-    // --- Testimonials Section ---
-    $wp_customize->add_section( 'bbt_homepage_testimonials_section', array( 'title' => __( 'Testimonials Section', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 20 ) );
+    $wp_customize->add_section( 'bbt_homepage_testimonials_section', array( 'title' => __( 'Testimonials Section Content', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 35 ) );
     $wp_customize->add_setting( 'bbt_testimonials_section_title', array( 'default' => __( 'What Our Clients Say', 'beautiful-business' ), 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_testimonials_section_title_control', array( 'label' => __( 'Section Title', 'beautiful-business' ), 'section' => 'bbt_homepage_testimonials_section', 'settings' => 'bbt_testimonials_section_title' ) );
     $wp_customize->add_setting( 'bbt_testimonials_section_count', array( 'default' => 2, 'sanitize_callback' => 'absint', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_testimonials_section_count_control', array( 'label' => __( 'Number of Testimonials', 'beautiful-business' ), 'section' => 'bbt_homepage_testimonials_section', 'settings' => 'bbt_testimonials_section_count', 'type' => 'number', 'input_attrs' => array('min'=>1, 'max'=>6) ) );
 
-    // --- Features Section ---
-    $wp_customize->add_section( 'bbt_homepage_features_section', array( 'title' => __( 'Features Section', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 30 ) );
+    $wp_customize->add_section( 'bbt_homepage_features_section', array( 'title' => __( 'Features Section Content', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 40 ) );
     for ($i = 1; $i <= 3; $i++) {
         $wp_customize->add_setting( "bbt_feature_{$i}_icon", array( 'default' => 'dashicons-star-filled', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
         $wp_customize->add_control( "bbt_feature_{$i}_icon_control", array( 'label' => sprintf(__( 'Feature %d Icon', 'beautiful-business' ), $i), 'section' => 'bbt_homepage_features_section', 'settings' => "bbt_feature_{$i}_icon", 'type' => 'text' ) );
@@ -278,15 +230,13 @@ function beautiful_business_customize_register( $wp_customize ) {
         $wp_customize->add_control( "bbt_feature_{$i}_text_control", array( 'label' => sprintf(__( 'Feature %d Text', 'beautiful-business' ), $i), 'section' => 'bbt_homepage_features_section', 'settings' => "bbt_feature_{$i}_text", 'type' => 'textarea' ) );
     }
 
-    // --- Client Logos Section ---
-    $wp_customize->add_section( 'bbt_homepage_logos_section', array( 'title' => __( 'Client Logos Section', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 40 ) );
+    $wp_customize->add_section( 'bbt_homepage_logos_section', array( 'title' => __( 'Client Logos Section Content', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 45 ) );
     for ($i = 1; $i <= 4; $i++) {
         $wp_customize->add_setting( "bbt_client_logo_{$i}", array( 'default' => '', 'sanitize_callback' => 'esc_url_raw', 'transport' => 'postMessage' ) );
         $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, "bbt_client_logo_{$i}_control", array( 'label' => sprintf(__( 'Client Logo %d', 'beautiful-business' ), $i), 'section' => 'bbt_homepage_logos_section', 'settings' => "bbt_client_logo_{$i}" ) ) );
     }
 
-    // --- CTA Block Section ---
-    $wp_customize->add_section( 'bbt_homepage_cta_section', array( 'title' => __( 'Call-to-Action Block', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 50 ) );
+    $wp_customize->add_section( 'bbt_homepage_cta_section', array( 'title' => __( 'Call-to-Action Block Content', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 50 ) );
     $wp_customize->add_setting( 'bbt_cta_headline', array( 'default' => __( 'Ready to Start Your Project?', 'beautiful-business' ), 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_cta_headline_control', array( 'label' => __( 'CTA Headline', 'beautiful-business' ), 'section' => 'bbt_homepage_cta_section', 'settings' => 'bbt_cta_headline' ) );
     $wp_customize->add_setting( 'bbt_cta_text', array( 'default' => __( 'Let\'s work together.', 'beautiful-business' ), 'sanitize_callback' => 'wp_kses_post', 'transport' => 'postMessage' ) );
@@ -296,8 +246,7 @@ function beautiful_business_customize_register( $wp_customize ) {
     $wp_customize->add_setting( 'bbt_cta_button_url', array( 'default' => '#contact', 'sanitize_callback' => 'esc_url_raw', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_cta_button_url_control', array( 'label' => __( 'CTA Button URL', 'beautiful-business' ), 'section' => 'bbt_homepage_cta_section', 'settings' => 'bbt_cta_button_url' ) );
 
-    // --- Latest News Section ---
-    $wp_customize->add_section( 'bbt_homepage_news_section', array( 'title' => __( 'Latest News Section', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 60 ) );
+    $wp_customize->add_section( 'bbt_homepage_news_section', array( 'title' => __( 'Latest News Section Content', 'beautiful-business' ), 'panel' => 'bbt_homepage_sections_panel', 'priority' => 55 ) );
     $wp_customize->add_setting( 'bbt_news_section_title', array( 'default' => __( 'From Our Blog', 'beautiful-business' ), 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
     $wp_customize->add_control( 'bbt_news_section_title_control', array( 'label' => __( 'Section Title', 'beautiful-business' ), 'section' => 'bbt_homepage_news_section', 'settings' => 'bbt_news_section_title' ) );
     $wp_customize->add_setting( 'bbt_news_section_count', array( 'default' => 3, 'sanitize_callback' => 'absint', 'transport' => 'postMessage' ) );
@@ -311,6 +260,7 @@ add_action( 'customize_register', 'beautiful_business_customize_register' );
  */
 function beautiful_business_customize_preview_js() {
     wp_enqueue_script( 'beautiful-business-customizer-preview', get_template_directory_uri() . '/js/customizer-preview.js', array( 'customize-preview' ), BEAUTIFUL_BUSINESS_VERSION, true );
+    wp_enqueue_script( 'beautiful-business-section-reorder', get_template_directory_uri() . '/js/section-reorder.js', array( 'jquery', 'jquery-ui-sortable', 'customize-controls' ), BEAUTIFUL_BUSINESS_VERSION, true );
 }
 add_action( 'customize_preview_init', 'beautiful_business_customize_preview_js' );
 

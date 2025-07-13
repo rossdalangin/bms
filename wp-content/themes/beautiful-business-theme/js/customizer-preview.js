@@ -162,6 +162,19 @@
         });
     });
 
+    // --- Live Preview for Page Layout ---
+    api('bbt_content_max_width', function(setting) {
+        setting.bind(function(newVal) {
+            document.documentElement.style.setProperty('--bbt-content-max-width', newVal);
+        });
+    });
+
+    api('bbt_screen_width', function(setting) {
+        setting.bind(function(newVal) {
+            $('body').toggleClass('layout-fullwidth', newVal === 'fullwidth');
+        });
+    });
+
     // --- Live Preview for Section Visibility ---
     var homepageSections = ['hero', 'features', 'services', 'projects', 'cta', 'clients', 'testimonials', 'news'];
     $.each(homepageSections, function(index, id) {

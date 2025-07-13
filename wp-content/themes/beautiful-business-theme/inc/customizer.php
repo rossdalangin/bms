@@ -111,6 +111,50 @@ function beautiful_business_customize_register( $wp_customize ) {
         ),
     ) );
 
+    // --- General Settings Panel ---
+    $wp_customize->add_panel( 'bbt_general_settings_panel', array(
+        'title'      => __( 'General Settings', 'beautiful-business' ),
+        'priority'   => 15,
+    ) );
+
+    // Page Settings Section
+    $wp_customize->add_section( 'bbt_page_settings_section', array(
+        'title'      => __( 'Page Settings', 'beautiful-business' ),
+        'panel'      => 'bbt_general_settings_panel',
+        'priority'   => 10,
+    ) );
+
+    // Content Max Width
+    $wp_customize->add_setting( 'bbt_content_max_width', array(
+        'default'           => '1200px',
+        'sanitize_callback' => 'sanitize_text_field', // Simple sanitization, can be improved with a custom one for CSS values
+        'transport'         => 'postMessage',
+    ) );
+    $wp_customize->add_control( 'bbt_content_max_width_control', array(
+        'label'       => __( 'Content Max Width', 'beautiful-business' ),
+        'description' => __( 'e.g., 1200px or 90%', 'beautiful-business' ),
+        'section'     => 'bbt_page_settings_section',
+        'settings'    => 'bbt_content_max_width',
+        'type'        => 'text',
+    ) );
+
+    // Screen Width
+    $wp_customize->add_setting( 'bbt_screen_width', array(
+        'default'           => 'default',
+        'sanitize_callback' => 'sanitize_key',
+        'transport'         => 'postMessage',
+    ) );
+    $wp_customize->add_control( 'bbt_screen_width_control', array(
+        'label'       => __( 'Screen Width', 'beautiful-business' ),
+        'section'     => 'bbt_page_settings_section',
+        'settings'    => 'bbt_screen_width',
+        'type'        => 'select',
+        'choices'     => array(
+            'default'   => __( 'Default', 'beautiful-business' ),
+            'fullwidth' => __( 'Full Width', 'beautiful-business' ),
+        ),
+    ) );
+
     // Demo Import Section
     $wp_customize->add_section( 'bbt_demo_import_section', array(
         'title'      => __( 'Demo Content Import', 'beautiful-business' ),

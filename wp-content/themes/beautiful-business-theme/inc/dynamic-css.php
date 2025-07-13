@@ -104,6 +104,7 @@ function beautiful_business_output_dynamic_css() {
     $heading_color = get_theme_mod( 'bbt_heading_color', '#111111' );
     $link_hover_color = get_theme_mod( 'bbt_link_hover_color', '#0056b3' );
     $background_color = get_theme_mod( 'bbt_background_color', '#ffffff' );
+    $content_max_width = get_theme_mod( 'bbt_content_max_width', '1200px' );
 
     // Add color variables to :root
     $css .= ":root {";
@@ -115,6 +116,7 @@ function beautiful_business_output_dynamic_css() {
     $css .= "--bbt-heading-color: " . esc_attr($heading_color) . ";";
     $css .= "--bbt-link-hover-color: " . esc_attr($link_hover_color) . ";";
     $css .= "--bbt-background-color: " . esc_attr($background_color) . ";";
+    $css .= "--bbt-content-max-width: " . esc_attr($content_max_width) . ";";
     $css .= "}";
 
     // Apply colors to elements

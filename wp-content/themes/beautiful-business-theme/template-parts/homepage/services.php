@@ -16,7 +16,7 @@ $services_query = new WP_Query( array(
 
 if ( $services_query->have_posts() ) : ?>
     <section id="homepage-services" class="homepage-content-section homepage-services-section">
-        <div class="container">
+    <div class="section-inner container">
             <?php if ( ! empty( $section_title ) ) : ?>
                 <h2 class="section-title"><?php echo esc_html( $section_title ); ?></h2>
             <?php endif; ?>

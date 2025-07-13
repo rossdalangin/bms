@@ -24,17 +24,19 @@ if ( ! empty( $hero_bg_image ) ) {
 ?>
 
 <section id="homepage-hero" class="<?php echo esc_attr( $hero_classes ); ?>" <?php echo $hero_style; ?>>
-    <div class="container hero-content-container" style="text-align: <?php echo esc_attr( $hero_text_align ); ?>;">
-        <?php if ( ! empty( $hero_title ) ) : ?>
-            <h1 class="hero-main-title"><?php echo esc_html( $hero_title ); ?></h1>
-        <?php endif; ?>
+    <div class="section-inner container" style="text-align: <?php echo esc_attr( $hero_text_align ); ?>;">
+        <div class="hero-content-container">
+            <?php if ( ! empty( $hero_title ) ) : ?>
+                <h1 class="hero-main-title"><?php echo esc_html( $hero_title ); ?></h1>
+            <?php endif; ?>
 
-        <?php if ( ! empty( $hero_subtitle ) ) : ?>
-            <p class="hero-main-subtitle"><?php echo wp_kses_post( $hero_subtitle ); ?></p>
-        <?php endif; ?>
+            <?php if ( ! empty( $hero_subtitle ) ) : ?>
+                <p class="hero-main-subtitle"><?php echo wp_kses_post( $hero_subtitle ); ?></p>
+            <?php endif; ?>
 
-        <?php if ( ! empty( $hero_button_text ) && ! empty( $hero_button_url ) ) : ?>
-            <a href="<?php echo esc_url( $hero_button_url ); ?>" class="button hero-main-button"><?php echo esc_html( $hero_button_text ); ?></a>
-        <?php endif; ?>
+            <?php if ( ! empty( $hero_button_text ) && ! empty( $hero_button_url ) ) : ?>
+                <a href="<?php echo esc_url( $hero_button_url ); ?>" class="button hero-main-button"><?php echo esc_html( $hero_button_text ); ?></a>
+            <?php endif; ?>
+        </div>
     </div>
 </section>

@@ -8,7 +8,7 @@
 ?>
 
 <section id="homepage-features" class="homepage-content-section homepage-features-section">
-    <div class="container">
+    <div class="section-inner container">
         <div class="features-grid">
             <?php for ( $i = 1; $i <= 3; $i++ ) :
                 $icon = get_theme_mod( "bbt_feature_{$i}_icon", 'dashicons-star-filled' );

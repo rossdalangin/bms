@@ -12,7 +12,7 @@ $button_url = get_theme_mod( 'bbt_cta_button_url', '#contact' );
 ?>
 
 <section id="homepage-cta" class="homepage-content-section homepage-cta-section">
-    <div class="container">
+    <div class="section-inner container">
         <?php if ( ! empty( $headline ) ) : ?>
             <h2 class="cta-headline"><?php echo esc_html( $headline ); ?></h2>
         <?php endif; ?>

@@ -17,7 +17,7 @@ $news_query = new WP_Query( array(
 
 if ( $news_query->have_posts() ) : ?>
     <section id="homepage-news" class="homepage-content-section homepage-latest-news-section alternate-background">
-        <div class="container">
+        <div class="section-inner container">
             <?php if ( ! empty( $section_title ) ) : ?>
                 <h2 class="section-title"><?php echo esc_html( $section_title ); ?></h2>
             <?php endif; ?>
